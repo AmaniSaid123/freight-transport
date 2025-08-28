@@ -1,0 +1,56 @@
+/* Conteneur principal */
+.terms-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+
+/* Contenu des conditions */
+.terms-content {
+    margin-bottom: 30px;
+}
+
+.terms-section {
+    margin-bottom: 25px;
+}
+
+.terms-section h2 {
+    font-size: 22px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.terms-section h3 {
+    font-size: 18px;
+    color: #34495e;
+    margin: 20px 0 10px 0;
+}
+
+.terms-section p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.terms-section ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.terms-section li {
+    margin-bottom: 8px;
+}
+
+/* Pied de page */
+.terms-footer {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    color: #7f8c8d;
+    font-size: 14px;
+}

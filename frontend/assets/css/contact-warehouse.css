@@ -1,0 +1,196 @@
+.contact-warehouse {
+    .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        margin-bottom: 30px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e9ecef;
+        background-color: rgb(0 0 0 / 23%) !important;
+    }
+
+    .card-icon {
+        background: #000;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 1.5rem;
+    }
+
+    .card-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8rem;
+        color: #8d8d8d;
+    }
+
+    /* Galerie d'images */
+    .image-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .image-card {
+        flex: 1 0 300px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .image-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .image-placeholder {
+        height: 200px;
+        background-color: #eaeaea;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #777;
+    }
+
+    .image-info {
+        padding: 15px;
+    }
+
+    .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #ff6b00;
+        color: white;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 30px;
+        margin-top: 15px;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
+
+    .download-btn:hover {
+        background: #e55e00;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+    }
+
+    /* Contact Info */
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 25px;
+        margin-top: 20px;
+    }
+
+    .contact-card {
+        background: var(--light);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+        border-left: 4px solid #000;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .contact-card h3 {
+        font-family: 'Montserrat', sans-serif;
+        color: var(--primary);
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .contact-card i {
+        color: #ff6b00;
+    }
+
+    .address {
+        margin-bottom: 15px;
+        line-height: 1.6;
+    }
+
+    .contact-details {
+        margin-top: 15px;
+    }
+
+    .contact-details a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .contact-details a:hover {
+        color: #ff6b00;
+    }
+
+    /* Hours */
+    .hours-list {
+        list-style: none;
+        margin-top: 15px;
+    }
+
+    .hours-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px dashed #e9ecef;
+    }
+
+    .hours-list li:last-child {
+        border-bottom: none;
+    }
+
+    .highlight {
+        color: #ff6b00;
+        font-weight: 500;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 768px) {
+
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .image-gallery {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-title {
+            font-size: 1.5rem;
+        }
+    }
+}
