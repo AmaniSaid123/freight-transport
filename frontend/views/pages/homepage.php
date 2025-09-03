@@ -3,12 +3,12 @@
 
 <?php
 session_start();
-include_once(__DIR__ . "/../../../php/function.php");
+include_once(__DIR__ . '/../../php/function.php');
 
 ?>
 
 
-<?php include("../layouts/head.php"); ?>
+<?php include(__DIR__ . '/../layouts/head.php'); ?>
 
 <body>
 
@@ -21,17 +21,19 @@ include_once(__DIR__ . "/../../../php/function.php");
     </div>
     <!-- Spinner End -->
 
+    <?php include(__DIR__ . '/../layouts/topbar.php'); ?>
 
-    <?php include("../layouts/topbar.php"); ?>
+    <?php include(__DIR__ . '/../layouts/menu.php'); ?>
 
-    <?php include("../layouts/menu.php"); ?>
 
 
     <!-- About Start -->
-    <?php include("./about.php"); ?>
+    <?php include(__DIR__ . '/about.php'); ?>
+
+
     <!-- About End -->
 
-    <?php include("./service.php"); ?>
+    <?php include(__DIR__ . '/service.php'); ?>
 
     <!-- tracking Start -->
     <div class="container-fluid tracking py-5" id="tracking">
@@ -61,15 +63,12 @@ include_once(__DIR__ . "/../../../php/function.php");
     </div>
 
     <!-- tracking End -->
-    <?php include("./values.php"); ?>
-    <?php include("./process.php"); ?>
-    <?php include("./price.php"); ?>
 
+    <?php include(__DIR__ . '/values.php'); ?>
+    <?php include(__DIR__ . '/process.php'); ?>
+    <?php include(__DIR__ . '/price.php'); ?>
 
-    <?php
-    include_once("../layouts/footer.php");
-    ?>
-
+    <?php include(__DIR__ . '/../layouts/footer.php'); ?>
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
@@ -78,14 +77,14 @@ include_once(__DIR__ . "/../../../php/function.php");
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/lib/wow/wow.min.js"></script>
-    <script src="../../assets/lib/easing/easing.min.js"></script>
-    <script src="../../assets/lib/waypoints/waypoints.min.js"></script>
-    <script src="../../assets/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="frontend/assets/lib/wow/wow.min.js"></script>
+    <script src="frontend/assets/lib/easing/easing.min.js"></script>
+    <script src="frontend/assets/lib/waypoints/waypoints.min.js"></script>
+    <script src="frontend/assets/lib/owlcarousel/owl.carousel.min.js"></script>
 
 
     <!-- Template Javascript -->
-    <script src="../../assets/js/main.js"></script>
+    <script src="frontend/assets/js/main.js"></script>
 
 </body>
 

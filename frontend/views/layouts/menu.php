@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
         <a href="index.html" class="navbar-brand p-0">
 
-            <img src="../../assets/img/logo.svg" alt="Logo">
+            <img src="frontend/assets/img/logo.svg" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="fa fa-bars"></span>
@@ -40,12 +40,12 @@
     $currentRoute = $_SERVER['SCRIPT_NAME'];
 
     // Vérifie si on est sur homepage.php
-    if (basename($currentRoute) === 'homepage.php'): ?>
+    if (basename($currentRoute) === 'index.php'): ?>
         <div class="header-carousel owl-carousel">
             <!-- Carousel Start -->
 
             <div class="header-carousel-item">
-                <img src="../../assets/img/carousel-1.jpg" class="img-fluid w-100" alt="Image">
+                <img src="frontend/assets/img/carousel-1.jpg" class="img-fluid w-100" alt="Image">
                 <div class="carousel-caption">
                     <div class="carousel-caption-content p-3">
                         <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="header-carousel-item">
-                <img src="../../assets/img/carousel-2.jpg" class="img-fluid w-100" alt="Image">
+                <img src="frontend/assets/img/carousel-2.jpg" class="img-fluid w-100" alt="Image">
                 <div class="carousel-caption">
                     <div class="carousel-caption-content p-3">
                         <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">
