@@ -166,18 +166,18 @@ return [
     'prices_row_jhb_air_notes' => 'Dédouanement inclus',
 
     'prices_row_jhb_sea_type' => 'Fret Maritime',
-    'prices_row_jhb_sea_price' => '400 USD par CBM ou R180 par Kg (moins de 100 Kg)',
+    'prices_row_jhb_sea_price' => 'à partir de R7300 par CBM',
     'prices_row_jhb_sea_leadtime' => '25 à 40 jours',
     'prices_row_jhb_sea_notes' => 'Dédouanement inclus',
 
     'prices_row_kins_destination' => 'Kinshasa et Lubumbashi, RDC',
     'prices_row_kins_air_type' => 'Fret Aérien',
-    'prices_row_kins_air_price' => '20 USD par Kg',
+    'prices_row_kins_air_price' => '18 USD par Kg',
     'prices_row_kins_air_leadtime' => '5 à 10 jours',
     'prices_row_kins_air_notes' => 'Dédouanement inclus',
 
     'prices_row_kins_sea_type' => 'Fret Maritime',
-    'prices_row_kins_sea_price' => '590 USD par CBM ou 12 USD par Kg (moins de 100 Kg)',
+    'prices_row_kins_sea_price' => 'à partir de 570 USD par CBM',
     'prices_row_kins_sea_leadtime' => '50 à 60 jours',
     'prices_row_kins_sea_notes' => 'Dédouanement inclus',
 

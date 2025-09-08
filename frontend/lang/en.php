@@ -157,18 +157,18 @@ return [
     'prices_row_jhb_air_notes' => 'Customs clearance included',
 
     'prices_row_jhb_sea_type' => 'Sea Freight',
-    'prices_row_jhb_sea_price' => '400 USD per CBM or R180 per Kg (under 100 Kg)',
+    'prices_row_jhb_sea_price' => 'from R7300 per CBM',
     'prices_row_jhb_sea_leadtime' => '25 to 40 days',
     'prices_row_jhb_sea_notes' => 'Customs clearance included',
 
     'prices_row_kins_destination' => 'Kinshasa & Lubumbashi, DRC',
     'prices_row_kins_air_type' => 'Air Freight',
-    'prices_row_kins_air_price' => '20 USD per Kg',
+    'prices_row_kins_air_price' => '18 USD per Kg',
     'prices_row_kins_air_leadtime' => '5 to 10 days',
     'prices_row_kins_air_notes' => 'Customs clearance included',
 
     'prices_row_kins_sea_type' => 'Sea Freight',
-    'prices_row_kins_sea_price' => '590 USD per CBM or 12 USD per Kg (under 100 Kg)',
+    'prices_row_kins_sea_price' => ' from USD 570 per CBM',
     'prices_row_kins_sea_leadtime' => '50 to 60 days',
     'prices_row_kins_sea_notes' => 'Customs clearance included',
     // process page

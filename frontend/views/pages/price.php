@@ -3,7 +3,7 @@
     <div class="row g-5 align-items-center">
       <div class="col-lg-5 wow fadeInLeft" data-wow-delay="0.2s">
         <div class="about-img pb-5 ps-5">
-          <img src="frontend/assets/img/prix.png" class="img-fluid rounded w-100" style="object-fit: cover;" alt="Image">
+          <img src="<?= BASE_URL ?>assets/img/prix.png" class="img-fluid rounded w-100" style="object-fit: cover;" alt="Image">
 
         </div>
       </div>

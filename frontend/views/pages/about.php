@@ -3,10 +3,10 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-5 wow fadeInLeft" data-wow-delay="0.2s">
                 <div class="about-img pb-5 ps-5">
-                    <img src="frontend/assets/img/about.jpg" class="img-fluid rounded w-100" style="object-fit: cover;"
+                    <img src="<?= BASE_URL ?>assets/img/about.jpg" class="img-fluid rounded w-100" style="object-fit: cover;"
                         alt="Image">
                     <div class="about-img-inner">
-                        <img src="frontend/assets/img/about.png" class="img-fluid rounded-circle w-100 h-100" alt="Image">
+                        <img src="<?= BASE_URL ?>assets/img/about.png" class="img-fluid rounded-circle w-100 h-100" alt="Image">
                     </div>
                 </div>
             </div>

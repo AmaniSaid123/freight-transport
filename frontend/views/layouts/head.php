@@ -14,14 +14,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link href="frontend/assets/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="frontend/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="frontend/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="frontend/assets/css/style.css" rel="stylesheet">
-    <link href="frontend/assets/css/process.css" rel="stylesheet">
-    <link href="frontend/assets/css/values.css" rel="stylesheet">
-    <link href="frontend/assets/css/contact-warehouse.css" rel="stylesheet">
-    <link href="frontend/assets/css/terms.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/lib/animate/animate.min.css" rel="stylesheet">
+
+    <link href="<?= BASE_URL ?>assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/process.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/values.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/contact-warehouse.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/terms.css" rel="stylesheet">
     <?php
 
     // Fonction pour récupérer la langue principale du navigateur

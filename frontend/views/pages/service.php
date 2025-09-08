@@ -163,7 +163,7 @@
             <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="blog-item rounded">
                     <div class="blog-img">
-                        <img src="<?= BASE_URL ?>/assets/img/blog-1.jpg" class="img-fluid w-100" alt="Image">
+                        <img src="<?= BASE_URL ?>assets/img/blog-1.jpg" class="img-fluid w-100" alt="Image">
                     </div>
                     <div class="blog-centent p-4">
 
@@ -177,7 +177,7 @@
             <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="blog-item rounded">
                     <div class="blog-img">
-                        <img src="<?= BASE_URL ?>/assets/img/blog-2.jpg" class="img-fluid w-100" alt="Image">
+                        <img src="<?= BASE_URL ?>assets/img/blog-2.jpg" class="img-fluid w-100" alt="Image">
                     </div>
                     <div class="blog-centent p-4">
                         <a href="#" class="h4"><?= t('blog_content_title_2') ?></a>
@@ -190,7 +190,7 @@
             <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.5s">
                 <div class="blog-item rounded">
                     <div class="blog-img">
-                        <img src="<?= BASE_URL ?>/assets/img/blog-3.jpg" class="img-fluid w-100" alt="Image">
+                        <img src="<?= BASE_URL ?>assets/img/blog-3.jpg" class="img-fluid w-100" alt="Image">
                     </div>
                     <div class="blog-centent p-4">
 
