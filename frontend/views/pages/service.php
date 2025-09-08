@@ -3,13 +3,10 @@
     <div class="container py-5">
         <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="sub-style">
-                <h4 class="sub-title px-3 mb-0">Nos Services</h4>
+                <h4 class="sub-title px-3 mb-0"> <?= t('services_sub_title') ?></h4>
             </div>
-            <h1 class="display-3 mb-4">Des solutions logistiques fiables et sur mesure</h1>
-            <p class="mb-0"> Nous vous offrons un ensemble complet de services pour expédier vos marchandises en
-                toute sécurité et efficacité.
-                Du fret aérien et maritime à l’entreposage, en passant par le suivi en temps réel, nous vous
-                accompagnons à chaque étape.</p>
+            <h1 class="display-3 mb-4"> <?= t('services_hero_title') ?></h1>
+            <p class="mb-0"> <?= t('services_description') ?></p>
         </div>
         <div class="row g-4 justify-content-center">
             <!-- Service 1 : Fret Aérien -->
@@ -22,8 +19,8 @@
                             </div>
                         </div>
                         <div class="feature-content d-flex flex-column">
-                            <h5 class="mb-4">Fret Aérien</h5>
-                            <p class="mb-0">Transport rapide depuis la Chine vers l’Afrique par avion.</p>
+                            <h5 class="mb-4"><?= t('service1_title') ?></h5>
+                            <p class="mb-0"><?= t('service1_desc') ?></p>
                         </div>
                     </div>
                 </div>
@@ -39,8 +36,8 @@
                             </div>
                         </div>
                         <div class="feature-content d-flex flex-column">
-                            <h5 class="mb-4">Fret Maritime</h5>
-                            <p class="mb-0">Expédition économique par bateau pour gros volumes.</p>
+                            <h5 class="mb-4"><?= t('service2_title') ?></h5>
+                            <p class="mb-0"><?= t('service2_desc') ?></p>
                         </div>
                     </div>
                 </div>
@@ -56,8 +53,8 @@
                             </div>
                         </div>
                         <div class="feature-content d-flex flex-column">
-                            <h5 class="mb-4">Entreposage</h5>
-                            <p class="mb-0">Stockage sécurisé et consolidation de vos commandes.</p>
+                            <h5 class="mb-4"><?= t('service3_title') ?></h5>
+                            <p class="mb-0"><?= t('service3_desc') ?></p>
                         </div>
                     </div>
                 </div>
@@ -73,8 +70,8 @@
                             </div>
                         </div>
                         <div class="feature-content d-flex flex-column">
-                            <h5 class="mb-4">Suivi en Temps Réel</h5>
-                            <p class="mb-0">Information continue du départ à la livraison, via email & WhatsApp.</p>
+                            <h5 class="mb-4"><?= t('service4_title') ?></h5>
+                            <p class="mb-0"><?= t('service4_desc') ?></p>
                         </div>
                     </div>
                 </div>
@@ -90,9 +87,8 @@
                             </div>
                         </div>
                         <div class="feature-content d-flex flex-column">
-                            <h5 class="mb-4">Évaluation & Devis</h5>
-                            <p class="mb-0">Évaluation rapide et précise des coûts de transport avec devis clair et
-                                détaillé.</p>
+                            <h5 class="mb-4"><?= t('service5_title') ?></h5>
+                            <p class="mb-0"><?= t('service5_desc') ?></p>
                         </div>
                     </div>
                 </div>
@@ -109,8 +105,8 @@
                             </div>
                         </div>
                         <div class="feature-content d-flex flex-column">
-                            <h5 class="mb-4">Assistance à l’Achat</h5>
-                            <p class="mb-0">Instructions claires pour vos vendeurs afin de livrer correctement.</p>
+                            <h5 class="mb-4"><?= t('service6_title') ?></h5>
+                            <p class="mb-0"><?= t('service6_desc') ?></p>
                         </div>
                     </div>
                 </div>
@@ -126,8 +122,8 @@
                             </div>
                         </div>
                         <div class="feature-content d-flex flex-column">
-                            <h5 class="mb-4">Emballage & Préparation</h5>
-                            <p class="mb-0">Emballage sécurisé pour protéger vos marchandises pendant le transport.
+                            <h5 class="mb-4"><?= t('service7_title') ?></h5>
+                            <p class="mb-0"><?= t('service7_desc') ?>
                             </p>
                         </div>
                     </div>
@@ -144,8 +140,8 @@
                             </div>
                         </div>
                         <div class="feature-content d-flex flex-column">
-                            <h5 class="mb-4">Assurance Transport</h5>
-                            <p class="mb-0">Couverture contre les pertes ou dommages durant l’acheminement.</p>
+                            <h5 class="mb-4"><?= t('service8_title') ?></h5>
+                            <p class="mb-0"><?= t('service8_desc') ?></p>
                         </div>
                     </div>
                 </div>
@@ -153,13 +149,13 @@
 
             <!-- Bouton Plus d'infos -->
             <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
-                <a href="#" class="btn btn-primary rounded-pill text-white py-3 px-5">Plus de détails</a>
+                <a href="#" class="btn btn-primary rounded-pill text-white py-3 px-5"><?= t('services_sub_title') ?></a>
             </div>
         </div>
     </div>
     <div class="container py-5 blog">
         <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s">
-           
+
             <h1 class="display-3 mb-4"> <?= t('blog_text') ?></h1>
             <p class="mb-0"> <?= t('blog_description') ?></p>
         </div>
@@ -167,7 +163,7 @@
             <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="blog-item rounded">
                     <div class="blog-img">
-                        <img src="frontend/assets/img/blog-1.jpg" class="img-fluid w-100" alt="Image">
+                        <img src="<?= BASE_URL ?>/assets/img/blog-1.jpg" class="img-fluid w-100" alt="Image">
                     </div>
                     <div class="blog-centent p-4">
 
@@ -181,7 +177,7 @@
             <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="blog-item rounded">
                     <div class="blog-img">
-                        <img src="frontend/assets/img/blog-2.jpg" class="img-fluid w-100" alt="Image">
+                        <img src="<?= BASE_URL ?>/assets/img/blog-2.jpg" class="img-fluid w-100" alt="Image">
                     </div>
                     <div class="blog-centent p-4">
                         <a href="#" class="h4"><?= t('blog_content_title_2') ?></a>
@@ -194,7 +190,7 @@
             <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.5s">
                 <div class="blog-item rounded">
                     <div class="blog-img">
-                        <img src="frontend/assets/img/blog-3.jpg" class="img-fluid w-100" alt="Image">
+                        <img src="<?= BASE_URL ?>/assets/img/blog-3.jpg" class="img-fluid w-100" alt="Image">
                     </div>
                     <div class="blog-centent p-4">
 
