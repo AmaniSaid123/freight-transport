@@ -5,16 +5,16 @@
 <?php
 session_start();
 
-include_once(__DIR__ . "/../../../php/function.php");
+//include_once(__DIR__ . "/../../../php/function.php");
 
 
 
 ?>
 
 
-<?php include("../layouts/head.php"); ?>
+<?php include(__DIR__ . '/../layouts/head.php'); ?>
 <style>
- 
+
 </style>
 
 <body>
@@ -29,19 +29,21 @@ include_once(__DIR__ . "/../../../php/function.php");
     <!-- Spinner End -->
 
 
-    <?php include("../layouts/topbar.php"); ?>
+    <?php include(__DIR__ . '/../layouts/topbar.php'); ?>
 
-    <?php include("../layouts/menu.php"); ?>
+    <?php include(__DIR__ . '/../layouts/menu.php'); ?>
+
+
 
     <!-- Header Start -->
     <div class="container-fluid bg-breadcrumb">
         <div class="container text-center py-5" style="max-width: 900px;">
             <h3 class="display-3 mb-4 wow fadeInDown" data-wow-delay="0.1s"><?= t('contact_page_title') ?></h3>
-                <ol class="breadcrumb justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
-                    <li class="breadcrumb-item"><a href="index.html"><?= t('home') ?></a></li>
-                    <li class="breadcrumb-item"><a href="#"><?= t('pages') ?></a></li>
-                    <li class="breadcrumb-item active text-black"><?= t('contact_page_breadcrumb') ?></li>
-                </ol>
+            <ol class="breadcrumb justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                <li class="breadcrumb-item"><a href="index.html"><?= t('home') ?></a></li>
+                <li class="breadcrumb-item"><a href="#"><?= t('pages') ?></a></li>
+                <li class="breadcrumb-item active text-black"><?= t('contact_page_breadcrumb') ?></li>
+            </ol>
         </div>
     </div>
     <!-- Header End -->
@@ -79,11 +81,16 @@ include_once(__DIR__ . "/../../../php/function.php");
 
                     <div class="image-gallery">
                         <div class="image-card">
-                            <div class="image-placeholder">Image pour Johannesburg</div>
+                            <div class="image-placeholder"> <img
+                                    src="https://images.unsplash.com/photo-1588362953336-2d200c9c7561?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80"
+                                    alt="Kinshasa">
+                                </div>
+
                             <div class="image-info">
-                                        <h3><?= t('contact_city_jhb') ?></h3>
-                                        <p><?= t('contact_city_jhb_desc') ?></p>
-                                        <a href="#" class="download-btn"><i class="fas fa-download"></i> <?= t('contact_download_file') ?></a>
+                                <h3><?= t('contact_city_jhb') ?></h3>
+                                <p><?= t('contact_city_jhb_desc') ?></p>
+                                <a href="#" class="download-btn"><i class="fas fa-download"></i>
+                                    <?= t('contact_download_file') ?></a>
 
                             </div>
                         </div>
@@ -93,7 +100,8 @@ include_once(__DIR__ . "/../../../php/function.php");
                             <div class="image-info">
                                 <h3><?= t('contact_city_kin') ?></h3>
                                 <p><?= t('contact_city_kin_desc') ?></p>
-                                <a href="#" class="download-btn"><i class="fas fa-download"></i> <?= t('contact_download_file') ?></a>
+                                <a href="#" class="download-btn"><i class="fas fa-download"></i>
+                                    <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
 
@@ -102,7 +110,8 @@ include_once(__DIR__ . "/../../../php/function.php");
                             <div class="image-info">
                                 <h3><?= t('contact_city_lub') ?></h3>
                                 <p><?= t('contact_city_lub_desc') ?></p>
-                                <a href="#" class="download-btn"><i class="fas fa-download"></i> <?= t('contact_download_file') ?></a>
+                                <a href="#" class="download-btn"><i class="fas fa-download"></i>
+                                    <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
                     </div>
@@ -127,7 +136,8 @@ include_once(__DIR__ . "/../../../php/function.php");
                             <div class="contact-details">
                                 <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
                                     <?= t('contact_email') ?></a>
-                                <a href="tel:<?= t('contact_phone_jhb_link') ?>"><i class="fas fa-phone"></i> <?= t('contact_phone_jhb') ?></a>
+                                <a href="tel:<?= t('contact_phone_jhb_link') ?>"><i class="fas fa-phone"></i>
+                                    <?= t('contact_phone_jhb') ?></a>
                             </div>
                         </div>
 
@@ -142,7 +152,8 @@ include_once(__DIR__ . "/../../../php/function.php");
                             <div class="contact-details">
                                 <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
                                     <?= t('contact_email') ?></a>
-                                <a href="tel:<?= t('contact_phone_kin_link') ?>"><i class="fas fa-phone"></i> <?= t('contact_phone_kin') ?></a>
+                                <a href="tel:<?= t('contact_phone_kin_link') ?>"><i class="fas fa-phone"></i>
+                                    <?= t('contact_phone_kin') ?></a>
                             </div>
                         </div>
 
@@ -158,7 +169,8 @@ include_once(__DIR__ . "/../../../php/function.php");
                             <div class="contact-details">
                                 <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
                                     <?= t('contact_email') ?></a>
-                                <a href="tel:<?= t('contact_phone_lub_link') ?>"><i class="fas fa-phone"></i> <?= t('contact_phone_lub') ?></a>
+                                <a href="tel:<?= t('contact_phone_lub_link') ?>"><i class="fas fa-phone"></i>
+                                    <?= t('contact_phone_lub') ?></a>
                             </div>
                         </div>
                     </div>
@@ -173,9 +185,12 @@ include_once(__DIR__ . "/../../../php/function.php");
                     </div>
 
                     <ul class="hours-list">
-                        <li><span><?= t('contact_hours_weekdays_label') ?></span> <span class="highlight"><?= t('contact_hours_weekdays') ?></span></li>
-                        <li><span><?= t('contact_hours_saturday_label') ?></span> <span class="highlight"><?= t('contact_hours_saturday') ?></span></li>
-                        <li><span><?= t('contact_hours_holidays_label') ?></span> <span class="highlight"><?= t('contact_hours_holidays') ?></span></li>
+                        <li><span><?= t('contact_hours_weekdays_label') ?></span> <span
+                                class="highlight"><?= t('contact_hours_weekdays') ?></span></li>
+                        <li><span><?= t('contact_hours_saturday_label') ?></span> <span
+                                class="highlight"><?= t('contact_hours_saturday') ?></span></li>
+                        <li><span><?= t('contact_hours_holidays_label') ?></span> <span
+                                class="highlight"><?= t('contact_hours_holidays') ?></span></li>
                     </ul>
 
                     <p style="margin-top: 20px; font-style: italic;"><?= t('contact_hours_holiday_note') ?></p>
@@ -195,11 +210,12 @@ include_once(__DIR__ . "/../../../php/function.php");
     <!-- Contact Start -->
     <div class="container-fluid contact py-5" id="contact">
         <div class="container py-5">
-        
+
             <div class="row g-4 align-items-center">
                 <div class="col-lg-5 col-xl-5 contact-form wow fadeInLeft" data-wow-delay="0.1s">
                     <h2 class="display-5 text-white mb-2"><?= t('contact_form_title') ?></h2>
-                    <p class="mb-4 text-white"><?= t('contact_form_description') ?> <a class="text-dark fw-bold" href="https://htmlcodex.com/contact-form"><?= t('contact_form_download') ?></a>.</p>
+                    <p class="mb-4 text-white"><?= t('contact_form_description') ?> <a class="text-dark fw-bold"
+                            href="https://htmlcodex.com/contact-form"><?= t('contact_form_download') ?></a>.</p>
                     <form>
                         <div class="row g-3">
                             <div class="col-lg-12 col-xl-6">
@@ -246,7 +262,8 @@ include_once(__DIR__ . "/../../../php/function.php");
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-light text-dark w-100 py-3"><?= t('contact_form_send_button') ?></button>
+                                <button
+                                    class="btn btn-light text-dark w-100 py-3"><?= t('contact_form_send_button') ?></button>
                             </div>
                         </div>
                     </form>
@@ -296,26 +313,13 @@ include_once(__DIR__ . "/../../../php/function.php");
     </div>
     <!-- Contact End -->
 
-    <?php
-    include_once("../layouts/footer.php");
-    ?>
-
+    <?php include(__DIR__ . '/../layouts/footer.php'); ?>
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/lib/wow/wow.min.js"></script>
-    <script src="../../assets/lib/easing/easing.min.js"></script>
-    <script src="../../assets/lib/waypoints/waypoints.min.js"></script>
-    <script src="../../assets/lib/owlcarousel/owl.carousel.min.js"></script>
-
-
-    <!-- Template Javascript -->
-    <script src="../../assets/js/main.js"></script>
+    <?php include(__DIR__ . '/../layouts/js.php'); ?>
 
 </body>
 

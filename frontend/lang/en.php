@@ -46,7 +46,7 @@ return [
     "tracking_title" => "Tracking of my parcel",
     'tracking_text' => 'Track your parcel in real time',
     'tracking_description' => 'Insert your tracking number below to track your parcel. Our tracking system update you from the leaving of your parcel from our warehouse up to its collection or delivery.',
-    'tracking_button' => 'follow',
+    'tracking_button' => 'Follow',
     'tracking_placeholder' => 'Enter your tracking number',
 
     // about
@@ -244,4 +244,8 @@ return [
     'contact_block_addresses' => 'Addresses',
     'contact_block_mobile' => 'Mobile',
     'contact_block_email' => 'Email',
+    // buttons
+    'button_info' => 'Important information !',
+    'text_info' => 'This feature will be available soon. We\'re still working on it. In the meantime, you can start your shipment by sending your parcels directly to our warehouse in China and sending a message to our team in your city to track it. Go to "Our Contacts and Warehouses" to get started.',
+
 ];

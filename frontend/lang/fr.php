@@ -14,7 +14,7 @@ return [
     'send_parcel' => 'Envoyer un colis',
     'who_are_you' => 'Qui sommes-nous',
     'values' => 'Nos valeurs',
-    'proceed' => 'Comment procéde',
+    'proceed' => 'Comment procéder',
     'prices' => 'Nos prix et nos délais de livraison',
     // carousel
     'carousel-1' => 'Agence de fret maritime et aérien',
@@ -255,5 +255,9 @@ return [
     'contact_block_addresses' => 'Adresses',
     'contact_block_mobile' => 'Mobile',
     'contact_block_email' => 'Email',
+
+    // buttons
+    'button_info' => 'Information importante !',
+    'text_info' => 'Cette fonctionnalité sera bientôt disponible. Nous y travaillons encore. En attendant, vous pouvez commencer votre expédition en envoyant directement vos colis à notre entrepôt en Chine et en envoyant un message à notre équipe dans votre ville pour assurer le suivi. Rendez-vous dans « Nos contacts et nos entrepôts » pour commencer.',
 
 ];

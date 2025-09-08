@@ -3,7 +3,9 @@
 
 <?php
 session_start();
-include_once(__DIR__ . '/../../php/function.php');
+//include_once(__DIR__ . '/../../php/function.php');
+// bonne fichier
+//include_once __DIR__ . "/../../../php/function.php";
 
 ?>
 
@@ -54,7 +56,9 @@ include_once(__DIR__ . '/../../php/function.php');
                     <form action="tracking-result.php" method="get" class="d-flex">
                         <input type="text" name="tracking_number" class="form-control form-control-lg me-2"
                             placeholder="<?= t('tracking_placeholder') ?>" required>
-                        <button type="submit" class="btn btn-primary rounded-pill text-white py-3 px-5">
+                        <button type="submit" class="btn btn-primary rounded-pill text-white py-3 px-5"
+                            data-bs-toggle="popover" data-bs-title="<?= t('button_info') ?>"
+                            data-bs-content="<?= t('text_info') ?>">
                             <?= t('tracking_button') ?></button>
                     </form>
                 </div>
@@ -73,18 +77,9 @@ include_once(__DIR__ . '/../../php/function.php');
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
-
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="<?= BASE_URL ?>assets/lib/wow/wow.min.js"></script>
-    <script src="<?= BASE_URL ?>assets/lib/easing/easing.min.js"></script>
-    <script src="<?= BASE_URL ?>assets/lib/waypoints/waypoints.min.js"></script>
-    <script src="<?= BASE_URL ?>assets/lib/owlcarousel/owl.carousel.min.js"></script>
+    <?php include(__DIR__ . '/../layouts/js.php'); ?>
 
 
-    <!-- Template Javascript -->
-    <script src="<?= BASE_URL ?>assets/js/main.js"></script>
 
 </body>
 

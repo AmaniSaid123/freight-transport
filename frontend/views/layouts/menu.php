@@ -1,7 +1,7 @@
 <!-- Navbar & Hero Start -->
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
-        <a href="index.html" class="navbar-brand p-0">
+        <a href="homepage" class="navbar-brand p-0">
 
             <img src="<?= BASE_URL ?>assets/img/logo.svg" alt="Logo">
         </a>
@@ -10,13 +10,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="#home" class="nav-item nav-link active"><?= t('home') ?></a>
-                <a href="#about" class="nav-item nav-link"><?= t('about') ?></a>
-                <a href="#services" class="nav-item nav-link"><?= t('services') ?></a>
-                <a href="#tracking" class="nav-item nav-link"><?= t('tracking') ?></a>
-                <a href="#values" class="nav-item nav-link"><?= t('values') ?></a>
-                <a href="#process" class="nav-item nav-link"><?= t('proceed') ?></a>
-                <a href="#price" class="nav-item nav-link"><?= t('prices') ?></a>
+                <a href="homepage" class="nav-item nav-link active"><?= t('home') ?></a>
+                <a href="/#about" class="nav-item nav-link"><?= t('about') ?></a>
+                <a href="/#services" class="nav-item nav-link"><?= t('services') ?></a>
+                <a href="/#tracking" class="nav-item nav-link"><?= t('tracking') ?></a>
+                <a href="/#values" class="nav-item nav-link"><?= t('values') ?></a>
+                <a href="/#process" class="nav-item nav-link"><?= t('proceed') ?></a>
+                <a href="/#price" class="nav-item nav-link"><?= t('prices') ?></a>
                 <a href="contact.php" class="nav-item nav-link"><?= t('contact') ?></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><?= t('language') ?></a>
@@ -27,8 +27,9 @@
                     </div>
                 </div>
             </div>
-            <a href="send-parcel.php"
-                class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">
+            <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0"
+                data-bs-toggle="popover" data-bs-title="<?= t('button_info') ?>"
+                data-bs-content="<?= t('text_info') ?>">
                 <?= t('send_parcel') ?>
             </a>
         </div>
@@ -54,7 +55,8 @@
                         <h1 class="display-1 text-white mb-4"><?= t('carousel-text-1') ?></h1>
                         <p class="mb-5 fs-5"><?= t('carousel-description-1') ?>
                         </p>
-                        <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="send-parcel.php">
+                        <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#" data-bs-toggle="popover"
+                            data-bs-title="<?= t('button_info') ?>" data-bs-content="<?= t('text_info') ?>">
                             <?= t('send_parcel') ?></a>
                     </div>
                 </div>
@@ -69,7 +71,9 @@
                         <h1 class="display-1 text-white mb-4"><?= t('carousel-text-2') ?></h1>
                         <p class="mb-5 fs-5 animated slideInDown"><?= t('carousel-description-2') ?>
                         </p>
-                        <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#"><?= t('send_parcel') ?></a>
+                        <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#" data-bs-toggle="popover"
+                            data-bs-title="<?= t('button_info') ?>"
+                            data-bs-content="<?= t('text_info') ?>"><?= t('send_parcel') ?></a>
                     </div>
                 </div>
             </div>

@@ -50,14 +50,14 @@ if (isset($_POST['send-parcel'])) {
 
     // 👉 Traitement formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Dossier
-    $name = clean_in_text($_POST['full_name']);
-    $phone_country = clean_in_text($_POST['phone_country'] ?? '');
-    $phone_local = clean_in_text($_POST['phone_local'] ?? '');
-    // Combine country code and local number into one phone string
-    $phone = trim(($phone_country ? $phone_country . ' ' : '') . $phone_local);
-    $email = clean_in_text($_POST['email']);
-    $address = clean_in_text($_POST['address']);
+        // Dossier
+        $name = clean_in_text($_POST['full_name']);
+        $phone_country = clean_in_text($_POST['phone_country'] ?? '');
+        $phone_local = clean_in_text($_POST['phone_local'] ?? '');
+        // Combine country code and local number into one phone string
+        $phone = trim(($phone_country ? $phone_country . ' ' : '') . $phone_local);
+        $email = clean_in_text($_POST['email']);
+        $address = clean_in_text($_POST['address']);
 
         // Basic validation
         if (!($name && $email && $address && $phone)) {
@@ -274,19 +274,26 @@ if (isset($_POST['send-parcel'])) {
 
                             <div class="row gy-3 gx-4">
                                 <div class="col-md-6">
-                                    <label for="full_name" class="form-label visually-hidden"><?= t('full_name') ?></label>
+                                    <label for="full_name"
+                                        class="form-label visually-hidden"><?= t('full_name') ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light border-primary"><i class="fa fa-user"></i></span>
-                                        <input name="full_name" id="full_name" type="text" class="form-control py-3 border-primary bg-transparent"
-                                            placeholder="<?= t('full_name') ?>" required aria-required="true" value="<?= htmlspecialchars($_POST['full_name'] ?? '') ?>">
+                                        <span class="input-group-text bg-light border-primary"><i
+                                                class="fa fa-user"></i></span>
+                                        <input name="full_name" id="full_name" type="text"
+                                            class="form-control py-3 border-primary bg-transparent"
+                                            placeholder="<?= t('full_name') ?>" required aria-required="true"
+                                            value="<?= htmlspecialchars($_POST['full_name'] ?? '') ?>">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label visually-hidden"><?= t('phone') ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light border-primary"><i class="fa fa-phone"></i></span>
-                                        <select name="phone_country" id="phone_country" class="form-select py-3 border-primary bg-transparent w-auto me-2 phone-country-select" style="max-width:110px;" required>
+                                        <span class="input-group-text bg-light border-primary"><i
+                                                class="fa fa-phone"></i></span>
+                                        <select name="phone_country" id="phone_country"
+                                            class="form-select py-3 border-primary bg-transparent w-auto me-2 phone-country-select"
+                                            style="max-width:110px;" required>
                                             <option value="+1" <?= (($_POST['phone_country'] ?? '') === '+1') ? 'selected' : '' ?>>🇺🇸 +1</option>
                                             <option value="+33" <?= (($_POST['phone_country'] ?? '') === '+33') ? 'selected' : '' ?>>🇫🇷 +33</option>
                                             <option value="+41" <?= (($_POST['phone_country'] ?? '') === '+41') ? 'selected' : '' ?>>🇨🇭 +41</option>
@@ -294,27 +301,35 @@ if (isset($_POST['send-parcel'])) {
                                             <option value="+27" <?= (($_POST['phone_country'] ?? '') === '+27') ? 'selected' : '' ?>>🇿🇦 +27</option>
                                             <!-- add more countries as needed -->
                                         </select>
-                                        <input name="phone_local" id="phone_local" type="tel" pattern="[0-9() \-]{4,20}" class="form-control py-3 border-primary bg-transparent"
-                                            placeholder="<?= t('phone') ?>" required aria-required="true" value="<?= htmlspecialchars($_POST['phone_local'] ?? '') ?>">
+                                        <input name="phone_local" id="phone_local" type="tel" pattern="[0-9() \-]{4,20}"
+                                            class="form-control py-3 border-primary bg-transparent"
+                                            placeholder="<?= t('phone') ?>" required aria-required="true"
+                                            value="<?= htmlspecialchars($_POST['phone_local'] ?? '') ?>">
                                     </div>
-                               
+
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="email" class="form-label visually-hidden"><?= t('email') ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light border-primary"><i class="fa fa-envelope"></i></span>
-                                        <input name="email" id="email" type="email" class="form-control py-3 border-primary bg-transparent"
-                                            placeholder="<?= t('email') ?>" required aria-required="true" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                                        <span class="input-group-text bg-light border-primary"><i
+                                                class="fa fa-envelope"></i></span>
+                                        <input name="email" id="email" type="email"
+                                            class="form-control py-3 border-primary bg-transparent"
+                                            placeholder="<?= t('email') ?>" required aria-required="true"
+                                            value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="address" class="form-label visually-hidden"><?= t('address') ?></label>
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light border-primary"><i class="fa fa-map-marker"></i></span>
-                                        <input name="address" id="address" type="text" class="form-control py-3 border-primary bg-transparent"
-                                            placeholder="<?= t('address') ?>" required aria-required="true" value="<?= htmlspecialchars($_POST['address'] ?? '') ?>">
+                                        <span class="input-group-text bg-light border-primary"><i
+                                                class="fa fa-map-marker"></i></span>
+                                        <input name="address" id="address" type="text"
+                                            class="form-control py-3 border-primary bg-transparent"
+                                            placeholder="<?= t('address') ?>" required aria-required="true"
+                                            value="<?= htmlspecialchars($_POST['address'] ?? '') ?>">
                                     </div>
                                 </div>
 
@@ -323,51 +338,63 @@ if (isset($_POST['send-parcel'])) {
                                 <!-- Bloc d'expédition -->
                                 <div class="row gy-3 gx-4 expedition-item border rounded p-3 mb-3">
                                     <div class="col-xl-6">
-                                            <label class="form-label visually-hidden"><?= t('origin') ?></label>
-                                            <select class="form-select py-3 border-primary bg-transparent" name="origin[]" required>
-                                                <option value="" disabled selected><?= t('select_origin') ?? t('origin') ?></option>
-                                                <option value="Chine">Chine</option>
-                                            </select>
+                                        <label class="form-label visually-hidden"><?= t('origin') ?></label>
+                                        <select class="form-select py-3 border-primary bg-transparent" name="origin[]"
+                                            required>
+                                            <option value="" disabled selected><?= t('select_origin') ?? t('origin') ?>
+                                            </option>
+                                            <option value="Chine">Chine</option>
+                                        </select>
                                     </div>
 
                                     <div class="col-xl-6">
-                                            <label class="form-label visually-hidden"><?= t('destination') ?></label>
-                                            <select class="form-select py-3 border-primary bg-transparent" name="destination[]" required>
-                                                <option value="" disabled selected><?= t('select_destination') ?? t('destination') ?></option>
-                                                <option value="Johannesburg">Johannesburg</option>
-                                                <option value="Kinshasa">Kinshasa</option>
-                                                <option value="Lubumbashi">Lubumbashi</option>
-                                            </select>
+                                        <label class="form-label visually-hidden"><?= t('destination') ?></label>
+                                        <select class="form-select py-3 border-primary bg-transparent"
+                                            name="destination[]" required>
+                                            <option value="" disabled selected>
+                                                <?= t('select_destination') ?? t('destination') ?></option>
+                                            <option value="Johannesburg">Johannesburg</option>
+                                            <option value="Kinshasa">Kinshasa</option>
+                                            <option value="Lubumbashi">Lubumbashi</option>
+                                        </select>
                                     </div>
                                     <div class="col-xl-6">
-                                            <label class="form-label visually-hidden"><?= t('description') ?></label>
-                                            <textarea class="form-control py-3 border-primary bg-transparent text-dark" placeholder="<?= t('description') ?>" name="description[]" rows="2" required></textarea>
+                                        <label class="form-label visually-hidden"><?= t('description') ?></label>
+                                        <textarea class="form-control py-3 border-primary bg-transparent text-dark"
+                                            placeholder="<?= t('description') ?>" name="description[]" rows="2"
+                                            required></textarea>
                                     </div>
                                     <div class="col-xl-6">
-                                            <label class="form-label visually-hidden"><?= t('commentaire') ?></label>
-                                            <textarea class="form-control py-3 border-primary bg-transparent text-dark" placeholder="<?= t('commentaire') ?>" name="commentaire[]" rows="2"></textarea>
+                                        <label class="form-label visually-hidden"><?= t('commentaire') ?></label>
+                                        <textarea class="form-control py-3 border-primary bg-transparent text-dark"
+                                            placeholder="<?= t('commentaire') ?>" name="commentaire[]"
+                                            rows="2"></textarea>
                                     </div>
 
                                     <div class="col-12 text-end">
-                                            <button type="button" class="btn btn-outline-danger btn-sm remove-expedition" aria-label="<?= t('remove_expedition') ?>">✖</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm remove-expedition"
+                                            aria-label="<?= t('remove_expedition') ?>">✖</button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Bouton ajouter -->
-                                <div class="d-flex justify-content-between mb-3">
-                                    <div>
-                                        <button type="button" id="add" class="btn btn-success">➕ <?= t('add_expedition') ?></button>
-                                        <button type="reset" id="resetForm" class="btn btn-secondary ms-2">↺ <?= t('reset') ?></button>
-                                    </div>
-                                    <div class="text-end">
-                                        <button type="submit" class="btn btn-primary btn-lg text-white px-4" name="send-parcel">📦 <?= t('send') ?></button>
-                                    </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <button type="button" id="add" class="btn btn-success">➕
+                                        <?= t('add_expedition') ?></button>
+                                    <button type="reset" id="resetForm" class="btn btn-secondary ms-2">↺
+                                        <?= t('reset') ?></button>
                                 </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary btn-lg text-white px-4"
+                                        name="send-parcel">📦 <?= t('send') ?></button>
+                                </div>
+                            </div>
 
 
 
-                            
+
 
                     </div>
 
@@ -393,17 +420,7 @@ if (isset($_POST['send-parcel'])) {
     <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/lib/wow/wow.min.js"></script>
-    <script src="../../assets/lib/easing/easing.min.js"></script>
-    <script src="../../assets/lib/waypoints/waypoints.min.js"></script>
-    <script src="../../assets/lib/owlcarousel/owl.carousel.min.js"></script>
-
-
-    <!-- Template Javascript -->
-    <script src="../../assets/js/main.js"></script>
+    <?php include(__DIR__ . '/../layouts/js.php'); ?>
 
     <script>
         $(document).ready(function () {
