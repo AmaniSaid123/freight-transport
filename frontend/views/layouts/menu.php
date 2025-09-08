@@ -37,11 +37,9 @@
     </nav>
 
     <?php
-    // Récupère le chemin du script courant
-    $currentRoute = $_SERVER['SCRIPT_NAME'];
 
     // Vérifie si on est sur homepage.php
-    if (basename($currentRoute) === 'index.php'): ?>
+    if ($page === 'homepage'): ?>
         <div class="header-carousel owl-carousel">
             <!-- Carousel Start -->
 

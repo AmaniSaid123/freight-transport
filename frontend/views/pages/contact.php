@@ -81,36 +81,40 @@ session_start();
 
                     <div class="image-gallery">
                         <div class="image-card">
-                            <div class="image-placeholder"> <img
-                                    src="https://images.unsplash.com/photo-1588362953336-2d200c9c7561?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80"
-                                    alt="Kinshasa">
-                                </div>
+                            <div class="image-placeholder">
+                                <img src="<?= BASE_URL ?>assets/img/tcc-Joh.png" alt="Johannesburg">
+                            </div>
 
                             <div class="image-info">
                                 <h3><?= t('contact_city_jhb') ?></h3>
                                 <p><?= t('contact_city_jhb_desc') ?></p>
-                                <a href="#" class="download-btn"><i class="fas fa-download"></i>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Joh.png" class="download-btn" download><i
+                                        class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
+
 
                             </div>
                         </div>
 
                         <div class="image-card">
-                            <div class="image-placeholder">Image pour Kinshasa</div>
+                            <div class="image-placeholder"> <img src="<?= BASE_URL ?>assets/img/tcc-Kin.png"
+                                    alt="Kinshasa"></div>
                             <div class="image-info">
                                 <h3><?= t('contact_city_kin') ?></h3>
                                 <p><?= t('contact_city_kin_desc') ?></p>
-                                <a href="#" class="download-btn"><i class="fas fa-download"></i>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Kin.png" class="download-btn" download><i class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
 
                         <div class="image-card">
-                            <div class="image-placeholder">Image pour Lubumbashi</div>
+                            <div class="image-placeholder">
+                                <img src="<?= BASE_URL ?>assets/img/tcc-Lumb.png" alt="Lubumbashi">
+                            </div>
                             <div class="image-info">
                                 <h3><?= t('contact_city_lub') ?></h3>
                                 <p><?= t('contact_city_lub_desc') ?></p>
-                                <a href="#" class="download-btn"><i class="fas fa-download"></i>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Lumb.png" class="download-btn" download><i class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
@@ -212,10 +216,10 @@ session_start();
         <div class="container py-5">
 
             <div class="row g-4 align-items-center">
-                <div class="col-lg-5 col-xl-5 contact-form wow fadeInLeft" data-wow-delay="0.1s">
+                <div class="col-lg-5 col-xl-5 contact-form">
                     <h2 class="display-5 text-white mb-2"><?= t('contact_form_title') ?></h2>
                     <p class="mb-4 text-white"><?= t('contact_form_description') ?> <a class="text-dark fw-bold"
-                            href="https://htmlcodex.com/contact-form"><?= t('contact_form_download') ?></a>.</p>
+                            href="#"><?= t('contact_form_download') ?></a>.</p>
                     <form>
                         <div class="row g-3">
                             <div class="col-lg-12 col-xl-6">
@@ -263,12 +267,12 @@ session_start();
                             </div>
                             <div class="col-12">
                                 <button
-                                    class="btn btn-light text-dark w-100 py-3"><?= t('contact_form_send_button') ?></button>
+                                    class="btn btn-light text-dar py-3"><?= t('contact_form_send_button') ?></button>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-lg-2 col-xl-2 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="col-lg-2 col-xl-2 ">
                     <div class="bg-transparent rounded">
                         <div class="d-flex flex-column align-items-center text-center mb-4">
                             <div class="bg-white d-flex align-items-center justify-content-center mb-3"
@@ -291,7 +295,7 @@ session_start();
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-xl-5 wow fadeInRight" data-wow-delay="0.3s">
+                <div class="col-lg-5 col-xl-5" data-wow-delay="0.3s">
                     <div class="d-flex justify-content-center mb-4">
                         <a class="btn btn-lg-square btn-light rounded-circle mx-2" href=""><i
                                 class="fab fa-facebook-f"></i></a>
@@ -303,9 +307,7 @@ session_start();
                                 class="fab fa-linkedin-in"></i></a>
                     </div>
                     <div class="rounded h-100">
-                        <iframe class="rounded w-100" style="height: 500px;"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387191.33750346623!2d-73.97968099999999!3d40.6974881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1694259649153!5m2!1sen!2sbd"
-                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
                     </div>
                 </div>
             </div>

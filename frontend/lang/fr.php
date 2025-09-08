@@ -105,28 +105,28 @@ return [
     'services_description' => "Nous vous offrons un ensemble complet de services pour expédier vos marchandises en toute sécurité et efficacité. Du fret aérien et maritime à l’entreposage, en passant par le suivi en temps réel, nous vous accompagnons à chaque étape.",
 
     'service1_title' => 'Fret Aérien',
-    'service1_desc'  => 'Transport rapide depuis la Chine vers l’Afrique par avion.',
+    'service1_desc' => 'Transport rapide depuis la Chine vers l’Afrique par avion.',
 
     'service2_title' => 'Fret Maritime',
-    'service2_desc'  => 'Expédition économique par bateau pour gros volumes.',
+    'service2_desc' => 'Expédition économique par bateau pour gros volumes.',
 
     'service3_title' => 'Entreposage',
-    'service3_desc'  => 'Stockage sécurisé et consolidation de vos commandes.',
+    'service3_desc' => 'Stockage sécurisé et consolidation de vos commandes.',
 
     'service4_title' => 'Suivi en Temps Réel',
-    'service4_desc'  => 'Information continue du départ à la livraison, via email & WhatsApp.',
+    'service4_desc' => 'Information continue du départ à la livraison, via email & WhatsApp.',
 
     'service5_title' => 'Évaluation & Devis',
-    'service5_desc'  => 'Évaluation rapide et précise des coûts de transport avec devis clair et détaillé.',
+    'service5_desc' => 'Évaluation rapide et précise des coûts de transport avec devis clair et détaillé.',
 
     'service6_title' => 'Assistance à l’Achat',
-    'service6_desc'  => 'Instructions claires pour vos vendeurs afin de livrer correctement.',
+    'service6_desc' => 'Instructions claires pour vos vendeurs afin de livrer correctement.',
 
     'service7_title' => 'Emballage & Préparation',
-    'service7_desc'  => 'Emballage sécurisé pour protéger vos marchandises pendant le transport.',
+    'service7_desc' => 'Emballage sécurisé pour protéger vos marchandises pendant le transport.',
 
     'service8_title' => 'Assurance Transport',
-    'service8_desc'  => 'Couverture contre les pertes ou dommages durant l’acheminement.',
+    'service8_desc' => 'Couverture contre les pertes ou dommages durant l’acheminement.',
 
     'more_details' => "Plus de détails",
 
@@ -259,5 +259,130 @@ return [
     // buttons
     'button_info' => 'Information importante !',
     'text_info' => 'Cette fonctionnalité sera bientôt disponible. Nous y travaillons encore. En attendant, vous pouvez commencer votre expédition en envoyant directement vos colis à notre entrepôt en Chine et en envoyant un message à notre équipe dans votre ville pour assurer le suivi. Rendez-vous dans « Nos contacts et nos entrepôts » pour commencer.',
+    // terms and conditions
+    'terms_title' => 'Termes et Conditions',
+
+    'terms_intro' => 'Votre colis peut rester dans notre entrepôt de la ville de destination finale 40 jours maximum.
+                Si nous n\'avons pas reçu votre paiement de la facture, nous considérons que vous avez abandonné ce(s)
+                colis et que nous avons votre accord pour la destruction ou vente aux enchères.',
+    'terms_title1' => 'Responsabilités de l\'expéditeur',
+    'terms_title2' => 'Non-respect du règlement',
+    'terms_title3' => 'Exigences spécifiques',
+    'terms_title4' => 'Droit de refus',
+    'terms_title5' => 'Modalités de transport',
+    'terms_title6' => 'Paiement et facturation',
+    'terms_title7' => 'Limitation de responsabilité',
+    'terms_title8' => 'Délais de livraison',
+    'terms_title9' => 'Réclamations',
+    'terms_title10' => 'Prescription',
+    'terms_title11' => 'Compétence juridique',
+    'terms_title12' => 'Acceptation des conditions',
+
+    'terms_title1_content' => 'L\'expéditeur est SEUL responsable de la liste d\'inventaire établie, de sa déclaration en Effets
+                        Personnels ou Commerciaux. En cas de refus des services douaniers ou gouvernementaux de la ville
+                        de destination finale, le client paiera les surtaxations avant la livraison au destinataire.',
+    'terms_title1_content_highlight' => 'Le contrôle du poids à l\'arrivée est le SEUL contrôle pris en compte.',
+    'terms_title1_content1' => 'Le destinataire ne pourra en aucun cas faire référence à la liste établie par l\'expéditeur et non
+                        contresignée par Trusted Cargo company de la ville de destination finale. L\'expéditeur certifie
+                        que le contenu des colis n\'est ni dangereux pour le transport, ni prohibé par les autorités.',
+
+    'terms_title2_content' => 'Le non-respect du règlement entraînera une amende et/ou une confiscation de la marchandise
+                        illicite par les autorités en vigueur.',
+
+    'terms_title3_content_sub_article_title1' => '1. Exigences pour produits textiles',
+    'terms_title3_content_sub_article_text1' => 'Les produits textiles, surtout à destination de l\'Afrique du Sud, doivent être munis
+                            d\'étiquettes d\'entretien cousues, d\'étiquettes de composition et d\'étiquettes « Fabriqué en
+                            Chine ». Ces trois étiquettes sont obligatoires pour tous les produits conformes aux normes
+                            et qualifiés.',
+    'terms_title3_content_sub_article_title2' => '2. Restrictions dimensionnelles pour l\'expédition',
+    'terms_title3_content_sub_article_text2' => 'Pour les marchandises dépassant 3 mètres de longueur ou 1 000 kg, veuillez nous consulter
+                            séparément. Des frais de manutention supplémentaires, tels que ceux liés à un chariot
+                            élévateur ou à une grue, peuvent s\'appliquer et seront facturés sur la base des coûts réels.',
+    'terms_title3_content_sub_article_text2_list1' => 'Si un article pèse plus de 70 kg ou que son côté mesure plus de 180 cm, des frais de
+                                transport hors gabarit de 35 USD (R 625) par envoi seront facturés (maximum de 10
+                                articles par envoi ; un supplément de 8 USD (R125) par article sera facturé pour tout
+                                excédent). Une base en bois de 9 cm (patin) est requise.',
+    'terms_title3_content_sub_article_text2_list2' => 'Si un article pèse plus de 150 kg ou que son côté mesure plus de 200 cm, des frais de
+                                transport hors gabarit de 70 USD (R 1250) par envoi seront facturés (maximum de 10
+                                articles par envoi ; un supplément de 10 USD (R170) par article sera facturé pour tout
+                                excédent). Une base en bois de 9 cm (patin) est requise.',
+
+    'terms_title4_content1' => 'L\'expéditeur se réserve le droit de refuser certaines marchandises (entre autres : animaux,
+                        bijoux, mandats postaux, documents d\'identité, obligations, chèques, devises, traites, titres,
+                        chèques de voyage, ...), de ne pas manipuler des biens dangereux, d\'interdire ceux qui sont
+                        déterminés notamment par les lois et les dispositions nationales et internationales.',
+    'terms_title4_content2' => 'La marchandise est prise en charge sans vérification de son contenu et de l\'état de celui-ci. Ni
+                        la vérification des indications fournies, ni celles des poids déclarés par le client ne sont
+                        obligatoires pour l\'expéditeur. L\'expéditeur ou les autorités compétentes ont, si nécessaire, le
+                        droit de vérifier le contenu des envois.',
+    'terms_title4_content3' => 'Par ailleurs, le client garantit que la marchandise est emballée pour assurer un transport sûr
+                        vis à vis des soins ordinaires de manutention.',
+
+    'terms_title5_content1' => 'L\'expéditeur jouit d\'une totale liberté pour déterminer la manière et les moyens par lesquels les
+                        biens seront transportés. Tous les renseignements nécessaires (indications d\'expédition telles
+                        qu\'instruites, etc., ...) doivent figurer clairement sur tout envoi.',
+    'terms_title5_content2' => 'En cas de refus des marchandises par le destinataire ou de défaillance de ce dernier pour quelque
+                        cause que ce soit, le client prendra en charge tous les frais afférents au changement de
+                        destination de la marchandise ou éventuellement à son rapatriement et son stockage.',
+
+
+    'terms_title6_content1' => 'Toutes les factures sont payables dès leur réception par le client, c\'est-à-dire au guichet de
+                        l\'expéditeur ou via le lien de paiement qui lui sera envoyé, avant l\'envoi.',
+    'terms_title6_content2' => 'Si les tarifs pour le transport et les autres services ne sont pas payés avant I\'envoi, tous les
+                        frais seront payés dans les 5 jours suivants la réception de la facture, laquelle sera
+                        considérée avoir été reçue 3 jours ouvrables après la date de la facture, sauf preuve contraire.',
+    'terms_title6_content3' => 'Si des droits, taxes, amendes, frais ou dépenses quelconques sont imposés ou encourus en raison
+                        d\'une action des douanes ou du manquement de l\'expéditeur ou du destinataire à ses obligations
+                        de fournir les documents appropriés ou toute licence ou permis requis en rapport avec le
+                        transport, ils seront préalablement imputés au destinataire et, en l\'absence de paiement de ce
+                        dernier, il incombera alors au client de payer le montant en question sur simple demande.',
+    'terms_title6_content_highlight' => 'Les sommes impayées à leur date d\'exigibilité porteront d\'office et sans mise en demeure
+                            préalable intérêt au taux annuel de 12% majoré d\'une indemnité forfaitaire équivalente à 15%
+                            de la dette avec un minimum de 50 USD (R900), destiné à couvrir le dommage économique et
+                            administratif subi, sans préjudice du droit de l\'expéditeur de prouver l\'existence d\'un dommage plus important.',
+    'terms_title6_content4' => 'L\'expéditeur a un privilège sur toutes les marchandises transportées pour le fret, les droits de douane, les sommes avancées et toutes autres charges résultant du transport. L\'expéditeur a en outre un droit de rétention sur les marchandises et est en droit de les vendre afin de couvrir totalement ses frais, après mise en demeure demeurée sans suite pendant 15 jours.',
+
+
+    'terms_title7_content1' => 'L\'expéditeur ne peut être tenu que de ses fautes et négligences dans le cadre de l\'exécution de
+                        sa mission pour autant que celles-ci aient causé un dommage matériel ou financier direct dans le
+                        chef du client, à l\'exclusion de tout dommage indirect, notamment économique.',
+    'terms_title7_content2' => 'L\'expéditeur n\'assume aucune responsabilité si le dommage subi est, ne fût ce qu\'en partie, dû à
+                        un cas de Force majeure ou à la faute d\'un tiers ou du client.',
+    'terms_title7_content_highlight' => 'Lorsqu\'elle est engagée, la responsabilité de l\'expéditeur est limitée, sauf convention
+                            expresse contraire, à 5 USD (R 90) par kilo de poids brut avarié ou perdu, avec un maximum
+                            de 25.000 USD (R 450.000) par mission.',
+
+    'terms_title8_content' => 'Les délais de livraison ne sont pas garantis par L\'expéditeur, sauf accord contraire préalable et
+                        écrit. La simple mention par le client d\'un délai de livraison n\'engage en rien l\'expéditeur.',
+
+
+    'terms_title9_content1' => 'Pour être recevable, toute réclamation doit être adressée à l\'expéditeur par lettre recommandée dans les 14 jours qui suivent l\'envoi ou la livraison.',
+    'terms_title9_content2' => 'Si le destinataire néglige de prendre livraison, le délai de 14 jours prend cours à la mise à disposition des marchandises concernées auprès de la personne habilitée à en recevoir la livraison.',
+
+    'terms_title10_content' => 'Toute action en responsabilité à l\'encontre de l\'expéditeur est éteinte par prescription si elle
+                        n\'est pas introduite devant un tribunal compétent dans un délai de 6 mois à compter du jour qui
+                        suit le jour où les marchandises ont ou auraient dû être livrées ou, à défaut, à compter du jour
+                        qui suit le jour où s\'est produit le Fait qui entraîne la réclamation.',
+
+
+    'terms_title11_content1' => 'Seuls les tribunaux de la circonscription judiciaire de l\'entrepôt de la ville de destination
+                        finale du colis sont compétents, sans préjudice du droit de l\'expéditeur d\'introduire le litige
+                        devant une autre juridiction.',
+    'terms_title11_content2' => 'Les présentes conditions, tout contrat conclu qui incorpore celles-ci, et de manière générale,
+                        l\'intégralité des relations entre l\'expéditeur et le client, seront régis par le droit soit
+                        sudafricain pour l\'entrepôt situé en Afrique du Sud, et congolais pour l\'entrepôt situé en
+                        République démocratique du Congo.',
+
+
+    'terms_title12_content1' => 'En plaçant et en payant cette Facture, vous acceptez les termes et les conditions d\'utilisation
+                        de Trusted Cargo Company.',
+    'terms_title12_content2' => 'Toutes nos opérations sont soumises aux conditions générales inscrites dans ce cadre.',
+    'terms_title12_content_highlight' => 'Nos contractants reconnaissent avoir parfaite connaissance desdites conditions et déclarent
+                            les avoir acceptées.',
+
+
+
+
+
 
 ];

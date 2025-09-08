@@ -64,12 +64,19 @@
     }
 
     .image-placeholder {
-        height: 200px;
+        height: 300px;
         background-color: #eaeaea;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #777;
+    }
+
+    .image-placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
     }
 
     .image-info {
