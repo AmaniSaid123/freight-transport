@@ -1199,10 +1199,7 @@
     line-height: 35px;
 }
 
-.footer .footer-item a:hover {
-    letter-spacing: 2px;
-    color: var(--bs-primary);
-}
+
 
 
 

@@ -44,7 +44,7 @@ session_start();
                 <div class="sub-style">
                     <h4 class="sub-title px-3 mb-0"> <?= t('tracking_title') ?></h4>
                 </div>
-                <h1 class="display-3 mb-4"> <?= t('tracking_text') ?></h1>
+                <h1 class="display-7 mb-4"> <?= t('tracking_text') ?></h1>
                 <p class="mb-0">
                     <?= t('tracking_description') ?>
                 </p>

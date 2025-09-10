@@ -4,7 +4,7 @@
             <div class="sub-style">
                 <h4 class="sub-title px-3 mb-0"><?= t('text_process') ?></h4>
             </div>
-            <h1 class="display-3 mb-4"><?= t('process_hero_title') ?></h1>
+            <h1 class="display-7 mb-4"><?= t('process_hero_title') ?></h1>
         </div>
 
         <div class="process-steps">
@@ -19,7 +19,8 @@
                 </div>
 
                 <div class="step-actions">
-                    <a href="/send-parcel.php" class="btn"><?= t('process_step1_button') ?></a>
+                    <a href="" class="btn" disabled data-bs-toggle="popover" data-bs-title="<?= t('button_info') ?>"
+                        data-bs-content="<?= t('text_info') ?>"><?= t('process_step1_button') ?></a>
                 </div>
             </div>
 

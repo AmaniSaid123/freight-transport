@@ -34,7 +34,7 @@
                         <p class="text-dark"><i class="fa fa-check me-2"></i> <?= t('about_list_2') ?></p>
                         <p class="text-dark"><i class="fa fa-check me-2"></i><?= t('about_list_3') ?></p>
                     </div>
-                    <a href="#" class="btn btn-primary rounded-pill text-white py-3 px-5"><?= t('about_button') ?></a>
+                    <a href="/#services" class="btn btn-primary rounded-pill text-white py-3 px-5"><?= t('about_button') ?></a>
                 </div>
             </div>
         </div>

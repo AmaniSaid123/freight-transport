@@ -136,11 +136,8 @@ return [
     'footer_quick_terms' => 'Our Terms and Conditions',
     'footer_quick_values' => 'Our Values',
     'footer_contact_title' => 'Contact Info',
-    'footer_contact_address' => '123 Street, New York, USA',
-    'footer_contact_email1' => 'info@example.com',
-    'footer_contact_email2' => 'support@example.com',
-    'footer_contact_phone' => '+012 345 67890',
-    'footer_contact_fax' => '+012 345 67890',
+
+
     // prices page
     'prices_intro_p1' => 'Air and sea freight pricing is often volatile. Factors such as product type (standard, hazardous, sensitive, electronics/batteries), customs, final destination and freight mode (air or sea) cause price variation.',
     'prices_intro_p2' => 'Below are approximate standard rates for general cargo (standard products) to South Africa and the Democratic Republic of Congo. We will provide an exact quote once your parcels arrive at our China warehouse and we evaluate their specifics.',

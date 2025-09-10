@@ -21,7 +21,7 @@ session_start();
     <!-- Header Start -->
     <div class="container-fluid bg-breadcrumb">
         <div class="container text-center py-5" style="max-width: 900px;">
-            <h3 class="display-3 mb-4 wow fadeInDown" data-wow-delay="0.1s"><?= t('terms_title') ?> </h1>
+            <h3 class="display-7 mb-4 wow fadeInDown" data-wow-delay="0.1s"><?= t('terms_title') ?> </h1>
                 <ol class="breadcrumb justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
                     <li class="breadcrumb-item"><a href="index.html"><?= t('home') ?></a></li>
                     <li class="breadcrumb-item"><a href="#">Pages</a></li>

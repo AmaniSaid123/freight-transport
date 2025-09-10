@@ -145,11 +145,7 @@ return [
     'footer_quick_terms' => 'Nos Termes et Conditions',
     'footer_quick_values' => 'Nos valeurs',
     'footer_contact_title' => 'Informations de contact',
-    'footer_contact_address' => '123 Rue, New York, USA',
-    'footer_contact_email1' => 'info@example.com',
-    'footer_contact_email2' => 'support@example.com',
-    'footer_contact_phone' => '+012 345 67890',
-    'footer_contact_fax' => '+012 345 67890',
+
     // prices page
     'prices_intro_p1' => 'Le fret aérien et maritime est un domaine dont la fixation des prix est souvent volatile. Des facteurs tels que le type de produit (standard, dangereux, sensibles, électroniques / batteries), la douane, la destination finale et le mode de fret (aérien ou maritime) provoquent des variations de prix.',
     'prices_intro_p2' => 'Ci-dessous figurent des tarifs approximatifs standards pour le cargo général (produits standards) vers l\'Afrique du Sud et la République démocratique du Congo. Nous fournirons un devis exact une fois que vos colis seront arrivés à notre entrepôt en Chine et que nous en aurons évalué les spécificités.',

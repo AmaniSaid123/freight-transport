@@ -1,14 +1,14 @@
 <div class="container-fluid about bg-light py-5" id="price">
   <div class="container py-5">
     <div class="row g-5 align-items-center">
-      <div class="col-lg-5 wow fadeInLeft" data-wow-delay="0.2s">
+      <div class="col-lg-5" data-wow-delay="0.2s">
         <div class="about-img pb-5 ps-5">
           <img src="<?= BASE_URL ?>assets/img/prix.png" class="img-fluid rounded w-100" style="object-fit: cover;"
             alt="Image">
 
         </div>
       </div>
-      <div class="col-lg-7 wow fadeInRight" data-wow-delay="0.4s">
+      <div class="col-lg-7">
         <div class="section-title text-start mb-5">
           <h4 class="sub-title pe-3 mb-0"><?= t('prices') ?></h4>
 

@@ -5,7 +5,7 @@
             <div class="sub-style">
                 <h4 class="sub-title px-3 mb-0"><?= t('values') ?></h4>
             </div>
-            <h1 class="display-3 mb-4"><?= t('values_hero') ?></h1>
+            <h1 class="display-7 mb-4"><?= t('values_hero') ?></h1>
         </div>
         <div class="values-container">
             <div class="values-grid">

@@ -4,7 +4,8 @@
         <div class="row g-5">
             <div class="col-md-6 col-lg-6 col-xl-3">
                 <div class="footer-item d-flex flex-column">
-                    <h4 class="text-white mb-4"><i class="fas fa-star-of-life me-3"></i><?= t('footer_company_title') ?></h4>
+                    <h4 class="text-white mb-4"><i class="fas fa-star-of-life me-3"></i><?= t('footer_company_title') ?>
+                    </h4>
                     <p><?= t('footer_company_desc') ?></p>
                     <div class="d-flex align-items-center">
                         <i class="fas fa-share fa-2x text-white me-2"></i>
@@ -23,22 +24,46 @@
             <div class="col-md-6 col-lg-6 col-xl-3">
                 <div class="footer-item d-flex flex-column">
                     <h4 class="mb-4 text-white"><?= t('footer_quick_links_title') ?></h4>
-                    <a href="homepage.php#about"><i class="fas fa-angle-right me-2"></i> <?= t('footer_quick_about') ?></a>
+                    <a href="homepage.php#about"><i class="fas fa-angle-right me-2"></i>
+                        <?= t('footer_quick_about') ?></a>
                     <a href="contact.php"><i class="fas fa-angle-right me-2"></i> <?= t('footer_quick_contacts') ?></a>
                     <a href=""><i class="fas fa-angle-right me-2"></i> <?= t('footer_quick_pay') ?></a>
-                    <a href="terms-conditions.php"><i class="fas fa-angle-right me-2"></i> <?= t('footer_quick_terms') ?></a>
-                    <a href="homepage.php#values"><i class="fas fa-angle-right me-2"></i> <?= t('footer_quick_values') ?></a>
+                    <a href="terms-conditions.php"><i class="fas fa-angle-right me-2"></i>
+                        <?= t('footer_quick_terms') ?></a>
+                    <a href="homepage.php#values"><i class="fas fa-angle-right me-2"></i>
+                        <?= t('footer_quick_values') ?></a>
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="col-md-12 col-lg-12 col-xl-6">
                 <div class="footer-item d-flex flex-column">
                     <h4 class="mb-4 text-white"><?= t('footer_contact_title') ?></h4>
-                    <a href=""><i class="fa fa-map-marker-alt me-2"></i> <?= t('footer_contact_address') ?></a>
-                    <a href="mailto:<?= t('footer_contact_email1') ?>"><i class="fas fa-envelope me-2"></i> <?= t('footer_contact_email1') ?></a>
-                    <a href="mailto:<?= t('footer_contact_email2') ?>"><i class="fas fa-envelope me-2"></i> <?= t('footer_contact_email2') ?></a>
-                    <a href="tel:<?= t('footer_contact_phone') ?>"><i class="fas fa-phone me-2"></i> <?= t('footer_contact_phone') ?></a>
-                    <a href="" class="mb-3"><i class="fas fa-print me-2"></i> <?= t('footer_contact_fax') ?></a>
+                    <a href=""><i class="fa fa-map-marker-alt me-2"></i>Trusted Cargo Company
+                        30 Gaunt Road
+                        Bryanston Sandton
+                        Johannesburg 2191
+                    </a>
+                    <a href="tel:<?= t('footer_contact_phone') ?>"><i class="fas fa-phone me-2"></i>
+                        +27 73 298 5311</a>
+                    <a href=""><i class="fa fa-map-marker-alt me-2"></i> Trusted Cargo Company
+                        14, Avenue Sergent Moke
+                        Commune de Ngaliema Kinshasa
+                        Réf. : Rond Point Socimat
+                    </a>
+                    <a href="tel:<?= t('footer_contact_phone') ?>"><i class="fas fa-phone me-2"></i>
+                        +243 987 020 110</a>
+                    <a href=""><i class="fa fa-map-marker-alt me-2"></i>Trusted Cargo Company
+                        108, Avenue Kasaï
+                        Commune de Lubumbashi
+                        Centre-ville
+                        Réf. : Cliniques universitaires
+                    </a>
+                    <a href="tel:<?= t('footer_contact_phone') ?>"><i class="fas fa-phone me-2"></i>
+                        +243 852 934 920</a>
+
+                    <a href="mailto:admin@trustedcargo.co.za"><i
+                            class="fas fa-envelope me-2"></i>admin@trustedcargo.co.za</a>
+
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@
             <div class="sub-style">
                 <h4 class="sub-title px-3 mb-0"> <?= t('services_sub_title') ?></h4>
             </div>
-            <h1 class="display-3 mb-4"> <?= t('services_hero_title') ?></h1>
+            <h1 class="display-7 mb-4"> <?= t('services_hero_title') ?></h1>
             <p class="mb-0"> <?= t('services_description') ?></p>
         </div>
         <div class="row g-4 justify-content-center">
@@ -147,16 +147,12 @@
                 </div>
             </div>
 
-            <!-- Bouton Plus d'infos -->
-            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
-                <a href="#" class="btn btn-primary rounded-pill text-white py-3 px-5"><?= t('services_sub_title') ?></a>
-            </div>
         </div>
     </div>
     <div class="container py-5 blog">
         <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s">
 
-            <h1 class="display-3 mb-4"> <?= t('blog_text') ?></h1>
+            <h1 class="display-7 mb-4"> <?= t('blog_text') ?></h1>
             <p class="mb-0"> <?= t('blog_description') ?></p>
         </div>
         <div class="row g-4 justify-content-center">
