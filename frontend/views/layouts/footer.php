@@ -38,6 +38,9 @@
             <div class="col-md-12 col-lg-12 col-xl-6">
                 <div class="footer-item d-flex flex-column">
                     <h4 class="mb-4 text-white"><?= t('footer_contact_title') ?></h4>
+                    <a href="mailto:admin@trustedcargo.co.za"><i
+                            class="fas fa-envelope me-2"></i>admin@trustedcargo.co.za</a>
+                    <div class="location-title">Johannesburg</div>
                     <a href=""><i class="fa fa-map-marker-alt me-2"></i>Trusted Cargo Company
                         30 Gaunt Road
                         Bryanston Sandton
@@ -45,6 +48,8 @@
                     </a>
                     <a href="tel:<?= t('footer_contact_phone') ?>"><i class="fas fa-phone me-2"></i>
                         +27 73 298 5311</a>
+
+                    <div class="location-title">Kinshasa</div>
                     <a href=""><i class="fa fa-map-marker-alt me-2"></i> Trusted Cargo Company
                         14, Avenue Sergent Moke
                         Commune de Ngaliema Kinshasa
@@ -52,6 +57,8 @@
                     </a>
                     <a href="tel:<?= t('footer_contact_phone') ?>"><i class="fas fa-phone me-2"></i>
                         +243 987 020 110</a>
+
+                    <div class="location-title">Lubumbashi</div>
                     <a href=""><i class="fa fa-map-marker-alt me-2"></i>Trusted Cargo Company
                         108, Avenue Kasaï
                         Commune de Lubumbashi
@@ -61,8 +68,7 @@
                     <a href="tel:<?= t('footer_contact_phone') ?>"><i class="fas fa-phone me-2"></i>
                         +243 852 934 920</a>
 
-                    <a href="mailto:admin@trustedcargo.co.za"><i
-                            class="fas fa-envelope me-2"></i>admin@trustedcargo.co.za</a>
+
 
                 </div>
             </div>

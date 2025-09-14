@@ -18,6 +18,7 @@
                 <a href="/#process" class="nav-item nav-link"><?= t('proceed') ?></a>
                 <a href="/#price" class="nav-item nav-link"><?= t('prices') ?></a>
                 <a href="contact.php" class="nav-item nav-link"><?= t('contact') ?></a>
+                   <a href="payment.php" class="nav-item nav-link"><?= t('payment_title') ?></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><?= t('language') ?></a>
                     <div class="dropdown-menu m-0">
@@ -50,7 +51,7 @@
                         <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">
                             <?= t('carousel-1') ?>
                         </h5>
-                        <h1 class="display-1 text-white mb-4"><?= t('carousel-text-1') ?></h1>
+                        <h1 class="display-5 text-white mb-4"><?= t('carousel-text-1') ?></h1>
                         <p class="mb-5 fs-5"><?= t('carousel-description-1') ?>
                         </p>
                         <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#" data-bs-toggle="popover"
@@ -66,7 +67,7 @@
                         <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">
                             <?= t('carousel-2') ?>
                         </h5>
-                        <h1 class="display-1 text-white mb-4"><?= t('carousel-text-2') ?></h1>
+                        <h1 class="display-5 text-white mb-4"><?= t('carousel-text-2') ?></h1>
                         <p class="mb-5 fs-5 animated slideInDown"><?= t('carousel-description-2') ?>
                         </p>
                         <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#" data-bs-toggle="popover"

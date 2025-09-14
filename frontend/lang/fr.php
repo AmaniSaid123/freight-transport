@@ -40,10 +40,8 @@ return [
     'who_are_we_desc_4' => "TCC communique régulièrement avec ses clients via email et Whatsapp afin de leur communiquer le prix,
     le suivi du colis en cours de route ainsi que le processus de livraison à Johannesburg, Kinshasa ou Lubumbashi.",
 
-    // service
-
     // tracking
-    'tracking_title' => 'Suivi de mon colis',
+    'tracking_title' => 'Suivi mon colis',
     'tracking_text' => 'Suivez votre colis en temps réel',
     'tracking_description' => 'Insérez votre numéro de suivi ci-dessous pour suivre votre colis. Notre système de suivi vous informe du départ de votre colis de notre entrepôt de Chine jusqu\'à son arrivée à notre entrepôt de votre ville ou sa livraison.',
     'tracking_button' => 'Suivre',
@@ -63,13 +61,13 @@ return [
     'blog_text' => 'Facilitation pour différents types de transport de vos colis',
     'blog_description' => 'Vos colis peuvent être transportés par avion, par bateau tout comme par véhicules lorsqu’il s’agit de vous le livrer à domicile',
     'blog_content_title_1' => 'Par Avion (Fret aérien)',
-    'blog_content_description_1' => 'Veuillez livrer vos colis à notre entrepôt en Chine sur base des indications que vous trouverez dans la rubrique Nos contacts et entrepôts et
+    'blog_content_description_1' => 'Veuillez livrer vos colis à notre entrepôt en Chine sur base des indications que vous trouverez dans la rubrique <a href="/contact">Nos contacts et entrepôts</a> et
     sélectionnez l’image qui convient à votre ville de destination finale, et envoyez cette image  à votre fournisseur en Chine et précisez lui que vous voulez le fret aérien pour
     votre colis. Faites nous un message WhatsApp ou email nous informant que vous faites livrer vos colis en Chine pour le fret aérien. Créez aussi
     votre dossier MyFret pour nous permettre de vous tenir informé étape par étape sur votre colis en route',
     'blog_content_title_2' => 'Par bateau (Fret maritime)',
-    'blog_content_description_2' => 'Veuillez livrer vos colis à notre entrepôt en Chine sur base des indications que vous trouverez dans la rubrique Nos contacts et
-    entrepôts et sélectionnez l’image qui convient à votre ville de destination finale, et envoyez cette image  à votre fournisseur en Chine et précisez lui que vous voulez
+    'blog_content_description_2' => 'Veuillez livrer vos colis à notre entrepôt en Chine sur base des indications que vous trouverez dans la rubrique <a href="/contact">Nos contacts et entrepôts</a>
+    et sélectionnez l’image qui convient à votre ville de destination finale, et envoyez cette image  à votre fournisseur en Chine et précisez lui que vous voulez
      le fret maritime pour votre colis. Faites nous un message WhatsApp ou email nous informant que vous faites livrer vos colis en Chine pour le fret maritime.
     Créez aussi votre dossier MyFret pour nous permettre de vous tenir informé étape par étape sur votre colis en route vers votre ville de destination finale.',
     'blog_content_title_3' => 'Par véhicule',
@@ -108,7 +106,7 @@ return [
     'service1_desc' => 'Transport rapide depuis la Chine vers l’Afrique par avion.',
 
     'service2_title' => 'Fret Maritime',
-    'service2_desc' => 'Expédition économique par bateau pour gros volumes.',
+    'service2_desc' => 'Expédition économique par bateau pour petits ou gros volumes des colis.',
 
     'service3_title' => 'Entreposage',
     'service3_desc' => 'Stockage sécurisé et consolidation de vos commandes.',
@@ -186,10 +184,10 @@ return [
     'process_step1_button' => 'Créer votre dossier fret',
 
     'process_step2_title' => 'Deuxième étape',
-    'process_step2_paragraph' => 'Par WhatsApp ou par mail à admin@trustedcargo.co.za, faites nous un message simple demandant nos adresses en Chine (si vous ne les avez pas encore prises toujours ici dans notre site web, rubrique Nos Contacts et entrepôts) et précisez nous si vous voulez le fret maritime ou aérien, et dites nous la ville de destination finale de votre colis, nous vous enverrons un fichier format photo contenant TOUS les détails dont votre fournisseur en Chine a besoin pour livrer vos colis chez nous. Si vous envoyez cette photo à votre fournisseur, c’est suffisant pour qu’il sache où et comment il va livrer vos colis à notre entrepôt en Chine.',
+    'process_step2_paragraph' => 'Par WhatsApp ou par mail à admin@trustedcargo.co.za, faites nous un message simple demandant nos adresses en Chine (si vous ne les avez pas encore prises toujours ici dans notre site web, rubrique <a href="/contact">Nos contacts et entrepôts</a>) et précisez nous si vous voulez le fret maritime ou aérien, et dites nous la ville de destination finale de votre colis, nous vous enverrons un fichier format photo contenant TOUS les détails dont votre fournisseur en Chine a besoin pour livrer vos colis chez nous. Si vous envoyez cette photo à votre fournisseur, c’est suffisant pour qu’il sache où et comment il va livrer vos colis à notre entrepôt en Chine.',
     'process_contact_whatsapp' => 'WhatsApp',
     'process_note_label' => 'Note :',
-    'process_note_text' => 'Dans la rubrique Nos contacts et entrepôts, vous trouverez les détails en format photo qu’il faut télécharger pour envoyer à votre fournisseur en Chine. Ca contient toutes les orientations dont votre fournisseur a besoin pour livrer vos colis à notre entrepôt en Chine selon qu’il s\'agit du fret aérien ou maritime et selon la destination finale de votre colis.',
+    'process_note_text' => 'Dans la rubrique <a href="/contact">Nos contacts et entrepôts</a>, vous trouverez les détails en format photo qu’il faut télécharger pour envoyer à votre fournisseur en Chine. Ca contient toutes les orientations dont votre fournisseur a besoin pour livrer vos colis à notre entrepôt en Chine selon qu’il s\'agit du fret aérien ou maritime et selon la destination finale de votre colis.',
     'process_step2_button' => 'Voir nos contacts et entrepôts',
 
     'process_important_label' => 'Information importante :',
@@ -254,7 +252,7 @@ return [
 
     // buttons
     'button_info' => 'Information importante !',
-    'text_info' => 'Cette fonctionnalité sera bientôt disponible. Nous y travaillons encore. En attendant, vous pouvez commencer votre expédition en envoyant directement vos colis à notre entrepôt en Chine et en envoyant un message à notre équipe dans votre ville pour assurer le suivi. Rendez-vous dans « Nos contacts et nos entrepôts » pour commencer.',
+    'text_info' => 'Cette fonctionnalité sera bientôt disponible. Nous y travaillons encore. En attendant, vous pouvez commencer votre expédition en envoyant directement vos colis à notre entrepôt en Chine et en envoyant un message à notre équipe dans votre ville pour assurer le suivi. Rendez-vous dans « Nos contacts et entrepôts » pour commencer.',
     // terms and conditions
     'terms_title' => 'Termes et Conditions',
 
@@ -376,9 +374,16 @@ return [
     'terms_title12_content_highlight' => 'Nos contractants reconnaissent avoir parfaite connaissance desdites conditions et déclarent
                             les avoir acceptées.',
 
-
-
-
-
+    // payment section
+    'payment_title' => 'Paiement',
+    'payment_text' => 'Paiement de vos expéditions',
+    'payment_info_text' => 'Alors que de façon générale TCC évaluera votre colis depuis notre entrepôt en Chine et vous enverra le lien par mail ou par WhatsApp pour payer pour votre expédition, vous pouvez toujours effectuer également votre paiement ici en ligne en insérant le montant ainsi que le numéro de référence de votre expédition afin que nous puissions identifier l’expédition pour laquelle vous payez.',
+    'payment_feature1' => 'Insérez le montant et le numéro de référence de votre expédition',
+    'payment_feature2' => 'Nous identifions l\'expédition pour laquelle vous payez',
+    'payment_feature3' => 'Processus sécurisé et rapide',
+    'payment_currency_note' => 'Le terminal vous facturera en Rand sudafricain, et la conversion se fera automatiquement par votre banque si votre compte bancaire est dans une devise différente du Rand sudafricain.',
+    'payment_text_process' => 'Procéder au paiement',
+    'payment_pay_button' => 'Payer maintenant',
+    'payment_secure_text' => 'Paiement sécurisé avec chiffrement SSL',
 
 ];

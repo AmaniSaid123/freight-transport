@@ -165,8 +165,7 @@
 
                         <a href="#" class="h4"> <?= t('blog_content_title_1') ?></a>
                         <p class="my-4"> <?= t('blog_content_description_1') ?></p>
-                        <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-1">Read
-                            More</a>
+                 
                     </div>
                 </div>
             </div>
@@ -178,8 +177,7 @@
                     <div class="blog-centent p-4">
                         <a href="#" class="h4"><?= t('blog_content_title_2') ?></a>
                         <p class="my-4"><?= t('blog_content_description_2') ?></p>
-                        <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-1">Read
-                            More</a>
+                    
                     </div>
                 </div>
             </div>
@@ -198,8 +196,7 @@
                         </br>
                         </br>
                         </br>
-                        <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-1">Read
-                            More</a>
+                   
                     </div>
 
                 </div>

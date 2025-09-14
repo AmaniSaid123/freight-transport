@@ -40,10 +40,8 @@ return [
     'who_are_we_desc_4' => "TCC communicates regularly with its customers via email and WhatsApp to inform them of the price, package tracking information, and the delivery process
     in Johannesburg, Kinshasa, or Lubumbashi.",
 
-    // service
-
     // tracking
-    "tracking_title" => "Tracking of my parcel",
+    'tracking_title' => 'Tracking my parcel',
     'tracking_text' => 'Track your parcel in real time',
     'tracking_description' => 'Insert your tracking number below to track your parcel. Our tracking system update you from the leaving of your parcel from our warehouse up to its collection or delivery.',
     'tracking_button' => 'Follow',
@@ -63,12 +61,12 @@ return [
     'blog_text' => 'Facilitating different types of parcel transport',
     'blog_description' => 'Your parcels can be transported by plane, ship, or vehicle for home delivery',
     'blog_content_title_1' => 'By Air (Air Freight)',
-    'blog_content_description_1' => 'Please deliver your parcels to our warehouse in China based on the information you\'ll find in the "Our Contacts and Warehouses" section.
+    'blog_content_description_1' => 'Please deliver your parcels to our warehouse in China based on the information you\'ll find in the "<a href="/contact"> Our Contacts and Warehouses</a>" section.
     Select the image that best suits your final destination city. Send this image to your supplier in China, specifying that you require air freight for your parcel.
     Send us a WhatsApp message or email informing us that you are having your parcels delivered to China for air freight. Also create your MyFret account so we can keep you updated
     step by step on your parcel\'s journey to your final destination city.',
     'blog_content_title_2' => 'By Ship (Sea Freight)',
-    'blog_content_description_2' => 'Please deliver your packages to our warehouse in China based on the information you\'ll find in the "Our Contacts and Warehouses" section.
+    'blog_content_description_2' => 'Please deliver your packages to our warehouse in China based on the information you\'ll find in the "<a href="/contact">Our Contacts and Warehouses</a>" section.
      Select the image that best suits your final destination city. Send this image to your supplier in China, specifying that you require sea freight for your package.
      Send us a WhatsApp message or email informing us that you are having your packages delivered to China by sea freight. Also, create your MyFret account so we can keep you updated
      step by step on your package en route to your final destination city.',
@@ -100,7 +98,7 @@ return [
     'service1_desc' => 'Fast transport from China to Africa by air.',
 
     'service2_title' => 'Sea Freight',
-    'service2_desc' => 'Cost-effective shipping by sea for large volumes.',
+    'service2_desc' => 'Cost-effective shipping by sea for small or large volumes of goods.',
 
     'service3_title' => 'Warehousing',
     'service3_desc' => 'Secure storage and consolidation of your orders.',
@@ -174,13 +172,13 @@ return [
     'process_step1_paragraph' => 'Here on our website, please click on "Create your freight file" then fill out the short online form that appears so we can get your details.',
     'process_step1_detail' => 'These details will allow us to notify you at every stage of your sea or air freight. Filling this form will only take 60 seconds.',
     'process_step1_note' => 'Filling this form will take you only 60 seconds.',
-    'process_step1_button' => 'Create your freight dossier',
+    'process_step1_button' => 'Create your freight file',
 
     'process_step2_title' => 'Step Two',
-    'process_step2_paragraph' => 'By WhatsApp or email to admin@trustedcargo.co.za, send us a simple message requesting our addresses in China (if you haven\'t taken it already, still here on our website, under Our Contacts and Warehouses). Specify whether you want sea or air freight, and tell us the final destination city for your parcel. We will send you a photo file containing ALL the details your supplier in China needs to deliver your packages to us. If you send this photo to your supplier, it\'s enough for them to know where and how they will deliver your packages to our warehouse in China.',
+    'process_step2_paragraph' => 'By WhatsApp or email to admin@trustedcargo.co.za, send us a simple message requesting our addresses in China (if you haven\'t taken it already, still here on our website, under Our <a href="/contact">Contacts and Warehouses</a>). Specify whether you want sea or air freight, and tell us the final destination city for your parcel. We will send you a photo file containing ALL the details your supplier in China needs to deliver your packages to us. If you send this photo to your supplier, it\'s enough for them to know where and how they will deliver your packages to our warehouse in China.',
     'process_contact_whatsapp' => 'WhatsApp',
     'process_note_label' => 'Note :',
-    'process_note_text' => 'In the "Our Contacts and Warehouses" section, you\'ll find the details in photo format that you need to upload to send to your supplier in China. This includes all the instructions your supplier needs to deliver your packages to our warehouse in China, depending on whether it\'s air or sea freight and the final destination of your package.',
+    'process_note_text' => 'In the "<a href="/contact">Our Contacts and Warehouses</a>" section, you\'ll find the details in photo format that you need to upload to send to your supplier in China. This includes all the instructions your supplier needs to deliver your packages to our warehouse in China, depending on whether it\'s air or sea freight and the final destination of your package.',
     'process_step2_button' => 'See our contacts & warehouses',
 
     'process_important_label' => 'Important information :',
@@ -312,5 +310,15 @@ If we did not receive your payment for the invoice, we will consider you have ab
     'terms_title12_content1' => 'By submitting and paying this Invoice, you agree to the terms and conditions of use of Trusted Cargo Company. ',
     'terms_title12_content2' => 'All our transactions are subject to the general terms and conditions set out in this framework.',
     'terms_title12_content_highlight' => 'Our contractors acknowledge that they are fully aware of these terms and conditions and declare that they have accepted them.',
-
+    // payment
+    'payment_title' => 'Payment',
+    'payment_text' => 'Paying for your shipments',
+    'payment_info_text' => 'While TCC will generally assess your package from our warehouse in China and send you the link by email or WhatsApp to pay for your shipment, you can also make your payment online here by entering the amount and your shipment reference number so we can identify the shipment you are paying for.',
+    'payment_feature1' => 'Enter the amount and the reference number of your shipment',
+    'payment_feature2' => 'We identify the shipment for which you are paying',
+    'payment_feature3' => 'Secure and fast process',
+    'payment_currency_note' => 'The terminal will charge you in South African Rand, and the conversion will be automatically processed by your bank if your bank account is in a currency other than South African Rand.',
+    'payment_text_process' => 'Proceed to payment',
+    'payment_pay_button' => 'Pay now',
+    'payment_secure_text' => 'Secure payment with SSL encryption',
 ];

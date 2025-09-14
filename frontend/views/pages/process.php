@@ -1,6 +1,6 @@
-<div class="container-fluid feature py-5 process-container" id="process">
+<div class="container-fluid feature py-5 process" id="process">
     <div class="container py-5">
-        <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="section-title mb-5" data-wow-delay="0.1s">
             <div class="sub-style">
                 <h4 class="sub-title px-3 mb-0"><?= t('text_process') ?></h4>
             </div>
@@ -19,8 +19,10 @@
                 </div>
 
                 <div class="step-actions">
-                    <a href="" class="btn" disabled data-bs-toggle="popover" data-bs-title="<?= t('button_info') ?>"
-                        data-bs-content="<?= t('text_info') ?>"><?= t('process_step1_button') ?></a>
+
+                    <button type="submit" class="btn btn-primary text-white py-3 px-5" data-bs-toggle="popover"
+                        data-bs-title="<?= t('button_info') ?>" data-bs-content="<?= t('text_info') ?>">
+                        <?= t('process_step1_button') ?></button>
                 </div>
             </div>
 

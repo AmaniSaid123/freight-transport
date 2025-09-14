@@ -25,6 +25,7 @@
     <link href="<?= BASE_URL ?>assets/css/values.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>assets/css/contact-warehouse.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>assets/css/terms.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/payment.css" rel="stylesheet">
     <?php
 
     // Fonction pour récupérer la langue principale du navigateur

@@ -1,9 +1,10 @@
-/* Process page */
-.process-container {
+.process {
+
+
     .process-steps {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
         position: relative;
         margin: 0 -15px;
     }
@@ -15,14 +16,15 @@
         height: 2px;
         background-color: var(--light-gray);
         top: 120px;
-        left: 15%;
-        right: 15%;
+        left: 10%;
+        right: 10%;
         z-index: 1;
     }
 
     .step {
         flex: 1;
         min-width: 300px;
+        max-width: 500px;
         margin: 0 15px 40px;
         background: var(--white);
         border-radius: 8px;
@@ -103,6 +105,16 @@
         transform: translateY(-2px);
     }
 
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .btn:disabled:hover {
+        transform: none;
+        background-color: var(--black);
+    }
+
     .note {
         background-color: #f5f5f5;
         border-left: 4px solid var(--black);
@@ -130,23 +142,81 @@
         color: var(--dark-gray);
     }
 
-    @media (max-width: 768px) {
-        .process-steps {
-            flex-direction: column;
-        }
+    .contact-method a {
+        color: var(--dark-gray);
+        text-decoration: none;
+    }
 
+    .contact-method a:hover {
+        color: var(--black);
+        text-decoration: underline;
+    }
+
+    /* Media Queries pour la responsivité */
+    @media (max-width: 1200px) {
+        .process-steps::before {
+            left: 5%;
+            right: 5%;
+        }
+    }
+
+    @media (max-width: 992px) {
         .process-steps::before {
             display: none;
         }
 
         .step {
-            margin-bottom: 60px;
+            flex: 0 0 calc(50% - 30px);
+            margin-bottom: 30px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .process-steps {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step {
+            flex: 0 0 90%;
+            margin-bottom: 40px;
         }
 
         .contact-methods {
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+        }
+
+        .section-title h1 {
+            font-size: 2rem !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .step {
+            flex: 0 0 100%;
+            padding: 20px;
+            margin: 0 0 30px 0;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+
+        .step h2 {
+            font-size: 1.3rem;
+        }
+
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .section-title h1 {
+            font-size: 1.8rem !important;
         }
     }
 }
