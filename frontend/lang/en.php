@@ -274,7 +274,7 @@ If we did not receive your payment for the invoice, we will consider you have ab
 
     'terms_title3_content_sub_article_title1' => '1. Requirements for textile products',
     'terms_title3_content_sub_article_text1' => 'Textile products, especially those destined for South Africa, must have sewn-in care labels, composition labels, and "Made in China" labels. These three labels are mandatory for all standard-compliant and qualified products.',
-    'terms_title3_content_sub_article_title2' => '2. Restrictions dimensionnelles pour l\'expédition :',
+    'terms_title3_content_sub_article_title2' => '2. Dimensional restrictions for shipping :',
     'terms_title3_content_sub_article_text2' => 'For goods exceeding 3 meters in length or 1000 kg, please consult us separately. Additional handling charges, such as forklift or crane charges, may apply and will be charged based on actual costs.',
     'terms_title3_content_sub_article_text2_list1' => 'If an item weighs more than 70 kg or has a side length exceeding 180 cm, an oversize freight charge of USD 35 (R 625) per shipment will be charged (maximum of 10 items per shipment; an additional USD 8 (R 125) per item will be charged for any excess). A 9 cm wooden base (pad) is required.',
     'terms_title3_content_sub_article_text2_list2' => ' If an item weighs more than 150 kg or has a side length exceeding 200 cm, an oversized freight charge of USD 70 (R 1250) per shipment will be charged (maximum 10 items per shipment; an additional USD 10 (R 170) per item will be charged for any excess). A 9 cm wooden base (skid) is required.',

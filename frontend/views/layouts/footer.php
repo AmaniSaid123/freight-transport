@@ -27,7 +27,7 @@
                     <a href="homepage.php#about"><i class="fas fa-angle-right me-2"></i>
                         <?= t('footer_quick_about') ?></a>
                     <a href="contact.php"><i class="fas fa-angle-right me-2"></i> <?= t('footer_quick_contacts') ?></a>
-                    <a href=""><i class="fas fa-angle-right me-2"></i> <?= t('footer_quick_pay') ?></a>
+                    <a href="payment.php"><i class="fas fa-angle-right me-2"></i> <?= t('footer_quick_pay') ?></a>
                     <a href="terms-conditions.php"><i class="fas fa-angle-right me-2"></i>
                         <?= t('footer_quick_terms') ?></a>
                     <a href="homepage.php#values"><i class="fas fa-angle-right me-2"></i>
@@ -67,9 +67,6 @@
                     </a>
                     <a href="tel:<?= t('footer_contact_phone') ?>"><i class="fas fa-phone me-2"></i>
                         +243 852 934 920</a>
-
-
-
                 </div>
             </div>
         </div>

@@ -24,14 +24,12 @@ session_start();
 
     <?php include(__DIR__ . '/../layouts/menu.php'); ?>
 
-
-
     <!-- Header Start -->
     <div class="container-fluid bg-breadcrumb">
         <div class="container text-center py-5" style="max-width: 900px;">
             <h3 class="display-7 mb-4 wow fadeInDown" data-wow-delay="0.1s"><?= t('contact_page_title') ?></h3>
             <ol class="breadcrumb justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
-                <li class="breadcrumb-item"><a href="index.html"><?= t('home') ?></a></li>
+                <li class="breadcrumb-item"><a href="homepage.php"><?= t('home') ?></a></li>
                 <li class="breadcrumb-item"><a href="#"><?= t('pages') ?></a></li>
                 <li class="breadcrumb-item active text-black"><?= t('contact_page_breadcrumb') ?></li>
             </ol>
