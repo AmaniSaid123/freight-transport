@@ -71,13 +71,13 @@ session_start();
                     <div class="image-gallery">
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <img src="<?= BASE_URL ?>assets/img/tcc-Joh.png" alt="Johannesburg">
+                                <img src="<?= BASE_URL ?>assets/img/tcc-Joh.jpg" alt="Johannesburg">
                             </div>
 
                             <div class="image-info">
                                 <h3><?= t('contact_city_jhb') ?></h3>
                                 <p><?= t('contact_city_jhb_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Joh.png" class="download-btn" download><i
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Joh.jpg" class="download-btn" download><i
                                         class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
 
@@ -86,24 +86,24 @@ session_start();
                         </div>
 
                         <div class="image-card">
-                            <div class="image-placeholder"> <img src="<?= BASE_URL ?>assets/img/tcc-Kin.png"
+                            <div class="image-placeholder"> <img src="<?= BASE_URL ?>assets/img/tcc-Kin.jpg"
                                     alt="Kinshasa"></div>
                             <div class="image-info">
                                 <h3><?= t('contact_city_kin') ?></h3>
                                 <p><?= t('contact_city_kin_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Kin.png" class="download-btn" download><i class="fas fa-download"></i>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Kin.jpg" class="download-btn" download><i class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
 
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <img src="<?= BASE_URL ?>assets/img/tcc-Lumb.png" alt="Lubumbashi">
+                                <img src="<?= BASE_URL ?>assets/img/tcc-Lumb.jpg" alt="Lubumbashi">
                             </div>
                             <div class="image-info">
                                 <h3><?= t('contact_city_lub') ?></h3>
                                 <p><?= t('contact_city_lub_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Lumb.png" class="download-btn" download><i class="fas fa-download"></i>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Lumb.jpg" class="download-btn" download><i class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
