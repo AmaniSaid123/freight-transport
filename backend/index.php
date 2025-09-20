@@ -1,108 +1,74 @@
-  <?php
-		if(isset($_SESSION['username']))
-		{
-			session_destroy();
-			}
-			
-			
-		
-	?>
+<?php
+//require __DIR__ . '/../config/debug.php';
 
+// Détruire la session si existante
+if (session_status() === PHP_SESSION_ACTIVE) {
+    session_destroy();
+}
+session_start();
+?>
 
+<!DOCTYPE html>
+<html lang="fr">
 
-
-<!doctype html> 
-<html>
-	<head>
-	<title>MyPASS Portal</title> 
-	<link rel="stylesheet" href="css/Site.css"/>
-	<link rel="icon" type="image/png" href="images/logo.png" />
-	<style type="text/css">
-<!--
-.Style6 {color: #000000}
--->
+<head>
+    <title>MyPASS Portal</title>
+    <link rel="stylesheet" href="../backend/assets/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .error {
+            color: red;
+            margin: 10px;
+        }
     </style>
-	</head>
+</head>
 
-	<body>
-		<center>
-		<header>
-		<div></div>
-		
-		</header>
-		
-		<div id="welcome_box">
-		<div id="bloc_entete">	<p>
-		<h2>MyPASS Portal</h2>
-		</p></div>
-		<p>
-<form method="post" action="authentification.php">
-	
+<body>
 
-<p><table>
-<tr>
-	<td class="connexion"><span class="Style6">Login</span></td>
-	<td class="connexion"><input type="text" name="login"></td>
-</tr>
-<tr>
-	<td class="connexion"><span class="Style6">Mot de passe</span></td>
-	<td class="connexion"><input type="password" name="pwd"></td>
-</tr>
-</table>
+    <div class="container">
+        <div class="logo">
+            <h1>TrustedCargo</h1>
+            <p>Solutions logistiques pour fret aérien et maritime</p>
+        </div>
 
-</p>
-<center><p>
-<input type="submit" value="Valider" name="valider">
-</center>
+        <form method="post" action="../authentification.php">
+            <div class="form-group">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Nom d'utilisateur" name="login" required>
+            </div>
 
-</form>
-		</div>
-		
-	<?php
-	if(isset($_GET['try']) and $_GET['try']=='ok'){
-			
-			echo "<SCRIPT LANGUAGE='Javascript'>";
-			echo 'alert("Mot de Passe ou nom d\'utilisateur incorrect");';
-			echo "</SCRIPT>";
-			
-			}
-	
-	if(isset($_GET['error']) and $_GET['error']=='login'){
-			
-			echo "<SCRIPT LANGUAGE='Javascript'>";
-			echo 'alert("Veuillez vous reconnecter d\'abord");';
-			echo "</SCRIPT>";
-			
-			}
-			
-	if(isset($_GET['error']) and $_GET['error']=='inactivity'){
-			
-			echo "<SCRIPT LANGUAGE='Javascript'>";
-			echo 'alert("Votre Session a pris fin pour non utilisation au dela de 3 heures");';
-			echo "</SCRIPT>";
-			
-			}
-if(isset($_GET['error']) and $_GET['error']=='autorisation'){
-			
-			echo "<SCRIPT LANGUAGE='Javascript'>";
-			echo 'alert("Votre profile n\' a pas le droit d\'acceder a cette page, Reconnectez-vous!");';
-			echo "</SCRIPT>";
-			
-			}
+            <div class="form-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Mot de passe" name="pwd" required>
+            </div>
 
-if(isset($_GET['error']) and $_GET['error']=='acces_caisse'){
-			
-			echo "<SCRIPT LANGUAGE='Javascript'>";
-			echo 'alert("Désolé vous devez avoir un accès caisse pour acceder à cette page, Reconnectez-vous!");';
-			echo "</SCRIPT>";
-			
-			}						
-	
-	
-	?>	
-	
-    
-		
-		</center>
-	</body> 
+
+            <button type="submit" class="btn" name="valider">Se connecter</button>
+
+            <div class="security-note">
+                <i class="fas fa-shield-alt"></i> Système sécurisé de gestion logistique
+            </div>
+
+
+        </form>
+    </div>
+
+
+    <?php
+    // Gestion des messages d'erreur
+    $errorMessages = [
+        'auth_failed' => "Mot de Passe ou nom d'utilisateur incorrect",
+        'login' => "Veuillez vous reconnecter d'abord",
+        'inactivity' => "Votre Session a pris fin pour non utilisation au dela de 3 heures",
+        'autorisation' => "Votre profile n'a pas le droit d'accéder à cette page",
+        'acces_caisse' => "Désolé vous devez avoir un accès caisse pour accéder à cette page"
+    ];
+
+    if (isset($_GET['error']) && isset($errorMessages[$_GET['error']])) {
+        echo '<div class="error">' . $errorMessages[$_GET['error']] . '</div>';
+    }
+    ?>
+
+</body>
+
 </html>

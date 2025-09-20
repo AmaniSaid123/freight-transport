@@ -194,12 +194,6 @@ session_start();
     </div>
 
 
-
-
-
-
-
-
     <!-- Contact Start -->
     <div class="container-fluid contact py-5" id="contact">
         <div class="container py-5">
