@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+.question
+{
+	border: 1px solid #999;
+    
+	border-radius: 5px 5px 5px 5px;	
+	color:#000000;
+	
+	/*border: 1px solid black;*/
+    background: #CCC;
+	text-align:left;
+	font-weight:bold;
+			font-size:12px;
+
+}
+.sous_titre
+{
+	border: 1px solid blue;
+    
+	border-radius: 5px 5px 5px 5px;	
+	color:#000000;
+	
+	/*border: 1px solid black;*/
+    background:#930;
+	text-align:left;
+	font-weight:bold;
+			font-size:12px;
+
+}
+.cellule
+{
+	border: 1px solid #999;
+    margin-left:10px;
+	    margin-right:30px;
+
+	border-radius: 5px 5px 5px 5px;	
+	color:#000000;
+	
+	/*border: 1px solid black;*/
+    background:#FFF;
+	text-align:left;
+	font-weight:bold;
+			font-size:12px;
+
+}
