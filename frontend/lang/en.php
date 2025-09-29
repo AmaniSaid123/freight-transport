@@ -27,18 +27,18 @@ return [
 
     // Qui nous sommes
     'who_are_we_desc_1' => "TCC (Trusted Cargo Company) is an air and sea freight agency, helping to transport packages from our warehouses in China
-    to our warehouses in Johannesburg in South Africa, Kinshasa, and Lubumbashi in Democratic Republic of Congo.",
+    to our warehouses in Johannesburg in South Africa, Kinshasa, Lubumbashi and Kolwezi in Democratic Republic of Congo.",
 
-    'who_are_we_desc_2' => "The process involves our customers located in Johannesburg, Kinshasa, and Lubumbashi purchasing their goods through various Chinese platforms
+    'who_are_we_desc_2' => "The process involves our customers located in Johannesburg, Kinshasa, Lubumbashi and Kolwezi purchasing their goods through various Chinese platforms
     such as Alibaba and having them delivered to our warehouses in China. We then evaluate the goods and communicate the shipping price to the customer. Depending on whether the customer
     has opted for air or sea freight, we then transport them either by plane
-    or by boat from China to the final destination city of one of three: Johannesburg, Kinshasa, or Lubumbashi.",
+    or by boat from China to the final destination city of one of three: Johannesburg, Kinshasa, Lubumbashi or Kolwezi.",
 
     'who_are_we_desc_3' => "In the How to Proceed, we provide the instructions that each customer will send to their Chinese seller, so that the seller knows where and how to
     deliver their goods to our warehouses in China. These instructions are sufficient for the supplier in China to fully understand what to do and how to do it.",
 
     'who_are_we_desc_4' => "TCC communicates regularly with its customers via email and WhatsApp to inform them of the price, package tracking information, and the delivery process
-    in Johannesburg, Kinshasa, or Lubumbashi.",
+    in Johannesburg, Kinshasa, Lubumbashi or Kolwezi.",
 
     // tracking
     'tracking_title' => 'Tracking my parcel',
@@ -134,7 +134,7 @@ return [
     'footer_quick_terms' => 'Our Terms and Conditions',
     'footer_quick_values' => 'Our Values',
     'footer_contact_title' => 'Contact Info',
-
+    'footer_contact_des_kwz' => ' Packages for Kolwezi can be collected from our Chinese partners in Kolwezi. The address will be communicated on a case-by-case basis upon collection. Any assistance required for Kolwezi customers must be obtained from our Lubumbashi office.',
 
     // prices page
     'prices_intro_p1' => 'Air and sea freight pricing is often volatile. Factors such as product type (standard, hazardous, sensitive, electronics/batteries), customs, final destination and freight mode (air or sea) cause price variation.',
@@ -156,14 +156,14 @@ return [
     'prices_row_jhb_sea_leadtime' => '25 to 40 days',
     'prices_row_jhb_sea_notes' => 'Customs clearance included',
 
-    'prices_row_kins_destination' => 'Kinshasa & Lubumbashi, DRC',
+    'prices_row_kins_destination' => 'Kinshasa, Lubumbashi and Kolwezi in Democratic Republic of Congo',
     'prices_row_kins_air_type' => 'Air Freight',
     'prices_row_kins_air_price' => '18 USD per Kg',
     'prices_row_kins_air_leadtime' => '5 to 10 days',
     'prices_row_kins_air_notes' => 'Customs clearance included',
 
     'prices_row_kins_sea_type' => 'Sea Freight',
-    'prices_row_kins_sea_price' => ' from USD 570 per CBM',
+    'prices_row_kins_sea_price' => ' from USD 545 per CBM',
     'prices_row_kins_sea_leadtime' => '50 to 60 days',
     'prices_row_kins_sea_notes' => 'Customs clearance included',
     // process page
@@ -190,28 +190,26 @@ return [
     'pages' => 'Pages',
     'contact_page_breadcrumb' => 'Contact',
     'contact_general_info_title' => 'General Information',
-    'contact_general_info_paragraph' => 'TCC operates in China (Guangzhou and Shenzhen) as origin warehouses, and in Johannesburg (South Africa), Kinshasa and Lubumbashi (DRC) as final destination warehouses for parcels coming from China.',
+    'contact_general_info_paragraph' => 'TCC operates in China (Guangzhou and Shenzhen) as origin warehouses, and in Johannesburg (South Africa), Kinshasa, Lubumbashi and Kolwezi in Democratic Republic of Congo as final destination warehouses for parcels coming from China.',
     'contact_instructions_title' => 'Instructions for Your Suppliers in China',
     'contact_instructions_p1' => 'For our addresses in China, please download the image that corresponds to your final destination city and send it to your supplier in China. It contains everything they need to deliver your parcel to our China warehouse.',
     'contact_instructions_p2' => 'Only take the file that matches your final destination city and forward it to your supplier so they know where and how to deliver your parcel to our China warehouse.',
     'contact_city_jhb' => 'Johannesburg',
-    'contact_city_jhb_desc' => "Shipping instructions for Johannesburg",
+    'contact_city_jhb_desc' => "Shipping instructions for Jhb",
     'contact_city_kin' => 'Kinshasa',
-    'contact_city_kin_desc' => "Shipping instructions for Kinshasa",
+    'contact_city_kin_desc' => "Shipping instructions for Kin",
     'contact_city_lub' => 'Lubumbashi',
-    'contact_city_lub_desc' => "Shipping instructions for Lubumbashi",
+    'contact_city_lub_desc' => "Shipping instructions for Lub",
+    'contact_city_kwz' => 'kolwezi',
+    'contact_city_kwz_desc' => 'Shipping instructions for kwz',
     'contact_download_file' => 'Download file',
     'contact_pickup_points_title' => 'Pickup Locations',
     'contact_city_jhb_full' => 'Johannesburg, South Africa',
     'contact_city_kin_full' => 'Kinshasa, DRC',
     'contact_city_lub_full' => 'Lubumbashi, DRC',
+    'contact_city_kwz_full' => 'kolwezi, DRC',
     'contact_email' => 'admin@trustedcargo.co.za',
-    'contact_phone_jhb_link' => '+27732985311',
-    'contact_phone_jhb' => '+27 73 298 5311',
-    'contact_phone_kin_link' => '+243987020110',
-    'contact_phone_kin' => '+243 987 020 110',
-    'contact_phone_lub_link' => '+243852934920',
-    'contact_phone_lub' => '+243 852 934 920',
+
     'contact_hours_title' => 'Opening Hours',
     'contact_hours_weekdays_label' => 'Monday to Friday:',
     'contact_hours_weekdays' => '08:30 - 17:00',

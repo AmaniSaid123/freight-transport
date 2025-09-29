@@ -107,6 +107,18 @@ session_start();
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
+
+                          <div class="image-card">
+                            <div class="image-placeholder">
+                                <img src="<?= BASE_URL ?>assets/img/tcc-Kwz.jpg" alt="Lubumbashi">
+                            </div>
+                            <div class="image-info">
+                                <h3><?= t('contact_city_kwz') ?></h3>
+                                <p><?= t('contact_city_kwz_desc') ?></p>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Kwz.jpg" class="download-btn" download><i class="fas fa-download"></i>
+                                    <?= t('contact_download_file') ?></a>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section class="card">
@@ -119,7 +131,7 @@ session_start();
 
                     <div class="contact-grid">
                         <div class="contact-card">
-                            <h3><i class="fas fa-city"></i> <?= t('contact_city_jhb_full') ?></h3>
+                            <h4><i class="fas fa-city"></i> <?= t('contact_city_jhb_full') ?></h4>
                             <div class="address">
                                 <p>Trusted Cargo Company</p>
                                 <p>30 Gaunt Road</p>
@@ -129,13 +141,14 @@ session_start();
                             <div class="contact-details">
                                 <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
                                     <?= t('contact_email') ?></a>
-                                <a href="tel:<?= t('contact_phone_jhb_link') ?>"><i class="fas fa-phone"></i>
-                                    <?= t('contact_phone_jhb') ?></a>
+                                <a href="tel:+27 73 298 5311"><i class="fas fa-phone"></i>
+                                    +27 73 298 5311</a>
                             </div>
                         </div>
 
+
                         <div class="contact-card">
-                            <h3><i class="fas fa-city"></i> <?= t('contact_city_kin_full') ?></h3>
+                            <h4><i class="fas fa-city"></i> <?= t('contact_city_kin_full') ?></h4>
                             <div class="address">
                                 <p>Trusted Cargo Company</p>
                                 <p>14, Avenue Sergent Moke</p>
@@ -145,13 +158,13 @@ session_start();
                             <div class="contact-details">
                                 <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
                                     <?= t('contact_email') ?></a>
-                                <a href="tel:<?= t('contact_phone_kin_link') ?>"><i class="fas fa-phone"></i>
-                                    <?= t('contact_phone_kin') ?></a>
+                                <a href="tel:+243 987 020 110"><i class="fas fa-phone"></i>
+                                    +243 987 020 110</a>
                             </div>
                         </div>
 
                         <div class="contact-card">
-                            <h3><i class="fas fa-city"></i> <?= t('contact_city_lub_full') ?></h3>
+                            <h4><i class="fas fa-city"></i> <?= t('contact_city_lub_full') ?></h4>
                             <div class="address">
                                 <p>Trusted Cargo Company</p>
                                 <p>108, Avenue Kasaï</p>
@@ -162,8 +175,23 @@ session_start();
                             <div class="contact-details">
                                 <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
                                     <?= t('contact_email') ?></a>
-                                <a href="tel:<?= t('contact_phone_lub_link') ?>"><i class="fas fa-phone"></i>
-                                    <?= t('contact_phone_lub') ?></a>
+                                <a href="tel:+243 852 934 920<"><i class="fas fa-phone"></i>
+                                    +243 852 934 920</a>
+                            </div>
+                        </div>
+
+
+                        <div class="contact-card">
+                            <h4><i class="fas fa-city"></i> <?= t('contact_city_kwz_full') ?></h4>
+                            <div class="address">
+                                <p>Trusted Cargo Company</p>
+                                <p>  NB : <?= t('footer_contact_des_kwz') ?></p>
+                            </div>
+                            <div class="contact-details">
+                                <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
+                                    <?= t('contact_email') ?></a>
+                                <a href="tel:+27 73 298 5311"><i class="fas fa-phone"></i>
+                                    +243 852 934 920</a>
                             </div>
                         </div>
                     </div>
@@ -280,11 +308,11 @@ session_start();
                 </div>
                 <div class="col-lg-5 col-xl-5" data-wow-delay="0.3s">
                     <div class="d-flex justify-content-center mb-4">
-                        <a class="btn btn-lg-square btn-light rounded-circle mx-2" href=""><i
+                        <a class="btn btn-lg-square btn-light rounded-circle mx-2" href="https://www.facebook.com/share/1CVqVzjFVB/"><i
                                 class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-lg-square btn-light rounded-circle mx-2" href=""><i
                                 class="fab fa-twitter"></i></a>
-                        <a class="btn btn-lg-square btn-light rounded-circle mx-2" href=""><i
+                        <a class="btn btn-lg-square btn-light rounded-circle mx-2" href="https://www.instagram.com/trustedcargocompany?igsh=MWlvdXo4cjIwZjlkNA=="><i
                                 class="fab fa-instagram"></i></a>
                         <a class="btn btn-lg-square btn-light rounded-circle mx-2" href=""><i
                                 class="fab fa-linkedin-in"></i></a>

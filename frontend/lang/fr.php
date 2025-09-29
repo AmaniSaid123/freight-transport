@@ -27,18 +27,18 @@ return [
 
     // Qui nous sommes
     'who_are_we_desc_1' => "TCC (Trusted Cargo Company) est une agence de fret aérien et maritime, aidant à transporter des
-    colis depuis nos entrepôts en Chine jusqu'à nos entrepôts à Johannesburg en Afrique du Sud, à Kinshasa et à Lubumbashi en République démocratique du Congo.",
+    colis depuis nos entrepôts en Chine jusqu'à nos entrepôts à Johannesburg en Afrique du Sud, à Kinshasa, à Lubumbashi et en Kolwezi en République démocratique du Congo.",
 
-    'who_are_we_desc_2' => "Le processus consiste à ce que nos clients localisés à Johannesburg, à Kinshasa et à Lubumbashi puissent acheter leurs marchandises
+    'who_are_we_desc_2' => "Le processus consiste à ce que nos clients localisés à Johannesburg, à Kinshasa, à Lubumbashi et à Kolwezi puissent acheter leurs marchandises
     à travers différentes plateformes chinoises telles qu’Alibaba, et les faire livrer à nos entrepôts en Chine, ensuite nous allons les évaluer, puis communiquer
     le prix du transport au client, ensuite, selon que le client a opté pour le fret aérien ou maritime, nous mettons soit dans l'avion soit dans le bateau depuis
-    la Chine jusqu'à la ville de destination finale parmi les trois : Johannesburg, Kinshasa ou Lubumbashi.",
+    la Chine jusqu'à la ville de destination finale parmi les trois : Johannesburg, Kinshasa, Lubumbashi ou Kolwezi.",
 
     'who_are_we_desc_3' => "Dans la rubrique Comment Procéder, nous donnons les orientations que chaque client va envoyer à son vendeur chinois, de sorte que le vendeur puisse savoir
     où et comment livrer leurs colis à nos entrepôts en Chine. Ces instructions sont suffisantes pour que le vendeur sache totalement quoi et comment faire.",
 
     'who_are_we_desc_4' => "TCC communique régulièrement avec ses clients via email et Whatsapp afin de leur communiquer le prix,
-    le suivi du colis en cours de route ainsi que le processus de livraison à Johannesburg, Kinshasa ou Lubumbashi.",
+    le suivi du colis en cours de route ainsi que le processus de livraison à Johannesburg, Kinshasa ,Lubumbashi ou Kolwezi.",
 
     // tracking
     'tracking_title' => 'Suivi mon colis',
@@ -143,7 +143,9 @@ return [
     'footer_quick_terms' => 'Nos Termes et Conditions',
     'footer_quick_values' => 'Nos valeurs',
     'footer_contact_title' => 'Informations de contact',
-
+    'footer_contact_des_kwz' => 'Le retrait des colis pour Kolwezi se fait auprès de nos partenaires chinois sur place dans
+                        Kolwezi. L’adresse sera communiquée au cas par cas lors du retrait. Toute assistance nécessaire
+                        pour les clients de Kolwezi doit se faire avec notre bureau de Lubumbashi.',
     // prices page
     'prices_intro_p1' => 'Le fret aérien et maritime est un domaine dont la fixation des prix est souvent volatile. Des facteurs tels que le type de produit (standard, dangereux, sensibles, électroniques / batteries), la douane, la destination finale et le mode de fret (aérien ou maritime) provoquent des variations de prix.',
     'prices_intro_p2' => 'Ci-dessous figurent des tarifs approximatifs standards pour le cargo général (produits standards) vers l\'Afrique du Sud et la République démocratique du Congo. Nous fournirons un devis exact une fois que vos colis seront arrivés à notre entrepôt en Chine et que nous en aurons évalué les spécificités.',
@@ -164,14 +166,14 @@ return [
     'prices_row_jhb_sea_leadtime' => '25 à 40 jours',
     'prices_row_jhb_sea_notes' => 'Dédouanement inclus',
 
-    'prices_row_kins_destination' => 'Kinshasa et Lubumbashi, RDC',
+    'prices_row_kins_destination' => 'Kinshasa, Lubumbashi et Kolwezi en République démocratique du Congo',
     'prices_row_kins_air_type' => 'Fret Aérien',
     'prices_row_kins_air_price' => '18 USD par Kg',
     'prices_row_kins_air_leadtime' => '5 à 10 jours',
     'prices_row_kins_air_notes' => 'Dédouanement inclus',
 
     'prices_row_kins_sea_type' => 'Fret Maritime',
-    'prices_row_kins_sea_price' => 'à partir de 570 USD par CBM',
+    'prices_row_kins_sea_price' => 'à partir de 545 USD par CBM',
     'prices_row_kins_sea_leadtime' => '50 à 60 jours',
     'prices_row_kins_sea_notes' => 'Dédouanement inclus',
 
@@ -199,28 +201,27 @@ return [
     'pages' => 'Pages',
     'contact_page_breadcrumb' => 'Contact',
     'contact_general_info_title' => 'Informations générales',
-    'contact_general_info_paragraph' => 'TCC opère en Chine (Guangzhou et Shenzhen) en tant qu\'entrepôts d\'origine, et à Johannesburg (Afrique du Sud), Kinshasa et Lubumbashi (RDC) comme entrepôts de destination finale pour les colis venant de Chine.',
+    'contact_general_info_paragraph' => 'TCC opère en Chine (Guangzhou et Shenzhen) en tant qu\'entrepôts d\'origine, et à Johannesburg (Afrique du Sud), Kinshasa à Lubumbashi et à Kolwezi en République democratique du Congo comme entrepôts de destination finale pour les colis venant de Chine.',
     'contact_instructions_title' => 'Instructions pour vos fournisseurs en Chine',
     'contact_instructions_p1' => 'Pour nos adresses en Chine, veuillez télécharger l\'image correspondant à votre ville de destination finale et l\'envoyer à votre fournisseur en Chine. Elle contient tout ce dont il a besoin pour livrer votre colis à notre entrepôt en Chine.',
     'contact_instructions_p2' => 'Ne prenez que le fichier correspondant à votre ville de destination finale et transmettez-le à votre fournisseur pour qu\'il sache où et comment livrer votre colis à notre entrepôt en Chine.',
     'contact_city_jhb' => 'Johannesburg',
-    'contact_city_jhb_desc' => 'Instructions d\'expédition pour Johannesburg',
+    'contact_city_jhb_desc' => 'Instructions d\'expédition pour Jhb',
     'contact_city_kin' => 'Kinshasa',
-    'contact_city_kin_desc' => 'Instructions d\'expédition pour Kinshasa',
+    'contact_city_kin_desc' => 'Instructions d\'expédition pour Kin',
     'contact_city_lub' => 'Lubumbashi',
-    'contact_city_lub_desc' => 'Instructions d\'expédition pour Lubumbashi',
+    'contact_city_lub_desc' => 'Instructions d\'expédition pour Lub',
+    'contact_city_kwz' => 'kolwezi',
+    'contact_city_kwz_desc' => 'Instructions d\'expédition pour Kwz',
     'contact_download_file' => 'Télécharger le fichier',
     'contact_pickup_points_title' => 'Points de Récupération',
     'contact_city_jhb_full' => 'Johannesburg, Afrique du Sud',
     'contact_city_kin_full' => 'Kinshasa, RDC',
     'contact_city_lub_full' => 'Lubumbashi, RDC',
+    'contact_city_kwz_full' => 'kolwezi, DRC',
     'contact_email' => 'admin@trustedcargo.co.za',
-    'contact_phone_jhb_link' => '+27732985311',
-    'contact_phone_jhb' => '+27 73 298 5311',
-    'contact_phone_kin_link' => '+243987020110',
-    'contact_phone_kin' => '+243 987 020 110',
-    'contact_phone_lub_link' => '+243852934920',
-    'contact_phone_lub' => '+243 852 934 920',
+
+
     'contact_hours_title' => 'Horaires d\'ouverture',
     'contact_hours_weekdays_label' => 'Lundi à Vendredi :',
     'contact_hours_weekdays' => '08h30 - 17h00',

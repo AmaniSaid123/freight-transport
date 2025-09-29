@@ -4,7 +4,7 @@
         <div class="col-lg-8 text-center text-lg-start mb-lg-0">
             <div class="d-flex flex-wrap">
                 <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt me-2"></i>Find A Location</a>
-                <a href="#" class="text-light me-4"><i class="fas fa-phone-alt me-2"></i>+27 73 298 5311 (Jhb) / +243 987 020 110 (Kin ) / +243 852 934 920 (Lushi)</a>
+                <a href="#" class="text-light me-4"><i class="fas fa-phone-alt me-2"></i>+27 73 298 5311 (Jhb) / +243 987 020 110 (Kin ) / +243 852 934 920 (Lushi - Kwz)</a>
                 <a href="#" class="text-light me-0"><i class="fas fa-envelope me-2"></i>admin@trustedcargo.co.za</a>
             </div>
         </div>

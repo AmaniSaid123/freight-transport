@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../config/debug.php';  
+//require_once __DIR__ . '/../config/debug.php';  
 require_once __DIR__ . '/../config/constants.php';  
 $page = $_GET['page'] ?? 'login';
 $viewPath = __DIR__ . '/views/pages/' . basename($page) . '.php';

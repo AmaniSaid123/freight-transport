@@ -64,7 +64,7 @@
     }
 
     .image-placeholder {
-        height: 300px;
+        height: 200px;
         background-color: #eaeaea;
         display: flex;
         align-items: center;
@@ -106,7 +106,7 @@
     /* Contact Info */
     .contact-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 25px;
         margin-top: 20px;
     }
