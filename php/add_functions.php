@@ -6,13 +6,32 @@
 //********************GLOBAL FUNCTION*******************
 //******************************************************
 
-function add_notification($ref_element, $id_element, $before, $after, $ref_user, $description) {
-    include("param.php");
 
-    $sql_query = $bdd->exec("insert into t_notification(ref_element,id_element,creationdate,before_event,after_event,ref_user,description) values('" . $ref_element . "','" . $id_element . "',now(),'" . $before . "','" . $after . "','" . $ref_user . "','" . $description . "')");
-
+function add_notification(
+    PDO $bdd,
+    string $ref_element,
+    string $id_element,   // <-- string au lieu de int
+    string $before,
+    string $after,
+    string $ref_user,
+    string $description
+): int {
+    $sql_query = $bdd->exec(
+        "INSERT INTO t_notification 
+         (ref_element, id_element, creationdate, before_event, after_event, ref_user, description)
+         VALUES (
+            '$ref_element',
+            '$id_element',
+            NOW(),
+            '$before',
+            '$after',
+            '$ref_user',
+            '$description'
+         )"
+    );
     return $sql_query;
 }
+
 
 function add_ecriture($ref_compte, $action, $ref_operation) {
     include("param.php");

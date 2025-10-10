@@ -36,18 +36,16 @@ function clean_in_text($value) {
 //*******************Authentification*******************
 //******************************************************
 
-function get_access($ref, $userprofile) {
-    include("param.php");
-    //echo "select count(*) as valide from t_profile_content where  ref_content=".$ref." and ref_profile=".$userprofile."<br>";
-    $resultat = $bdd->query("select count(idpc) as valide from t_profile_content join t_content on t_content.idcontent=t_profile_content.ref_content where t_content.status='a' and ref_content=" . $ref . " and ref_profile=" . $userprofile);
-    //echo ($ref==32) ? "select count(idpc) as valide from t_profile_content join t_content on t_content.idcontent=t_profile_content.ref_content where t_content.status='a' and ref_content=" . $ref . " and ref_profile=" . $userprofile : "";
-    //$resultat=$bdd->query("select  count(*) as valide from t_profile_content where  ref_content=".$ref." and ref_profile=".$userprofile);
-    //echo "select count(idpc) as valide from t_profile_content,t_content where t_content.idcontent=t_profile_content.ref_content and t_content.status='a' and ref_content=".$ref." and ref_profile=".$userprofile;
-    $donnee = $resultat->fetch();
-    //echo $ref." = ".$donnee['valide']."<br>";
+function get_access(PDO $bdd, int $ref, int $userprofile): int {
+    $stmt = $bdd->query(
+        "SELECT COUNT(idpc) AS valide 
+         FROM t_profile_content 
+         JOIN t_content ON t_content.idcontent=t_profile_content.ref_content 
+         WHERE t_content.status='a' AND ref_content=$ref AND ref_profile=$userprofile"
+    );
+    $donnee = $stmt->fetch();
     return $donnee['valide'];
 }
-
 function get_total_user() {
     include("param.php");
 
@@ -144,13 +142,18 @@ function get_user_data($iduser) {
     return $data;
 }
 
-function get_user_data_by_username($username) {
-    include("param.php");
+function get_user_data_by_username(PDO $bdd, string $username): array
+{
+    $stmt = $bdd->prepare(
+        "SELECT t.*, COUNT(*) AS is_exist 
+         FROM t_user t 
+         WHERE username = :username 
+         GROUP BY username"
+    );
+    $stmt->execute([':username' => $username]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $resultat = $bdd->query("select t.*, count(*) as is_exist from t_user t where username='" . $username ."' group by username");
-    $data = $resultat->fetch();
-
-    return $data;
+    return $data ?: [];
 }
 
 

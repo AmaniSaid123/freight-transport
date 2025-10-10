@@ -7,14 +7,16 @@
 //******************************************************
 //*******************Authentification*******************
 //******************************************************
-function update_user_lastlogon($username)
+function update_user_lastlogon(PDO $bdd, string $username): int
 {
-    include("param.php");
+    $stmt = $bdd->prepare(
+        "UPDATE t_user SET lastlogon = NOW() WHERE username = :username"
+    );
+    $stmt->execute([':username' => $username]);
 
-    $resultat = $bdd->exec("update t_user set lastlogon=now() where username='" . $username . "'");
-
-    return $resultat;
+    return $stmt->rowCount();
 }
+
 
 function reset_password($username)
 {
