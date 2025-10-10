@@ -9,17 +9,18 @@ function get_access(PDO $bdd, int $ref, int $userprofile): int
 {
     $stmt = $bdd->prepare(
         "SELECT COUNT(*) AS valide
-         FROM profil_content pc
+         FROM profile_content pc
          JOIN content c ON c.id = pc.id_content
-         WHERE c.status = 'a' AND pc.id_content = :ref AND pc.id_profil = :profile"
+         WHERE c.status = 'active' AND pc.id_content = :ref AND pc.id_profile = :profile"
     );
+
     $stmt->execute([
         ':ref' => $ref,
         ':profile' => $userprofile
     ]);
 
     $donnee = $stmt->fetch(PDO::FETCH_ASSOC);
-    return (int)$donnee['valide'];
+    return (int) $donnee['valide'];
 }
 
 /**

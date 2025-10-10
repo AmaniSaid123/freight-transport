@@ -31,18 +31,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['valider'])) {
     $password = $_POST['pwd']; // On garde le mot de passe brut pour password_verify
 
     // REQUÊTE SÉCURISÉE - Version corrigée
-    $sql = "SELECT t.*, v.name as profile, v.id as idprofile, t.id as iduser
-            FROM user t 
-            JOIN profil v ON t.id_profil = v.id
-            WHERE t.username = ? AND t.status = 'a'
+    $sql = "SELECT u.*, 
+            p.name as profile,
+            p.id as idprofile, 
+            u.id as iduser
+            FROM user u 
+            JOIN profile p ON u.id_profile = p.id
+            WHERE u.username = ? AND u.status = 'a'
             LIMIT 1";
 
-    /* $sql = "SELECT t.*, v.name as profile, v.idprofile 
+    /*$sql = "SELECT t.*, v.name as profile, v.idprofile 
             FROM t_user t 
             JOIN t_profile v ON t.ref_profile = v.idprofile
             WHERE t.username = ? AND t.status = 'a'
-            LIMIT 1";
-  */
+            LIMIT 1"; */
+
 
     try {
 
@@ -120,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['valider'])) {
         // Erreur base de données
         error_log("Erreur authentification dans " . __FILE__ . " ligne " . __LINE__ . " : " . $e->getMessage());
         $_SESSION['error'] = "Erreur système temporaire";
-            $error_message = "Erreur système temporaire";
+        $error_message = "Erreur système temporaire";
         header("Location: " . BASE_URL . "index.php?page=login&error=system_error&msg=$error_message");
         exit;
     }

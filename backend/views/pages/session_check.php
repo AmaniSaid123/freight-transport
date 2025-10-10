@@ -29,11 +29,6 @@ if (isset($_SESSION['LAST_ACTIVITY'])) {
 }
 
 
-/*if(isset($_SESSION['m_lock']) && $_SESSION['m_lock']!="NA" && $idpage!=1){
-	$_SESSION['m_lock']="NA";
-	header("Location:lockscreen.php?try=ok");
-
-	}*/
 
 
 if (get_access($bdd,$idpage, $_SESSION['my_idprofile']) == 1) {
