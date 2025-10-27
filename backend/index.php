@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/debug.php';
+
 require_once __DIR__ . '/../config/constants.php';
 
 // Get the requested page and module (example: ?module=profiles&page=list)

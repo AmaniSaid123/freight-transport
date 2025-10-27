@@ -8,8 +8,6 @@ if (!defined('BASE_URL')) {
 // Démarrer la session au tout début
 session_start();
 
-require __DIR__ . '/../../../config/debug.php';
-
 require_once __DIR__ . '/../../../php/function.php';
 
 // Vérifier si le formulaire a été soumis
@@ -22,45 +20,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['valider'])) {
         exit;
     }
 
-    // Inclusion sécurisée
-
-    // require_once __DIR__ . '/../../../param.php';
-
     // Nettoyage des données
     $username = htmlspecialchars(trim($_POST['login']));
-    $password = $_POST['pwd']; // On garde le mot de passe brut pour password_verify
+    $password = $_POST['pwd'];
 
-    // REQUÊTE SÉCURISÉE - Version corrigée
+    // REQUÊTE SÉCURISÉE
     $sql = "SELECT u.*, 
             p.name as profile,
             p.id as idprofile, 
             u.id as iduser
             FROM user u 
             JOIN profile p ON u.id_profile = p.id
-            WHERE u.username = ? AND u.status = 'a'
+            WHERE u.username = ? AND u.status = '1'
             LIMIT 1";
 
-    /*$sql = "SELECT t.*, v.name as profile, v.idprofile 
-            FROM t_user t 
-            JOIN t_profile v ON t.ref_profile = v.idprofile
-            WHERE t.username = ? AND t.status = 'a'
-            LIMIT 1"; */
-
-
     try {
-
         $req = $bdd->prepare($sql);
-
         $req->execute([$username]);
-
         $user = $req->fetch();
 
-
-        // VÉRIFICATION AVEC MOT DE PASSE HACHÉ (recommandé)
-        // if ($user && password_verify($password, $user['password'])) {
-
-        // Version temporaire (si mots de passe en clair)
-        if ($user && $password === $user['password']) {
+        // VÉRIFICATION AVEC MOT DE PASSE HACHÉ (SÉCURISÉ)
+        if ($user && password_verify($password, $user['password'])) {
+            
+            // Vérifier si le mot de passe doit être re-haché (algorithme obsolète)
+            if (password_needs_rehash($user['password'], PASSWORD_DEFAULT)) {
+                $newHash = password_hash($password, PASSWORD_DEFAULT);
+                // Mettre à jour le hash dans la base de données
+                $updateSql = "UPDATE user SET password = ? WHERE id = ?";
+                $updateReq = $bdd->prepare($updateSql);
+                $updateReq->execute([$newHash, $user['iduser']]);
+            }
 
             // Initialisation de la session
             $_SESSION['auth'] = true;
@@ -69,17 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['valider'])) {
             $_SESSION['my_firstname'] = $user['firstname'];
             $_SESSION['my_userId'] = $user['iduser'];
             $_SESSION['my_lastname'] = $user['lastname'];
-
             $_SESSION['my_user_picture'] = $user['url_picture'];
             $_SESSION['my_profile'] = $user['profile'];
             $_SESSION['my_idprofile'] = $user['idprofile'];
             $_SESSION['is_agent'] = ($user['idprofile'] == 2 ? '1' : '0');
-            //   $_SESSION['my_agence'] = $user['ref_agence'];
-
-            // Données supplémentaires
-            /*  $data_taux = get_taux();
-              $_SESSION['my_taux'] = $data_taux['valeur'] ?? 0;
-              $_SESSION['my_id_taux'] = $data_taux['id_taux'] ?? 0;*/
 
             // Zones par défaut
             $_SESSION['my_zone1'] = 0;
@@ -96,15 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['valider'])) {
 
             // Mise à jour dernière connexion
             if (update_user_lastlogon($bdd, $username) > 0) {
-                $success_message = "Votre agence de connexion est changé avec succes";
-                // add_notification("t_user",$use_username,"Connexion ","Connexion ",$use_username,"Connexion a MyPASS");	
+                $success_message = "Connexion réussie";
                 header("Location: " . BASE_URL . "index.php?page=dashboard&success=ok&msg=$success_message");
-
-
                 exit;
             } else {
                 $_SESSION['error'] = "Erreur de mise à jour du journal";
-
                 $error_message = "Erreur de mise à jour du journal";
                 header("Location: " . BASE_URL . "index.php?page=login&error=update_failed&msg=$error_message");
                 exit;
@@ -115,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['valider'])) {
             $_SESSION['error'] = "Identifiants incorrects";
             $error_message = "Identifiants incorrects";
             header("Location: " . BASE_URL . "index.php?page=login&error=auth_failed&msg=$error_message");
-
             exit;
         }
 
@@ -131,6 +108,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['valider'])) {
 
 // Accès direct sans formulaire
 header('Location: ' . BASE_URL . 'index.php?page=login');
-
 exit;
 ?>

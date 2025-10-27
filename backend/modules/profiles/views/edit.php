@@ -1,9 +1,8 @@
 <?php
 //****************** PAGE SETUP ******************
-$idpage = 5;
+$idpage = 4;
 
 require_once __DIR__ . '/../../../views/pages/session_check.php';
-require_once __DIR__ . '/../../../../config/debug.php';
 require_once __DIR__ . '/../../../../php/function.php';
 
 // Charger les classes
@@ -41,6 +40,22 @@ if (!$data_profile) {
 $profileRights = $model->getProfileContents($profileId);
 
 
+if (isset($_GET['del'])) {
+    $rightId = (int) $_GET['del'];
+    $menuName = $_GET['menu'] ?? '';
+
+    if ($rightId > 0) {
+        $result = $controller->handleDeleteRight($rightId);
+
+        if ($result['success']) {
+            header("Location: edit.php?find=" . $profileId . "&success=1&message=" . urlencode($result['message']));
+            exit;
+        } else {
+            $message = $result['message'];
+            $alertClass = 'alert-danger';
+        }
+    }
+}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -48,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $controller->editProfile($profileId, $_POST);
         $message = $result['message'];
         $alertClass = $result['success'] ? 'alert-success' : 'alert-danger';
-        
+
         if ($result['success']) {
             // Reload profile data after successful update
             $data_profile = $model->getProfileById($profileId);
@@ -59,12 +74,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $controller->handleAccessRights($profileId, $_POST);
         $message = $result['message'];
         $alertClass = $result['success'] ? 'alert-success' : 'alert-danger';
-        
+
         // Reload rights after update
         $profileRights = $model->getProfileContents($profileId);
     }
 }
 
+// Gestion des messages de succès depuis la redirection
+if (isset($_GET['success']) && $_GET['success'] == 1 && isset($_GET['message'])) {
+    $message = urldecode($_GET['message']);
+    $alertClass = 'alert-success';
+}
 
 // Count non-granted rights for the hidden input
 $index = 0;
@@ -183,97 +203,101 @@ foreach ($profileRights as $right) {
                     </div>
 
                     <!-- Access Rights Card -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gestion des droits d'accès</h6>
-                        </div>
-                        <div class="card-body">
-                            <form method="post" id="rightsForm">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped" id="accessRightsTable">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th>Menu</th>
-                                                <th>Fonctionnalité</th>
-                                                <th>Statut</th>
-                                                <th>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="selectAll"
-                                                            onclick="toggleAll(this);">
-                                                        <label class="form-check-label small" for="selectAll">
-                                                            Tout sélectionner
-                                                        </label>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $counter = 0;
-                                            foreach ($profileRights as $right):
-                                                $isGranted = $right['accorder'] === 'Oui';
-                                                $counter++;
-                                                ?>
+                    <?php if (get_access($bdd, 6, $_SESSION['my_idprofile']) == 1): ?>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Gestion des droits d'accès</h6>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" id="rightsForm">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped" id="accessRightsTable">
+                                            <thead class="thead-light">
                                                 <tr>
-                                                    <td class="align-middle">
-                                                        <strong><?= htmlspecialchars($right['ref_menu']) ?></strong>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <?= htmlspecialchars($right['sous_menu']) ?>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <span
-                                                            class="badge badge-<?= $isGranted ? 'success' : 'secondary' ?>">
-                                                            <?= htmlspecialchars($right['accorder']) ?>
-                                                        </span>
-                                                    </td>
-                                                    <td class="align-middle text-center">
-                                                        <?php if (!$isGranted): ?>
-                                                            <input type="hidden" name="value<?= $counter ?>"
-                                                                value="<?= $right['id_content'] ?>">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    name="chk<?= $counter ?>" value="on">
-                                                            </div>
-                                                        <?php else: ?>
-                                                            <a href="?find=<?= $profileId ?>&del=<?= $right['idpc'] ?>&menu=<?= urlencode($right['sous_menu']) ?>"
-                                                                class="btn btn-sm btn-outline-danger"
-                                                                onclick="return confirm('Êtes-vous sûr de vouloir retirer l\\'accès à \'<?= addslashes($right['sous_menu']) ?>\' ?')"
-                                                                title="Retirer l'accès">
-                                                                <i class="fas fa-times"></i>
-                                                            </a>
-                                                        <?php endif; ?>
+                                                    <th>Menu</th>
+                                                    <th>Fonctionnalité</th>
+                                                    <th>Statut</th>
+                                                    <th>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="selectAll"
+                                                                onclick="toggleAll(this);">
+                                                            <label class="form-check-label small" for="selectAll">
+                                                                Tout sélectionner
+                                                            </label>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $counter = 0;
+                                                foreach ($profileRights as $right):
+                                                    $isGranted = $right['accorder'] === 'Oui';
+                                                    $counter++;
+                                                    ?>
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            <strong><?= htmlspecialchars($right['ref_menu']) ?></strong>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <?= htmlspecialchars($right['sous_menu']) ?>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <span
+                                                                class="badge badge-<?= $isGranted ? 'success' : 'secondary' ?>">
+                                                                <?= htmlspecialchars($right['accorder']) ?>
+                                                            </span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <?php if (!$isGranted): ?>
+                                                                <input type="hidden" name="value<?= $counter ?>"
+                                                                    value="<?= $right['id_content'] ?>">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="chk<?= $counter ?>" value="on">
+                                                                </div>
+                                                            <?php else: ?>
+                                                                <?php if (get_access($bdd, 7, $_SESSION['my_idprofile']) == 1): ?>
+                                                                    <button type="button"
+                                                                        class="btn btn-sm btn-outline-danger delete-right-btn"
+                                                                        data-right-id="<?= $right['idpc'] ?>"
+                                                                        data-menu-name="<?= htmlspecialchars($right['sous_menu']) ?>"
+                                                                        data-profile-id="<?= $profileId ?>" title="Retirer l'accès">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </button>
+                                                                <?php endif; ?>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="4" class="small text-muted">
+                                                        Total des droits: <?= count($profileRights) ?> |
+                                                        Accordés:
+                                                        <?= array_sum(array_map(fn($r) => $r['accorder'] === 'Oui' ? 1 : 0, $profileRights)) ?>
+                                                        |
+                                                        En attente:
+                                                        <?= array_sum(array_map(fn($r) => $r['accorder'] === 'Non' ? 1 : 0, $profileRights)) ?>
                                                     </td>
                                                 </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="4" class="small text-muted">
-                                                    Total des droits: <?= count($profileRights) ?> |
-                                                    Accordés:
-                                                    <?= array_sum(array_map(fn($r) => $r['accorder'] === 'Oui' ? 1 : 0, $profileRights)) ?>
-                                                    |
-                                                    En attente:
-                                                    <?= array_sum(array_map(fn($r) => $r['accorder'] === 'Non' ? 1 : 0, $profileRights)) ?>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                                <input type="hidden" name="total" value="<?= $counter ?>">
-                                <div class="form-group mt-4">
-                                    <button type="submit" name="submit_rights" class="btn btn-success">
-                                        <i class="fas fa-check-circle"></i> Mettre à jour les droits
-                                    </button>
-                                    <small class="form-text text-muted">
-                                        Seules les cases cochées (droits non accordés) seront ajoutées
-                                    </small>
-                                </div>
-                            </form>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <input type="hidden" name="total" value="<?= $counter ?>">
+                                    <div class="form-group mt-4">
+                                        <button type="submit" name="submit_rights" class="btn btn-success">
+                                            <i class="fas fa-check-circle"></i> Mettre à jour les droits
+                                        </button>
+                                        <small class="form-text text-muted">
+                                            Seules les cases cochées (droits non accordés) seront ajoutées
+                                        </small>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-
+                    <?php endif; ?>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -294,7 +318,39 @@ foreach ($profileRights as $right) {
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
+    <!-- Delete Right Modal -->
+    <div class="modal fade" id="deleteRightModal" tabindex="-1" role="dialog" aria-labelledby="deleteRightModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteRightModalLabel">Confirmation de suppression</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <strong>Attention :</strong> Cette action est irréversible.
+                    </div>
+                    <p>Êtes-vous sûr de vouloir retirer l'accès à :</p>
+                    <div class="text-center">
+                        <h5 id="rightMenuName" class="text-danger mb-3"></h5>
+                    </div>
+                    <p class="text-muted small">L'utilisateur perdra l'accès à cette fonctionnalité.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fas fa-times mr-2"></i>Annuler
+                    </button>
+                    <a href="#" id="confirmDeleteRight" class="btn btn-danger">
+                        <i class="fas fa-trash mr-2"></i>Retirer l'accès
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Logout Modal-->
     <?php include_once __DIR__ . '/../../../layouts/logout.php'; ?>
 
@@ -309,7 +365,54 @@ foreach ($profileRights as $right) {
             });
         }
     </script>
+    <script>
+        // Gestion de la suppression des droits d'accès
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteRightModal = document.getElementById('deleteRightModal');
+            const rightMenuNameElement = document.getElementById('rightMenuName');
+            const confirmDeleteRightLink = document.getElementById('confirmDeleteRight');
 
+            // Événement pour les boutons de suppression des droits
+            document.querySelectorAll('.delete-right-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const rightId = this.getAttribute('data-right-id');
+                    const menuName = this.getAttribute('data-menu-name');
+                    const profileId = this.getAttribute('data-profile-id');
+
+                    // Mettre à jour le contenu du modal
+                    rightMenuNameElement.textContent = '"' + menuName + '"';
+
+                    // Mettre à jour le lien de confirmation
+                    const deleteUrl = `edit.php?find=${profileId}&del=${rightId}&menu=${encodeURIComponent(menuName)}`;
+                    confirmDeleteRightLink.href = deleteUrl;
+
+                    // Ouvrir le modal
+                    $(deleteRightModal).modal('show');
+                });
+            });
+
+            // Fonction pour tout sélectionner
+            function toggleAll(source) {
+                const checkboxes = document.querySelectorAll('input[name^="chk"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = source.checked;
+                });
+            }
+
+            // Auto-dissimulation des messages après 5 secondes
+            setTimeout(function () {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function (alert) {
+                    if (alert.classList.contains('alert-dismissible')) {
+                        const closeButton = alert.querySelector('.close');
+                        if (closeButton) {
+                            closeButton.click();
+                        }
+                    }
+                });
+            }, 5000);
+        });
+    </script>
 </body>
 
 </html>

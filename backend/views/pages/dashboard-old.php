@@ -1,7 +1,6 @@
 <?php
 //******************IDPAGE*****************
 $idpage = 1;
-require __DIR__ . '/../../../config/debug.php';
 
 //Session check****************************
 

@@ -11281,7 +11281,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 
-/*List profile*/
+/*List profile and user*/
 
 .stats-container {
     display: flex;
@@ -11323,10 +11323,37 @@ body.sidebar-toggled footer.sticky-footer {
     transition: background-color 0.3s;
 }
 
-.action-buttons a:hover {
-    background-color: #f8f9fa;
-}
 
+
+ .user-status {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .status-active {
+        background-color: #28a745;
+    }
+
+    .status-inactive {
+        background-color: #ffc107;
+    }
+
+    .status-very-inactive {
+        background-color: #dc3545;
+    }
+
+    .status-new {
+        background-color: #6c757d;
+    }
+
+    .action-buttons .btn {
+        margin: 1px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
 
 .no-data {
     text-align: center;
@@ -11334,6 +11361,40 @@ body.sidebar-toggled footer.sticky-footer {
     color: #6c757d;
     font-style: italic;
 }
+
+   /* Style pour le modal de suppression */
+    .delete-modal .modal-header {
+        background-color: #e74a3b;
+        color: white;
+    }
+
+    .user-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    .user-details h6 {
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .user-details p {
+        margin: 0;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
 
 
 /* Form Validation */
@@ -11364,4 +11425,7 @@ body.sidebar-toggled footer.sticky-footer {
 .required-fields-note {
     border-top: 1px solid #e3e6f0;
     padding-top: 1rem;
+}
+.badge {
+  color: black;
 }

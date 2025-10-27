@@ -1,20 +1,16 @@
 <?php
 //******************IDPAGE*****************
 $idpage = 1;
-require __DIR__ . '/../../../config/debug.php';
 
 //Session check****************************
-
 require_once __DIR__ . '/session_check.php';
-
 require_once __DIR__ . '/../../../php/function.php';
 
 //****************location******************
 $get_active_menu = "";
-$page_titre = "TrustedCargo";
+$page_titre = "TrustedCargo - Dashboard";
 $page_small_detail = "Version 1.0";
 $page_location = "Accueil";
-
 
 // Vérifie que l'utilisateur est connecté
 if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
@@ -24,6 +20,37 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
 
 $user = get_user_data_by_username($bdd, $_SESSION['my_username']);
 
+// Récupération des données pour le dashboard
+$total_shipments = get_total_shipments($bdd);
+$monthly_shipments = get_monthly_shipments($bdd);
+$total_customers = get_total_customers($bdd);
+$recent_shipments = get_recent_shipments($bdd, 5);
+$monthly_shipments_data = get_monthly_shipments_chart($bdd);
+$shipments_by_destination = get_shipments_by_destination($bdd);
+$destination_stats = get_destination_stats($bdd);
+$top_customers = get_top_customers($bdd, 5);
+
+// Préparation des données pour les graphiques
+$chart_labels = [];
+$chart_data = [];
+$chart_colors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796'];
+
+foreach ($monthly_shipments_data as $data) {
+    $month_name = date('M', mktime(0, 0, 0, $data['month'], 1));
+    $chart_labels[] = $month_name . ' ' . $data['year'];
+    $chart_data[] = intval($data['shipments_count']);
+}
+
+$pie_labels = [];
+$pie_data = [];
+$pie_colors = [];
+
+foreach ($shipments_by_destination as $index => $destination) {
+    $pie_labels[] = $destination['destination'];
+    $pie_data[] = intval($destination['count']);
+    $pie_colors[] = $chart_colors[$index % count($chart_colors)];
+}
+
 if (isset($_GET['close']) && $_GET['close'] == "ok") {
     $_SESSION['mi_m_profile'] = "NA";
     $_SESSION['my_m_user'] = "NA";
@@ -32,7 +59,6 @@ if (isset($_GET['close']) && $_GET['close'] == "ok") {
     $success = "yes";
     $success_message = "Tous les sous dossiers actifs ont été fermés";
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +82,6 @@ if (isset($_GET['close']) && $_GET['close'] == "ok") {
 
                 <!-- Topbar -->
                 <?php include_once __DIR__ . '/../../layouts/topbar.php'; ?>
-
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -64,23 +89,42 @@ if (isset($_GET['close']) && $_GET['close'] == "ok") {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard TrustedCargo</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-download fa-sm text-white-50"></i> Générer Rapport
+                        </a>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- Total Expéditions -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                Total Expéditions</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_shipments ?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-shipping-fast fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expéditions Ce Mois -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Expéditions Ce Mois</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $monthly_shipments ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -90,67 +134,36 @@ if (isset($_GET['close']) && $_GET['close'] == "ok") {
                             </div>
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- Total Clients -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Tasks
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                Total Clients</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_customers ?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pending Requests Card Example -->
+                        <!-- Destinations Actives -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                Destinations Actives</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= count($shipments_by_destination) ?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            <i class="fas fa-map-marker-alt fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -159,236 +172,161 @@ if (isset($_GET['close']) && $_GET['close'] == "ok") {
                     </div>
 
                     <!-- Content Row -->
-
                     <div class="row">
 
-                        <!-- Area Chart -->
+                        <!-- Area Chart - Expéditions Mensuelles -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Évolution des Expéditions Mensuelles</h6>
                                 </div>
-                                <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        <canvas id="shipmentsChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pie Chart -->
+                        <!-- Pie Chart - Par Destination -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Expéditions par Destination</h6>
                                 </div>
-                                <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
+                                        <canvas id="destinationPieChart"></canvas>
                                     </div>
                                     <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
+                                        <?php foreach($shipments_by_destination as $index => $destination): ?>
+                                            <span class="mr-2 d-block">
+                                                <i class="fas fa-circle" style="color: <?= $pie_colors[$index] ?>"></i> 
+                                                <?= $destination['destination'] ?> (<?= $destination['count'] ?>)
+                                            </span>
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- Deuxième ligne de contenu -->
                     <div class="row">
 
-                        <!-- Content Column -->
+                        <!-- Expéditions Récentes -->
                         <div class="col-lg-6 mb-4">
-
-                            <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Expéditions Récentes</h6>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">Server Migration <span
-                                            class="float-right">20%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
-                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Sales Tracking <span
-                                            class="float-right">40%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Customer Database <span
-                                            class="float-right">60%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Payout Details <span
-                                            class="float-right">80%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Account Setup <span
-                                            class="float-right">Complete!</span></h4>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Référence</th>
+                                                    <th>Client</th>
+                                                    <th>Destination</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach($recent_shipments as $shipment): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <strong><?= htmlspecialchars($shipment['tracking_reference']) ?></strong>
+                                                        </td>
+                                                        <td><?= htmlspecialchars($shipment['customer_name'] ?? 'N/A') ?></td>
+                                                        <td>
+                                                            <span class="badge badge-info"><?= $shipment['destination'] ?></span>
+                                                        </td>
+                                                        <td><?= date('d/m/Y', strtotime($shipment['created_at'])) ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Color System -->
-                            <div class="row">
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-primary text-white shadow">
-                                        <div class="card-body">
-                                            Primary
-                                            <div class="text-white-50 small">#4e73df</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-success text-white shadow">
-                                        <div class="card-body">
-                                            Success
-                                            <div class="text-white-50 small">#1cc88a</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-info text-white shadow">
-                                        <div class="card-body">
-                                            Info
-                                            <div class="text-white-50 small">#36b9cc</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-warning text-white shadow">
-                                        <div class="card-body">
-                                            Warning
-                                            <div class="text-white-50 small">#f6c23e</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-danger text-white shadow">
-                                        <div class="card-body">
-                                            Danger
-                                            <div class="text-white-50 small">#e74a3b</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-secondary text-white shadow">
-                                        <div class="card-body">
-                                            Secondary
-                                            <div class="text-white-50 small">#858796</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-light text-black shadow">
-                                        <div class="card-body">
-                                            Light
-                                            <div class="text-black-50 small">#f8f9fc</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-dark text-white shadow">
-                                        <div class="card-body">
-                                            Dark
-                                            <div class="text-white-50 small">#5a5c69</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
 
+                        <!-- Top Clients -->
                         <div class="col-lg-6 mb-4">
-
-                            <!-- Illustrations -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Top 5 Clients</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="text-center">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="...">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Client</th>
+                                                    <th>Téléphone</th>
+                                                    <th>Expéditions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach($top_customers as $customer): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <strong><?= htmlspecialchars($customer['full_name'] ?? 'N/A') ?></strong>
+                                                            <?php if(!empty($customer['email'])): ?>
+                                                                <br><small class="text-muted"><?= htmlspecialchars($customer['email']) ?></small>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td><?= htmlspecialchars($customer['phone'] ?? 'N/A') ?></td>
+                                                        <td>
+                                                            <span class="badge badge-primary"><?= $customer['total_shipments'] ?></span>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <p>Add some quality, svg illustrations to your project courtesy of <a
-                                            target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                        constantly updated collection of beautiful svg images that you can use
-                                        completely free and without attribution!</p>
-                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations
-                                        on
-                                        unDraw &rarr;</a>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Approach -->
+                    </div>
+
+                    <!-- Statistiques par Destination -->
+                    <div class="row">
+                        <div class="col-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Statistiques par Destination</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to
-                                        reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with
-                                        the
-                                        Bootstrap framework, especially the utility classes.</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Destination</th>
+                                                    <th>Total Expéditions</th>
+                                                    <th>Première Expédition</th>
+                                                    <th>Dernière Expédition</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach($destination_stats as $stat): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <strong><?= $stat['destination'] ?></strong>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-primary badge-pill"><?= $stat['total_shipments'] ?></span>
+                                                        </td>
+                                                        <td><?= $stat['first_shipment'] ? date('d/m/Y', strtotime($stat['first_shipment'])) : 'N/A' ?></td>
+                                                        <td><?= $stat['last_shipment'] ? date('d/m/Y', strtotime($stat['last_shipment'])) : 'N/A' ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -414,26 +352,100 @@ if (isset($_GET['close']) && $_GET['close'] == "ok") {
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include_once __DIR__ . '/../../layouts/logout.php'; ?>
 
     <?php include_once __DIR__ . '/../../layouts/script.php'; ?>
-</body>
 
+    <!-- Scripts pour les graphiques -->
+    <script>
+    // Graphique des expéditions mensuelles
+    var ctx = document.getElementById("shipmentsChart");
+    var shipmentsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <?= json_encode($chart_labels) ?>,
+            datasets: [{
+                label: "Nombre d'expéditions",
+                lineTension: 0.3,
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderColor: "rgba(78, 115, 223, 1)",
+                pointRadius: 3,
+                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverRadius: 3,
+                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
+                data: <?= json_encode($chart_data) ?>,
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function(value, index, values) {
+                            return value.toLocaleString();
+                        }
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return 'Expéditions: ' + tooltipItem.yLabel.toLocaleString();
+                    }
+                }
+            }
+        }
+    });
+
+    // Graphique circulaire des destinations
+    var ctx2 = document.getElementById("destinationPieChart");
+    var destinationPieChart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: <?= json_encode($pie_labels) ?>,
+            datasets: [{
+                data: <?= json_encode($pie_data) ?>,
+                backgroundColor: <?= json_encode($pie_colors) ?>,
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+                        return data.labels[tooltipItem.index] + ': ' + currentValue + ' (' + percentage + '%)';
+                    }
+                }
+            },
+            cutoutPercentage: 80,
+        },
+    });
+    </script>
+
+</body>
 </html>

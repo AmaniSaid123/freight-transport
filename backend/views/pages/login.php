@@ -1,5 +1,4 @@
 <?php
-require __DIR__ . '/../../../config/debug.php';
 if (!defined('BASE_URL')) {
         require_once __DIR__ . '/../../../config/constants.php';
 }

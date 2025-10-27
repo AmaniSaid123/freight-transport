@@ -31,18 +31,34 @@ class Profile
         return $this->bdd->query($sql);
     }
 
+
     /**
-     * Delete a profile by ID
-     *
-     * @param int $profileId
-     * @return bool
+     * Vérifie si un profil est utilisé par des utilisateurs
+     */
+    public function isProfileUsed($profileId)
+    {
+        $sql = "SELECT COUNT(*) as user_count FROM user WHERE id_profile = :profile_id";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute(['profile_id' => $profileId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['user_count'] > 0;
+    }
+
+    /**
+     * Supprime un profil
      */
     public function deleteProfile($profileId)
     {
-        $stmt = $this->bdd->prepare("DELETE FROM profile WHERE id = ?");
-        return $stmt->execute([$profileId]);
+        try {
+            $sql = "DELETE FROM profile WHERE id = :profile_id";
+            $stmt = $this->bdd->prepare($sql);
+            return $stmt->execute(['profile_id' => $profileId]);
+        } catch (PDOException $e) {
+            error_log("Erreur suppression profil: " . $e->getMessage());
+            return false;
+        }
     }
-
     /**
      * Get profile data by ID
      *
@@ -182,11 +198,7 @@ class Profile
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function deleteProfileContent(int $contentId, int $profileId): bool
-    {
-        $stmt = $this->bdd->prepare("DELETE FROM profile_content WHERE idpc = ? AND id_profile = ?");
-        return $stmt->execute([$contentId, $profileId]);
-    }
+
 
     public function addProfileContent(int $profileId, int $contentId): bool
     {
@@ -196,4 +208,19 @@ class Profile
         ");
         return $stmt->execute([$profileId, $contentId]);
     }
+    /**
+     * Supprime un enregistrement de profile_content
+     */
+    public function deleteProfileContent($rightId)
+    {
+        try {
+            $sql = "DELETE FROM profile_content WHERE id = :right_id";
+            $stmt = $this->bdd->prepare($sql);
+            return $stmt->execute(['right_id' => $rightId]);
+        } catch (PDOException $e) {
+            error_log("Erreur suppression droit accès: " . $e->getMessage());
+            return false;
+        }
+    }
+
 }

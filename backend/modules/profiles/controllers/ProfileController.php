@@ -66,42 +66,40 @@ class ProfileController
      * @param int $profileId
      * @return array
      */
-    public function handleDeleteProfile($profileId)
-    {
-        // Vérifier si le profil existe
-        if (!$this->model->profileExists($profileId)) {
+/**
+ * Gère la suppression d'un profil
+ */
+public function handleDeleteProfile($profileId) {
+    try {
+        // Vérifier d'abord si le profil peut être supprimé
+        if ($this->model->isProfileUsed($profileId)) {
             return [
                 'error' => 'yes',
-                'message' => "Le profile demandé n'existe pas."
+                'message' => 'Impossible de supprimer ce profil car il est utilisé par des utilisateurs.'
             ];
         }
 
-        $utilisateur_affecte = $this->model->getTotalUsersByProfile($profileId);
-
-        if ($utilisateur_affecte === 0) {
-            $profileData = $this->model->getProfileData($profileId);
-            $deleted = $this->model->deleteProfile($profileId);
-
-            if ($deleted && $profileData) {
-                $this->logDeletion($profileData);
-                return [
-                    'success' => 'yes',
-                    'message' => "Le Profile {$profileData['name']} supprimé avec succès ! (0 utilisateur affecté)"
-                ];
-            } else {
-                return [
-                    'error' => 'yes',
-                    'message' => "Erreur lors de la suppression du profile."
-                ];
-            }
+        // Supprimer le profil
+        $result = $this->model->deleteProfile($profileId);
+        
+        if ($result) {
+            return [
+                'success' => 'yes',
+                'message' => 'Profil supprimé avec succès'
+            ];
+        } else {
+            return [
+                'error' => 'yes',
+                'message' => 'Erreur lors de la suppression du profil'
+            ];
         }
-
+    } catch (Exception $e) {
         return [
             'error' => 'yes',
-            'message' => "Impossible de supprimer ce profile car il est encore attribué à {$utilisateur_affecte} utilisateur(s)."
+            'message' => 'Erreur: ' . $e->getMessage()
         ];
     }
-
+}
     /**
      * Log profile deletion
      *
@@ -165,6 +163,32 @@ class ProfileController
                 : "Aucun droit d’accès sélectionné."
         ];
     }
+
+    /**
+ * Gère la suppression d'un droit d'accès
+ */
+public function handleDeleteRight($rightId) {
+    try {
+        $result = $this->model->deleteProfileContent($rightId);
+        
+        if ($result) {
+            return [
+                'success' => true,
+                'message' => 'Droit d\'accès supprimé avec succès'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du droit d\'accès'
+            ];
+        }
+    } catch (Exception $e) {
+        return [
+            'success' => false,
+            'message' => 'Erreur: ' . $e->getMessage()
+        ];
+    }
+}
     /**
      * Get all profiles
      *

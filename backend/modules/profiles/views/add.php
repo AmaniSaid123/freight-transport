@@ -1,9 +1,8 @@
 <?php
 //****************** PAGE SETUP ******************
-$idpage = 5;
+$idpage = 3;
 
 require_once __DIR__ . '/../../../views/pages/session_check.php';
-require_once __DIR__ . '/../../../../config/debug.php';
 require_once __DIR__ . '/../../../../php/function.php';
 
 // Charger les classes

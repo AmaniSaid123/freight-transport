@@ -11,24 +11,23 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="<?= BASE_URL ?>dashboard.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
-<!-- Heading -->
-<div class="sidebar-heading">
-    Settings
-</div>
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Settings
+    </div>
 
 
-
-
-
-    <?php require_once __DIR__ . '/sidebar/sidebarProfile.php';?>
-
+    <?php require_once __DIR__ . '/sidebar/sidebarProfile.php'; ?>
+    <?php require_once __DIR__ . '/sidebar/sidebarUser.php'; ?>
+    <?php require_once __DIR__ . '/sidebar/sidebarMailing.php'; ?>
+    <?php require_once __DIR__ . '/sidebar/sidebarContact.php'; ?>
     <!-- Divider -->
     <hr class="sidebar-divider">
 
