@@ -1,7 +1,6 @@
 <?php
 //****************** PAGE SETUP ******************
-$idpage = 12; // ID de la page pour les permissions
-
+$idpage = 14;
 require_once __DIR__ . '/../../../views/pages/session_check.php';
 require_once __DIR__ . '/../../../../php/function.php';
 
@@ -23,11 +22,11 @@ $alertClass = 'alert-info';
 
 // Gestion des actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_mail_id'])) {
-    $mail_id = (int)$_POST['delete_mail_id'];
+    $mail_id = (int) $_POST['delete_mail_id'];
     $result = $controller->handleDeleteMail($mail_id);
     $message = $result['message'];
     $alertClass = $result['success'] ? 'alert-success' : 'alert-danger';
-    
+
     if ($result['success']) {
         header('Location: list.php?success=1&message=' . urlencode($message));
         exit;
@@ -47,17 +46,33 @@ $stats = $controller->getStats();
     .stat-card {
         border-left: 4px solid;
     }
-    .stat-total { border-left-color: #4e73df; }
-    .stat-envoye { border-left-color: #1cc88a; }
-    .stat-brouillon { border-left-color: #f6c23e; }
-    .stat-programme { border-left-color: #36b9cc; }
-    .stat-erreur { border-left-color: #e74a3b; }
-    
+
+    .stat-total {
+        border-left-color: #4e73df;
+    }
+
+    .stat-envoye {
+        border-left-color: #1cc88a;
+    }
+
+    .stat-brouillon {
+        border-left-color: #f6c23e;
+    }
+
+    .stat-programme {
+        border-left-color: #36b9cc;
+    }
+
+    .stat-erreur {
+        border-left-color: #e74a3b;
+    }
+
     .email-preview {
         max-height: 100px;
         overflow: hidden;
         position: relative;
     }
+
     .email-preview::after {
         content: '';
         position: absolute;
@@ -209,12 +224,14 @@ $stats = $controller->getStats();
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Liste des Emails</h6>
-                            <a href="add.php" class="btn btn-primary btn-sm">
-                                <i class="fa fa-plus"></i> Nouvel Email
-                            </a>
-                        </div>
+                        <?php if (get_access($bdd, 15, $_SESSION['my_idprofile']) == 1): ?>
+                            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">Liste des Emails</h6>
+                                <a href="add.php" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-plus"></i> Nouvel Email
+                                </a>
+                            </div>
+                        <?php endif; ?>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -251,38 +268,46 @@ $stats = $controller->getStats();
                                                     <td class="text-center">
                                                         <div class="action-buttons d-flex justify-content-center">
                                                             <!-- Voir détails -->
-                                                            <a href="detail.php?id=<?= $mail['id'] ?>"
-                                                                class="btn btn-info btn-xs" title="Voir détails">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-
+                                                            <?php if (get_access($bdd, 18, $_SESSION['my_idprofile']) == 1): ?>
+                                                                <a href="detail.php?id=<?= $mail['id'] ?>"
+                                                                    class="btn btn-info btn-xs" title="Voir détails">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+                                                            <?php endif; ?>
                                                             <!-- Modifier -->
-                                                            <a href="edit.php?id=<?= $mail['id'] ?>"
-                                                                class="btn btn-primary btn-xs" title="Modifier">
-                                                                <i class="fa fa-edit"></i>
-                                                            </a>
+                                                            <?php if (get_access($bdd, 16, $_SESSION['my_idprofile']) == 1): ?>
 
+                                                                <a href="edit.php?id=<?= $mail['id'] ?>"
+                                                                    class="btn btn-primary btn-xs" title="Modifier">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </a>
+                                                            <?php endif; ?>
                                                             <!-- Supprimer -->
-                                                            <button type="button" class="btn btn-danger btn-xs delete-mail-btn"
-                                                                title="Supprimer" 
-                                                                data-mail-id="<?= $mail['id'] ?>"
-                                                                data-mail-title="<?= htmlspecialchars($mail['titre_email']) ?>">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
+                                                            <?php if (get_access($bdd, 17, $_SESSION['my_idprofile']) == 1): ?>
+                                                                <button type="button" class="btn btn-danger btn-xs delete-mail-btn"
+                                                                    title="Supprimer" data-mail-id="<?= $mail['id'] ?>"
+                                                                    data-mail-title="<?= htmlspecialchars($mail['titre_email']) ?>">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            <?php endif; ?>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
+
                                             <tr>
-                                                <td colspan="8" class="text-center py-4">
-                                                    <i class="fa fa-envelope fa-3x text-muted mb-3"></i><br>
-                                                    <span class="text-muted">Aucun email trouvé</span><br>
-                                                    <a href="add.php" class="btn btn-primary btn-sm mt-2">
-                                                        <i class="fa fa-plus"></i> Créer votre premier email
-                                                    </a>
-                                                </td>
+                                                <?php if (get_access($bdd, 15, $_SESSION['my_idprofile']) == 1): ?>
+                                                    <td colspan="8" class="text-center py-4">
+                                                        <i class="fa fa-envelope fa-3x text-muted mb-3"></i><br>
+                                                        <span class="text-muted">Aucun email trouvé</span><br>
+                                                        <a href="add.php" class="btn btn-primary btn-sm mt-2">
+                                                            <i class="fa fa-plus"></i> Créer votre premier email
+                                                        </a>
+                                                    </td>
+                                                <?php endif; ?>
                                             </tr>
+
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
@@ -315,8 +340,8 @@ $stats = $controller->getStats();
     <?php include_once __DIR__ . '/../../../layouts/logout.php'; ?>
 
     <!-- Delete Mail Modal -->
-    <div class="modal fade" id="deleteMailModal" tabindex="-1" role="dialog"
-        aria-labelledby="deleteMailModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteMailModal" tabindex="-1" role="dialog" aria-labelledby="deleteMailModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
@@ -412,4 +437,5 @@ $stats = $controller->getStats();
         });
     </script>
 </body>
+
 </html>

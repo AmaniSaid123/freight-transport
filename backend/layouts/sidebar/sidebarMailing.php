@@ -1,8 +1,8 @@
 <?php
 // Définir les accès pour le profil
 $mailingAccess = [
-    'view' => get_access($bdd, 2, $_SESSION['my_idprofile']),
-    'create' => get_access($bdd, 3, $_SESSION['my_idprofile']),
+    'view' => get_access($bdd, 14, $_SESSION['my_idprofile']),
+    'create' => get_access($bdd, 15, $_SESSION['my_idprofile']),
 ];
 
 // Configuration du menu (centralisé)
