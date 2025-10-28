@@ -1,14 +1,10 @@
 <?php
-// frontend/index.php
+require_once __DIR__ . '/../config/constants.php';  
 
-// Récupère la page demandée dans l'URL (ex: ?page=homepage)
+
 $page = $_GET['page'] ?? 'homepage';
 
-// Définit le chemin des vues
-$viewPath = __DIR__ . '/views/pages/' . $page . '.php';
-
-echo($viewPath);
-
+$viewPath = __DIR__ . '/views/pages/' . basename($page) . '.php';
 // Vérifie si la vue existe
 if (file_exists($viewPath)) {
     include $viewPath;

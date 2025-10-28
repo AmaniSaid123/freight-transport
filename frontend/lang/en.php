@@ -145,27 +145,50 @@ return [
     'prices_table_leadtime' => 'Lead time',
     'prices_table_notes' => 'Notes',
 
-    'prices_row_jhb_destination' => 'Johannesburg, South Africa',
+    'prices_row_jhb_destination' => 'Johannesburg',
     'prices_row_jhb_air_type' => 'Air Freight',
     'prices_row_jhb_air_price' => 'R450 per Kg',
     'prices_row_jhb_air_leadtime' => '9 to 12 days',
     'prices_row_jhb_air_notes' => 'Customs clearance included',
 
     'prices_row_jhb_sea_type' => 'Sea Freight',
-    'prices_row_jhb_sea_price' => 'from R7300 per CBM',
+    'prices_row_jhb_sea_price' => 'From R5,999.99 per CBM',
     'prices_row_jhb_sea_leadtime' => '25 to 40 days',
     'prices_row_jhb_sea_notes' => 'Customs clearance included',
 
-    'prices_row_kins_destination' => 'Kinshasa, Lubumbashi and Kolwezi in Democratic Republic of Congo',
+    'prices_row_kins_destination' => 'Kinshasa',
     'prices_row_kins_air_type' => 'Air Freight',
     'prices_row_kins_air_price' => '18 USD per Kg',
     'prices_row_kins_air_leadtime' => '5 to 10 days',
     'prices_row_kins_air_notes' => 'Customs clearance included',
 
     'prices_row_kins_sea_type' => 'Sea Freight',
-    'prices_row_kins_sea_price' => ' from USD 545 per CBM',
+    'prices_row_kins_sea_price' => 'From USD 545 per CBM',
     'prices_row_kins_sea_leadtime' => '50 to 60 days',
     'prices_row_kins_sea_notes' => 'Customs clearance included',
+
+
+    'prices_row_lumb_destination' => 'Lubumbashi',
+    'prices_row_lumb_air_type' => 'Air Freight',
+    'prices_row_lumb_air_price' => '18 USD per Kg',
+    'prices_row_lumb_air_leadtime' => '5 to 10 days',
+    'prices_row_lumb_air_notes' => 'Customs clearance included',
+
+    'prices_row_lumb_sea_type' => 'Sea Freight',
+    'prices_row_lumb_sea_price' => 'From USD 545 per CBM',
+    'prices_row_lumb_sea_leadtime' => '50 to 60 days',
+    'prices_row_lumb_sea_notes' => 'Customs clearance included',
+
+    'prices_row_kwz_destination' => 'Kolwezi',
+    'prices_row_kwz_air_type' => 'Air Freight',
+    'prices_row_kwz_air_price' => '18 USD per Kg',
+    'prices_row_kwz_air_leadtime' => '5 to 10 days',
+    'prices_row_kwz_air_notes' => 'Customs clearance included',
+
+    'prices_row_kwz_sea_type' => 'Sea Freight',
+    'prices_row_kwz_sea_price' => 'From USD 545 per CBM',
+    'prices_row_kwz_sea_leadtime' => '50 to 60 days',
+    'prices_row_kwz_sea_notes' => 'Customs clearance included',
     // process page
     'process_hero_title' => 'Simple — here is the procedure to follow:',
     'process_step1_title' => 'Step One',
@@ -319,4 +342,14 @@ If we did not receive your payment for the invoice, we will consider you have ab
     'payment_text_process' => 'Proceed to payment',
     'payment_pay_button' => 'Pay now',
     'payment_secure_text' => 'Secure payment with SSL encryption',
+
+
+    'unexpected_error' => 'An error occurred while creating.',
+    'success' => 'Your shipment was successfully created.',
+    'login_failed' => 'Login failed.',
+    'please_fill_all_fields' => 'Please fill in all fields.',
+    'please_add_at_least_one_expedition' => 'Please add at least one expedition.',
+    'dossier_created_success' => 'Dossier created successfully.',
+
+
 ];

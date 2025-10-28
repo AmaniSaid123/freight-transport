@@ -155,28 +155,50 @@ return [
     'prices_table_leadtime' => 'Délais',
     'prices_table_notes' => 'Notes',
 
-    'prices_row_jhb_destination' => 'Johannesburg, Afrique du Sud',
+    'prices_row_jhb_destination' => 'Johannesburg',
     'prices_row_jhb_air_type' => 'Fret Aérien',
     'prices_row_jhb_air_price' => 'R450 par Kg',
     'prices_row_jhb_air_leadtime' => '9 à 12 jours',
     'prices_row_jhb_air_notes' => 'Dédouanement inclus',
 
     'prices_row_jhb_sea_type' => 'Fret Maritime',
-    'prices_row_jhb_sea_price' => 'à partir de R7300 par CBM',
+    'prices_row_jhb_sea_price' => 'À partir de R5,999.99 par CBM',
     'prices_row_jhb_sea_leadtime' => '25 à 40 jours',
     'prices_row_jhb_sea_notes' => 'Dédouanement inclus',
 
-    'prices_row_kins_destination' => 'Kinshasa, Lubumbashi et Kolwezi en République démocratique du Congo',
+    'prices_row_kins_destination' => 'Kinshasa',
     'prices_row_kins_air_type' => 'Fret Aérien',
     'prices_row_kins_air_price' => '18 USD par Kg',
     'prices_row_kins_air_leadtime' => '5 à 10 jours',
     'prices_row_kins_air_notes' => 'Dédouanement inclus',
 
     'prices_row_kins_sea_type' => 'Fret Maritime',
-    'prices_row_kins_sea_price' => 'à partir de 545 USD par CBM',
+    'prices_row_kins_sea_price' => 'À partir de 545 USD par CBM',
     'prices_row_kins_sea_leadtime' => '50 à 60 jours',
     'prices_row_kins_sea_notes' => 'Dédouanement inclus',
 
+
+    'prices_row_lumb_destination' => 'Lubumbashi',
+    'prices_row_lumb_air_type' => 'Fret Aérien',
+    'prices_row_lumb_air_price' => '18 USD par Kg',
+    'prices_row_lumb_air_leadtime' => '5 à 10 jours',
+    'prices_row_lumb_air_notes' => 'Dédouanement inclus',
+
+    'prices_row_lumb_sea_type' => 'Fret Maritime',
+    'prices_row_lumb_sea_price' => 'À partir de 545 USD par CBM',
+    'prices_row_lumb_sea_leadtime' => '50 à 60 jours',
+    'prices_row_lumb_sea_notes' => 'Dédouanement inclus',
+
+    'prices_row_kwz_destination' => 'Kolwezi',
+    'prices_row_kwz_air_type' => 'Fret Aérien',
+    'prices_row_kwz_air_price' => '18 USD par Kg',
+    'prices_row_kwz_air_leadtime' => '5 à 10 jours',
+    'prices_row_kwz_air_notes' => 'Dédouanement inclus',
+
+    'prices_row_kwz_sea_type' => 'Fret Maritime',
+    'prices_row_kwz_sea_price' => 'À partir de 545 USD par CBM',
+    'prices_row_kwz_sea_leadtime' => '50 à 60 jours',
+    'prices_row_kwz_sea_notes' => 'Dédouanement inclus',
     // process page
     'process_hero_title' => 'Simple. Voici la procédure à suivre :',
     'process_step1_title' => 'Première étape',
@@ -386,5 +408,13 @@ return [
     'payment_text_process' => 'Procéder au paiement',
     'payment_pay_button' => 'Payer maintenant',
     'payment_secure_text' => 'Paiement sécurisé avec chiffrement SSL',
+
+
+    'unexpected_error' => 'Une erreur est survenue lors de la création.',
+    'success' => 'Votre envoi a été créé avec succès.',
+    'login_failed' => 'Échec de la connexion.',
+    'please_fill_all_fields' => 'Veuillez remplir tous les champs du dossier !',
+    'please_add_at_least_one_expedition' => 'Veuillez ajouter au moins une expédition !',
+    'dossier_created_success' => 'Dossier créé avec succès !',
 
 ];

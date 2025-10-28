@@ -6,7 +6,7 @@
 session_start();
 
 //include_once(__DIR__ . "/../../../php/function.php");
-
+require_once __DIR__ . '/../../includes/translation.php';
 
 
 ?>
@@ -14,7 +14,47 @@ session_start();
 
 <?php include(__DIR__ . '/../layouts/head.php'); ?>
 <style>
+.is-invalid {
+    border-color: #e74a3b !important;
+}
 
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #e74a3b;
+}
+
+.alert {
+    border-radius: 0.35rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.alert-success {
+    color: #1cc88a;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #e74a3b;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-info {
+    color: #36b9cc;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+/* Animation pour le bouton */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 </style>
 
 <body>
@@ -91,7 +131,8 @@ session_start();
                             <div class="image-info">
                                 <h3><?= t('contact_city_kin') ?></h3>
                                 <p><?= t('contact_city_kin_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Kin.jpg" class="download-btn" download><i class="fas fa-download"></i>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Kin.jpg" class="download-btn" download><i
+                                        class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
@@ -103,19 +144,21 @@ session_start();
                             <div class="image-info">
                                 <h3><?= t('contact_city_lub') ?></h3>
                                 <p><?= t('contact_city_lub_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Lumb.jpg" class="download-btn" download><i class="fas fa-download"></i>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Lumb.jpg" class="download-btn" download><i
+                                        class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
 
-                          <div class="image-card">
+                        <div class="image-card">
                             <div class="image-placeholder">
                                 <img src="<?= BASE_URL ?>assets/img/tcc-Kwz.jpg" alt="Lubumbashi">
                             </div>
                             <div class="image-info">
                                 <h3><?= t('contact_city_kwz') ?></h3>
                                 <p><?= t('contact_city_kwz_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Kwz.jpg" class="download-btn" download><i class="fas fa-download"></i>
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Kwz.jpg" class="download-btn" download><i
+                                        class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
@@ -185,7 +228,7 @@ session_start();
                             <h4><i class="fas fa-city"></i> <?= t('contact_city_kwz_full') ?></h4>
                             <div class="address">
                                 <p>Trusted Cargo Company</p>
-                                <p>  NB : <?= t('footer_contact_des_kwz') ?></p>
+                                <p> NB : <?= t('footer_contact_des_kwz') ?></p>
                             </div>
                             <div class="contact-details">
                                 <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
@@ -231,54 +274,67 @@ session_start();
                     <h2 class="display-5 text-white mb-2"><?= t('contact_form_title') ?></h2>
                     <p class="mb-4 text-white"><?= t('contact_form_description') ?> <a class="text-dark fw-bold"
                             href="#"><?= t('contact_form_download') ?></a>.</p>
-                    <form>
+                    <form id="contactForm" method="POST"
+                        action="<?= BASE_URL ?>/actions/process_contact.php">
                         <div class="row g-3">
                             <div class="col-lg-12 col-xl-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control bg-transparent border border-white" id="name"
-                                        placeholder="<?= t('contact_form_name_placeholder') ?>">
-                                    <label for="name"><?= t('contact_form_name_label') ?></label>
+                                    <input type="text" class="form-control bg-transparent border border-white" id="nom"
+                                        name="nom" placeholder="<?= t('contact_form_name_placeholder') ?>" required>
+                                    <label for="nom"><?= t('contact_form_name_label') ?></label>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-xl-6">
                                 <div class="form-floating">
                                     <input type="email" class="form-control bg-transparent border border-white"
-                                        id="email" placeholder="<?= t('contact_form_email_placeholder') ?>">
+                                        id="email" name="email" placeholder="<?= t('contact_form_email_placeholder') ?>"
+                                        required>
                                     <label for="email"><?= t('contact_form_email_label') ?></label>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-xl-6">
                                 <div class="form-floating">
-                                    <input type="phone" class="form-control bg-transparent border border-white"
-                                        id="phone" placeholder="<?= t('contact_form_phone_placeholder') ?>">
-                                    <label for="phone"><?= t('contact_form_phone_label') ?></label>
+                                    <input type="tel" class="form-control bg-transparent border border-white"
+                                        id="telephone" name="telephone"
+                                        placeholder="<?= t('contact_form_phone_placeholder') ?>">
+                                    <label for="telephone"><?= t('contact_form_phone_label') ?></label>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-xl-6">
                                 <div class="form-floating">
                                     <input type="text" class="form-control bg-transparent border border-white"
-                                        id="project" placeholder="<?= t('contact_form_project_placeholder') ?>">
-                                    <label for="project"><?= t('contact_form_project_label') ?></label>
+                                        id="categorie" name="categorie"
+                                        placeholder="<?= t('contact_form_project_placeholder') ?>">
+                                    <label for="categorie"><?= t('contact_form_project_label') ?></label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
                                     <input type="text" class="form-control bg-transparent border border-white"
-                                        id="subject" placeholder="<?= t('contact_form_subject_placeholder') ?>">
-                                    <label for="subject"><?= t('contact_form_subject_label') ?></label>
+                                        id="sujet" name="sujet"
+                                        placeholder="<?= t('contact_form_subject_placeholder') ?>" required>
+                                    <label for="sujet"><?= t('contact_form_subject_label') ?></label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control bg-transparent border border-white"
-                                        placeholder="<?= t('contact_form_message_placeholder') ?>" id="message"
-                                        style="height: 160px"></textarea>
+                                    <textarea class="form-control bg-transparent border border-white" id="message"
+                                        name="message" placeholder="<?= t('contact_form_message_placeholder') ?>"
+                                        style="height: 160px" required></textarea>
                                     <label for="message"><?= t('contact_form_message_label') ?></label>
                                 </div>
                             </div>
+
+                            <!-- Champ caché pour les métadonnées -->
+                            <input type="hidden" name="ip_address" id="ip_address">
+                            <input type="hidden" name="user_agent" id="user_agent">
+                            <input type="hidden" name="lang" value="<?= $_SESSION['lang'] ?? 'fr' ?>">
+
                             <div class="col-12">
-                                <button
-                                    class="btn btn-light text-dar py-3"><?= t('contact_form_send_button') ?></button>
+                                <button type="submit" class="btn btn-light text-dark py-3" id="submitBtn">
+                                    <?= t('contact_form_send_button') ?>
+                                </button>
+                                <div id="formMessage" class="mt-3" style="display: none;"></div>
                             </div>
                         </div>
                     </form>
@@ -308,11 +364,12 @@ session_start();
                 </div>
                 <div class="col-lg-5 col-xl-5" data-wow-delay="0.3s">
                     <div class="d-flex justify-content-center mb-4">
-                        <a class="btn btn-lg-square btn-light rounded-circle mx-2" href="https://www.facebook.com/share/1CVqVzjFVB/"><i
-                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-lg-square btn-light rounded-circle mx-2"
+                            href="https://www.facebook.com/share/1CVqVzjFVB/"><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-lg-square btn-light rounded-circle mx-2" href=""><i
                                 class="fab fa-twitter"></i></a>
-                        <a class="btn btn-lg-square btn-light rounded-circle mx-2" href="https://www.instagram.com/trustedcargocompany?igsh=MWlvdXo4cjIwZjlkNA=="><i
+                        <a class="btn btn-lg-square btn-light rounded-circle mx-2"
+                            href="https://www.instagram.com/trustedcargocompany?igsh=MWlvdXo4cjIwZjlkNA=="><i
                                 class="fab fa-instagram"></i></a>
                         <a class="btn btn-lg-square btn-light rounded-circle mx-2" href=""><i
                                 class="fab fa-linkedin-in"></i></a>

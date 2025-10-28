@@ -1231,7 +1231,6 @@ svg {
 }
 
 
-
 /* Responsive */
 @media (max-width: 768px) {
     .terms-container {
@@ -1239,8 +1238,6 @@ svg {
     }
 
 }
-
-
 
 ul li.checked-svg {
     position: relative;
@@ -1258,55 +1255,6 @@ ul li.checked-svg::before {
     background-image: url("../img/check.svg");
     background-size: contain;
     background-repeat: no-repeat;
-}
-
-
-
-/*** price page ***/
-
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-th,
-td {
-    padding: 12px;
-    border: 1px solid #ccc;
-    text-align: left;
-}
-
-th {
-    background-color: #555;
-    color: white;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-    /* gris clair */
-}
-
-tr:nth-child(odd) {
-    background-color: #d9d9d9;
-    /* gris foncé */
-}
-
-
-.popover-custom {
-    max-width: 400px;
-}
-
-.popover-custom .popover-header {
-    background-color: #000;
-    color: white;
-    font-weight: 600;
-}
-
-.popover-custom .popover-body {
-    line-height: 1.6;
-    padding: 1rem;
 }
 
 .location-title {
