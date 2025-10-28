@@ -154,6 +154,7 @@ return [
     'prices_table_price' => 'Prix',
     'prices_table_leadtime' => 'Délais',
     'prices_table_notes' => 'Notes',
+    'prices_customs_included' => 'Douane incluse',
 
     'prices_row_jhb_destination' => 'Johannesburg',
     'prices_row_jhb_air_type' => 'Fret Aérien',

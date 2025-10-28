@@ -144,6 +144,7 @@ return [
     'prices_table_price' => 'Price',
     'prices_table_leadtime' => 'Lead time',
     'prices_table_notes' => 'Notes',
+    'prices_customs_included' => 'Customs included',
 
     'prices_row_jhb_destination' => 'Johannesburg',
     'prices_row_jhb_air_type' => 'Air Freight',

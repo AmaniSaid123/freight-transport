@@ -6,8 +6,8 @@
         <h3 class="section-title mb-3"><?= t('prices') ?></h3>
         <p class="mb-3 small"><?= t('prices_intro_p1') ?></p>
         <p class="mb-3 small"><?= t('prices_intro_p2') ?></p>
-        
-  
+
+
       </div>
     </div>
 
@@ -24,7 +24,7 @@
                   <th class="price-col"><?= t('prices_table_price') ?></th>
                   <th class="delivery-col"><?= t('prices_table_leadtime') ?></th>
                   <th class="notes-col"><?= t('prices_table_notes') ?></th>
-    
+
                 </tr>
               </thead>
               <tbody>
@@ -53,7 +53,7 @@
                   <td class="notes-cell small">
                     <?= t('prices_row_jhb_air_notes') ?>
                   </td>
-            
+
                 </tr>
                 <tr class="table-row">
                   <td class="type-cell">
@@ -65,10 +65,8 @@
                   <td class="price-cell">
                     <div class="price-with-doc">
                       <span class="price-value"><?= t('prices_row_jhb_sea_price') ?></span>
-                      <a href="<?= BASE_URL ?>assets/pdf/SA TRUSTED CARGO COMPANY SEA FREIGHT PRICE LIST.pdf" 
-                         class="pdf-download-btn small" 
-                         target="_blank"
-                        >
+                      <a href="<?= BASE_URL ?>assets/pdf/SA TRUSTED CARGO COMPANY SEA FREIGHT PRICE LIST.pdf"
+                        class="pdf-download-btn small" target="_blank">
                         <i class="fas fa-file-pdf"></i>
                       </a>
                     </div>
@@ -85,12 +83,12 @@
                       <div class="included-features">
                         <span class="feature-badge small">
                           <i class="fas fa-check"></i>
-                          Douane incluse
+                          <?= t('prices_customs_included') ?>
                         </span>
                       </div>
                     </div>
                   </td>
-                 
+
                 </tr>
 
                 <!-- Kinshasa -->
@@ -118,7 +116,7 @@
                   <td class="notes-cell small">
                     <?= t('prices_row_kins_air_notes') ?>
                   </td>
-               
+
                 </tr>
                 <tr class="table-row">
                   <td class="type-cell">
@@ -142,12 +140,12 @@
                       <div class="included-features">
                         <span class="feature-badge small">
                           <i class="fas fa-check"></i>
-                          Douane incluse
+                          <?= t('prices_customs_included') ?>
                         </span>
                       </div>
                     </div>
                   </td>
-                  
+
                 </tr>
 
                 <!-- Lubumbashi -->
@@ -175,7 +173,7 @@
                   <td class="notes-cell small">
                     <?= t('prices_row_lumb_air_notes') ?>
                   </td>
-                 
+
                 </tr>
                 <tr class="table-row">
                   <td class="type-cell">
@@ -199,12 +197,12 @@
                       <div class="included-features">
                         <span class="feature-badge small">
                           <i class="fas fa-check"></i>
-                          Douane incluse
+                          <?= t('prices_customs_included') ?>
                         </span>
                       </div>
                     </div>
                   </td>
-                 
+
                 </tr>
 
                 <!-- Kwamouth -->
@@ -232,7 +230,7 @@
                   <td class="notes-cell small">
                     <?= t('prices_row_kwz_air_notes') ?>
                   </td>
-                 
+
                 </tr>
                 <tr class="table-row">
                   <td class="type-cell">
@@ -256,12 +254,12 @@
                       <div class="included-features">
                         <span class="feature-badge small">
                           <i class="fas fa-check"></i>
-                          Douane incluse
+                          <?= t('prices_customs_included') ?>
                         </span>
                       </div>
                     </div>
                   </td>
-               
+
                 </tr>
               </tbody>
             </table>
