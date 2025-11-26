@@ -28,6 +28,7 @@
     <?php require_once __DIR__ . '/sidebar/sidebarUser.php'; ?>
     <?php require_once __DIR__ . '/sidebar/sidebarMailing.php'; ?>
     <?php require_once __DIR__ . '/sidebar/sidebarContact.php'; ?>
+    <?php require_once __DIR__ . '/sidebar/sidebarParcel.php'; ?>
     <!-- Divider -->
     <hr class="sidebar-divider">
 

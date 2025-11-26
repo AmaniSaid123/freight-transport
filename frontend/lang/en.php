@@ -153,8 +153,8 @@ return [
     'prices_row_jhb_air_notes' => 'Customs clearance included',
 
     'prices_row_jhb_sea_type' => 'Sea Freight',
-    'prices_row_jhb_sea_price' => 'From R5,999.99 per CBM',
-    'prices_row_jhb_sea_leadtime' => '25 to 40 days',
+    'prices_row_jhb_sea_price' => 'From R4,999.99 per CBM',
+    'prices_row_jhb_sea_leadtime' => '30 to 45 days',
     'prices_row_jhb_sea_notes' => 'Customs clearance included',
 
     'prices_row_kins_destination' => 'Kinshasa',
@@ -190,6 +190,8 @@ return [
     'prices_row_kwz_sea_price' => 'From USD 545 per CBM',
     'prices_row_kwz_sea_leadtime' => '50 to 60 days',
     'prices_row_kwz_sea_notes' => 'Customs clearance included',
+    'prices_detail_note' => 'Detailed pricing available in the PDF document',
+
     // process page
     'process_hero_title' => 'Simple — here is the procedure to follow:',
     'process_step1_title' => 'Step One',

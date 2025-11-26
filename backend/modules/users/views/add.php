@@ -33,8 +33,9 @@ $errors = [];
 
 // Récupérer la liste des profils pour le select
 $profiles = $profileActions->getAllProfiles();
+$user_id = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    $result = $userActions->handleAddUser($_POST);
+    $result = $userActions->handleAddUser($_POST, $user_id);
     $message = $result['message'];
     $alertClass = $result['success'] ? 'alert-success' : 'alert-danger';
     $errors = $result['errors'] ?? [];

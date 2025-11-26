@@ -2,13 +2,9 @@
   background: #f8f9fa;
 }
 
-
 .small {
   font-size: 0.85rem;
 }
-
-
-
 
 /* Conteneur du tableau compact */
 .pricing-table-container.compact {
@@ -38,7 +34,7 @@
 }
 
 .compact-table th:not(:last-child) {
-  border-right: 1px solid rgba(255,255,255,0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Bordures entre toutes les lignes */
@@ -105,7 +101,7 @@
 /* Prix */
 .price-value {
   font-weight: 600;
-color: #e67e22;
+  color: #e67e22;
   font-size: 0.9rem;
 }
 
@@ -113,25 +109,6 @@ color: #e67e22;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.pdf-download-btn.small {
-  background: #d32f2f;
-  color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 3px;
-  text-decoration: none;
-  font-size: 0.7rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  transition: all 0.2s ease;
-}
-
-.pdf-download-btn.small:hover {
-  background: #b71c1c;
-  color: white;
-  text-decoration: none;
 }
 
 /* Délais de livraison */
@@ -195,8 +172,6 @@ color: #e67e22;
   font-style: italic;
 }
 
-
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .pricing-table-container.compact {
@@ -204,69 +179,66 @@ color: #e67e22;
     margin: 0 -0.25rem;
     border-radius: 6px;
   }
-  
+
   .table-responsive {
     border: 1px solid #e0e0e0;
     border-radius: 4px;
   }
-  
+
   .compact-table {
     min-width: 700px;
     font-size: 0.8rem;
   }
-  
+
   .compact-table th,
   .compact-table td {
     padding: 0.6rem 0.4rem;
   }
-  
+
   .service-type.small {
     padding: 0.25rem 0.5rem;
     font-size: 0.7rem;
   }
-  
+
   .price-value {
     font-size: 0.85rem;
   }
-  
+
   .section-title {
     font-size: 1.3rem;
   }
-  
- 
 }
 
 @media (max-width: 576px) {
   .section-title {
     font-size: 1.2rem;
   }
-  
+
   .pricing-table-container.compact {
     padding: 0.25rem;
   }
-  
+
   .compact-table th,
   .compact-table td {
     padding: 0.5rem 0.3rem;
   }
-  
+
   .service-type.small {
     padding: 0.2rem 0.4rem;
     font-size: 0.65rem;
   }
-  
+
   .price-with-doc {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
   }
-  
+
   .pdf-download-btn.small,
   .pdf-link.small {
     font-size: 0.65rem;
     padding: 0.2rem 0.4rem;
   }
-
 }
 
 /* Indicateur de défilement horizontal */
@@ -282,4 +254,45 @@ color: #e67e22;
 .table-responsive::-webkit-scrollbar-thumb {
   background: #c1c1c1;
   border-radius: 3px;
+}
+/* Séparateur entre le prix et les détails */
+.price-divider {
+  border: none;
+  border-top: 1px dashed #ddd;
+  margin: 0.4rem 0;
+}
+
+/* Texte d'explication */
+.price-detail-text {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #d32f2f;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Bouton PDF plus grand et élégant */
+.pdf-download-btn.small {
+  background: #d32f2f;
+  color: white;
+  padding: 0.35rem 0.6rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.pdf-download-btn.small i {
+  font-size: 1rem;
+}
+
+.pdf-download-btn.small:hover {
+  background: #b71c1c;
+  color: white;
+  transform: scale(1.05);
 }

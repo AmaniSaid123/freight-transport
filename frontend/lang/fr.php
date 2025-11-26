@@ -163,8 +163,8 @@ return [
     'prices_row_jhb_air_notes' => 'Dédouanement inclus',
 
     'prices_row_jhb_sea_type' => 'Fret Maritime',
-    'prices_row_jhb_sea_price' => 'À partir de R5,999.99 par CBM',
-    'prices_row_jhb_sea_leadtime' => '25 à 40 jours',
+    'prices_row_jhb_sea_price' => 'À partir de R4,999.99 par CBM',
+    'prices_row_jhb_sea_leadtime' => '30 à 45 jours',
     'prices_row_jhb_sea_notes' => 'Dédouanement inclus',
 
     'prices_row_kins_destination' => 'Kinshasa',
@@ -200,6 +200,8 @@ return [
     'prices_row_kwz_sea_price' => 'À partir de 545 USD par CBM',
     'prices_row_kwz_sea_leadtime' => '50 à 60 jours',
     'prices_row_kwz_sea_notes' => 'Dédouanement inclus',
+    'prices_detail_note' => 'Prix détaillé disponible dans le document PDF',
+
     // process page
     'process_hero_title' => 'Simple. Voici la procédure à suivre :',
     'process_step1_title' => 'Première étape',
