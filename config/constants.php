@@ -13,7 +13,8 @@ if (!defined('BASE_URL')) {
             define('BASE_URL', $isLocal ? '/backend/' : '/backend/'); // tu peux adapter le prod ici
             break;
         case 'frontend':
-            define('BASE_URL', $isLocal ? '/' : '/'); // prod ici si différent
+            //define('BASE_URL', $isLocal ? '/' : '/'); // prod
+            define('BASE_URL', $isLocal ? '/frontend/' : '/frontend/'); // local ici si différent
             break;
         default:
             define('BASE_URL', $isLocal ? '/' : '/'); // racine si autre dossier

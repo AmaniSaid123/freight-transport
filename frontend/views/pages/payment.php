@@ -8,7 +8,7 @@ session_start();
 
 //include_once(__DIR__ . "/../../../php/function.php");
 
-
+require_once __DIR__ . '/../../includes/translation.php';
 
 ?>
 

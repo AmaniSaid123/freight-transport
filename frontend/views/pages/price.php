@@ -65,6 +65,9 @@
                   <td class="price-cell">
                     <div class="price-with-doc">
                       <span class="price-value"><?= t('prices_row_jhb_sea_price') ?></span>
+                    </div>
+                    <hr class="price-divider">
+                    <div class="price-detail-text"><?= t('prices_detail_note') ?>
                       <a href="<?= BASE_URL ?>assets/pdf/SA TRUSTED CARGO COMPANY SEA FREIGHT PRICE LIST.pdf"
                         class="pdf-download-btn small" target="_blank">
                         <i class="fas fa-file-pdf"></i>
