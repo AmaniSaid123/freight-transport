@@ -4,230 +4,43 @@
 
 <?php
 session_start();
-
+require_once __DIR__ . '/../../includes/translation.php';
 include_once(__DIR__ . "/../../../php/function.php");
+//require __DIR__ . '/../../../config/debug.php';
+
+
+require_once __DIR__ . '/../../controllers/ParcelController.php';
+
 
 global $bdd;
-// Fonction pour récupérer la langue principale du navigateur
+$controller = new ParcelController();
 
 
 if (isset($_POST['send-parcel'])) {
 
-    // prepare message container for UI
-    $form_message = '';
-    $form_type = '';
 
-    // Fonction pour générer une référence dossier unique
-    function generateRefDossier($bdd)
-    {
-        $uniqueId = substr(str_shuffle("0123456789"), 0, 4);
-        $ref_dossier = 'TCC' . $uniqueId;
-
-        // Vérifier si déjà utilisé
-        $stmt = $bdd->prepare("SELECT id FROM dossier WHERE ref_dossier = ?");
-        $stmt->execute([$ref_dossier]);
-
-        while ($stmt->rowCount() > 0) {
-            $uniqueId = substr(str_shuffle("0123456789"), 0, 4);
-            $ref_dossier = 'TCC' . $uniqueId;
-            $stmt->execute([$ref_dossier]);
-        }
-
-        return $ref_dossier;
-    }
-
-    // Fonction pour générer une référence expédition unique
-    function generateExpeditionRef($bdd, $dossier_id, $ref_dossier)
-    {
-        // Count existing expeditions for this dossier_id to make a sequence number
-        $stmt = $bdd->prepare("SELECT COUNT(*) as total FROM expedition WHERE dossier_id = ?");
-        $stmt->execute([$dossier_id]);
-        $count = $stmt->fetch(PDO::FETCH_ASSOC)['total'] + 1;
-
-        $expNumber = str_pad($count, 3, '0', STR_PAD_LEFT);
-        return $ref_dossier . $expNumber;
-    }
-
-    // 👉 Traitement formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Dossier
-        $name = clean_in_text($_POST['full_name']);
-        $phone_country = clean_in_text($_POST['phone_country'] ?? '');
-        $phone_local = clean_in_text($_POST['phone_local'] ?? '');
-        // Combine country code and local number into one phone string
-        $phone = trim(($phone_country ? $phone_country . ' ' : '') . $phone_local);
-        $email = clean_in_text($_POST['email']);
-        $address = clean_in_text($_POST['address']);
-
-        // Basic validation
-        if (!($name && $email && $address && $phone)) {
-            $form_message = t('please_fill_all_fields') ?? 'Veuillez remplir tous les champs du dossier !';
-            $form_type = 'error';
-        } elseif (empty($_POST['origin']) || !is_array($_POST['origin'])) {
-            $form_message = t('please_add_at_least_one_expedition') ?? 'Veuillez ajouter au moins une expédition.';
-            $form_type = 'error';
-        } else {
-            // Check if email already exists to attach expeditions to existing dossier
-            $stmt = $bdd->prepare("SELECT id, ref_dossier FROM dossier WHERE email = ? LIMIT 1");
-            $stmt->execute([$email]);
-            if ($stmt->rowCount() > 0) {
-                // Existing customer: attach expeditions to existing dossier
-                $existing = $stmt->fetch(PDO::FETCH_ASSOC);
-                $dossier_id = $existing['id'];
-                $ref_dossier = $existing['ref_dossier'];
-
-                try {
-                    $bdd->beginTransaction();
-
-                    $origines = $_POST['origin'];
-                    $destinations = $_POST['destination'];
-                    $descriptions = $_POST['description'];
-                    $comments = $_POST['commentaire'];
-
-                    for ($i = 0; $i < count($origines); $i++) {
-                        $origine = htmlspecialchars($origines[$i]);
-                        $destination = htmlspecialchars($destinations[$i]);
-                        $description = htmlspecialchars($descriptions[$i]);
-                        $commentaire = htmlspecialchars($comments[$i]);
-
-                        $ref_expedition = generateExpeditionRef($bdd, $dossier_id, $ref_dossier);
-                        $creation_date = date('Y-m-d H:i:s');
-                        $stmt = $bdd->prepare("INSERT INTO expedition (dossier_id, reference, origin, destination, description, comment, creation_date) 
-                                               VALUES (?, ?, ?, ?, ?, ?, ?)");
-                        $stmt->execute([$dossier_id, $ref_expedition, $origine, $destination, $description, $commentaire, $creation_date]);
-                    }
-
-                    $bdd->commit();
-                    // Notify user that new expeditions were persisted and clear expedition inputs
-                    $form_message = t('expeditions_attached_success') ?? 'Nouvelles expéditions enregistrées avec succès.';
-                    $form_type = 'success';
-                    // Clear only expedition-related POST data so dossier info persists
-                    unset($_POST['origin'], $_POST['destination'], $_POST['description'], $_POST['commentaire']);
-                } catch (Exception $e) {
-                    $bdd->rollBack();
-                    $form_message = t('unexpected_error') ?? 'Une erreur est survenue lors de la création.';
-                    $form_type = 'error';
-                }
-
-            } else {
-                try {
-                    // Start transaction
-                    $bdd->beginTransaction();
-
-                    // Générer la référence dossier
-                    $ref_dossier = generateRefDossier($bdd);
-
-                    // Insérer dossier
-                    $creationdate = date('Y-m-d H:i:s');
-                    $stmt = $bdd->prepare("INSERT INTO dossier (full_name, phone, email, address, ref_dossier, creationdate) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt->execute([$name, $phone, $email, $address, $ref_dossier, $creationdate]);
-                    $dossier_id = $bdd->lastInsertId();
-
-                    // Insert expeditions
-                    $origines = $_POST['origin'];
-                    $destinations = $_POST['destination'];
-                    $descriptions = $_POST['description'];
-                    $comments = $_POST['commentaire'];
-
-                    for ($i = 0; $i < count($origines); $i++) {
-                        $origine = htmlspecialchars($origines[$i]);
-                        $destination = htmlspecialchars($destinations[$i]);
-                        $description = htmlspecialchars($descriptions[$i]);
-                        $commentaire = htmlspecialchars($comments[$i]);
-
-                        // Générer ref expédition
-                        $ref_expedition = generateExpeditionRef($bdd, $dossier_id, $ref_dossier);
-
-                        // Insérer expédition
-                        $creation_date = date('Y-m-d H:i:s');
-                        $stmt = $bdd->prepare("INSERT INTO expedition (dossier_id, reference, origin, destination, description, comment, creation_date) 
-                                               VALUES (?, ?, ?, ?, ?, ?, ?)");
-                        $stmt->execute([$dossier_id, $ref_expedition, $origine, $destination, $description, $commentaire, $creation_date]);
-                    }
-
-                    $bdd->commit();
-
-                    $form_message = t('dossier_created_success') ?? "Dossier et expéditions créés avec succès ! Réf. Dossier : $ref_dossier";
-                    $form_type = 'success';
-
-                    // Clear POST so form fields reset (only on success)
-                    $_POST = [];
-
-                } catch (Exception $e) {
-                    $bdd->rollBack();
-                    $form_message = t('unexpected_error') ?? 'Une erreur est survenue lors de la création.';
-                    $form_type = 'error';
-                }
-            }
-        }
+        header('Content-Type: application/json; charset=utf-8');
+        $result = $controller->handleCreateParcel($_POST);
+        echo json_encode($result);
+        exit;
     }
+
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Méthode non autorisée']);
 }
-
-
-
-
-
-
 
 ?>
 
 
-
-<style>
-    /* Progress bar */
-    .progress-container {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 30px;
-        position: relative;
-    }
-
-    .progress-container::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        height: 4px;
-        width: 100%;
-        background: #e9ecef;
-        z-index: -1;
-    }
-
-    .progress-step {
-        width: 35px;
-        height: 35px;
-        background: #e9ecef;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        color: #000;
-    }
-
-    .progress-step.active {
-        background: #4b8ef1;
-        color: #fff;
-    }
-
-    .form-step {
-        display: none;
-    }
-
-    .form-step.active {
-        display: block;
-    }
-</style>
-<?php include("../layouts/head.php"); ?>
+<?php include(__DIR__ . '/../layouts/head.php'); ?>
 
 <body>
 
 
 
-    <?php include("../layouts/topbar.php"); ?>
-
-    <?php include("../layouts/menu.php"); ?>
+    <?php include(__DIR__ . '/../layouts/topbar.php'); ?>
+    <?php include(__DIR__ . '/../layouts/menu.php'); ?>
 
     <!-- Header Start -->
     <div class="container-fluid bg-breadcrumb">
@@ -261,7 +74,8 @@ if (isset($_POST['send-parcel'])) {
                             </div>
                         <?php endif; ?>
 
-                        <form action="send-parcel.php" method="post" novalidate>
+
+                        <form method="post" action="<?= BASE_URL ?>views/pages/send-parcel.php" novalidate>
 
                             <div class="row gy-3 gx-4">
                                 <div class="col-md-6">
@@ -335,7 +149,11 @@ if (isset($_POST['send-parcel'])) {
                                             <option value="" disabled selected><?= t('select_origin') ?? t('origin') ?>
                                             </option>
                                             <option value="Chine">Chine</option>
-                                        </select>
+                                            <option value="Johannesburg">Johannesburg</option>
+                                            <option value="Kinshasa">Kinshasa</option>
+                                            <option value="Lubumbashi">Lubumbashi</option>
+                                            <option value="Kolwezi">Kolwezi</option>
+                                        </select> </select>
                                     </div>
 
                                     <div class="col-xl-6">
@@ -343,10 +161,13 @@ if (isset($_POST['send-parcel'])) {
                                         <select class="form-select py-3 border-primary bg-transparent"
                                             name="destination[]" required>
                                             <option value="" disabled selected>
-                                                <?= t('select_destination') ?? t('destination') ?></option>
+                                                <?= t('select_destination') ?? t('destination') ?>
+                                            </option>
+                                            <option value="Chine">Chine</option>
                                             <option value="Johannesburg">Johannesburg</option>
                                             <option value="Kinshasa">Kinshasa</option>
                                             <option value="Lubumbashi">Lubumbashi</option>
+                                            <option value="Kolwezi">Kolwezi</option>
                                         </select>
                                     </div>
                                     <div class="col-xl-6">
@@ -382,36 +203,28 @@ if (isset($_POST['send-parcel'])) {
                                         name="send-parcel">📦 <?= t('send') ?></button>
                                 </div>
                             </div>
-
-
-
-
-
+                        </form>
                     </div>
 
-
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 
 
 
 
 
 
-    <?php
-    include_once("../layouts/footer.php");
-    ?>
 
+    <?php include(__DIR__ . '/../layouts/footer.php'); ?>
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 
     <?php include(__DIR__ . '/../layouts/js.php'); ?>
+
 
     <script>
         $(document).ready(function () {
@@ -434,6 +247,7 @@ if (isset($_POST['send-parcel'])) {
                             <option value="Johannesburg">Johannesburg</option>
                             <option value="Kinshasa">Kinshasa</option>
                             <option value="Lubumbashi">Lubumbashi</option>
+                            <option value="Kolwezi">Kolwezi</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -457,6 +271,38 @@ if (isset($_POST['send-parcel'])) {
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#parcelForm").on("submit", function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+
+                $.post("<?= BASE_URL ?>controllers/api/create_parcel_action.php", formData, function (response) {
+                    $(".alert-container").html("");
+
+                    if (response.success) {
+                        $(".alert-container").html(
+                            `<div class="alert alert-success">${response.message}</div>`
+                        );
+                        setTimeout(() => {
+                            window.location.href = "<?= BASE_URL ?>views/pages/detail.php?parcel_id=" + response.parcel_id;
+                        }, 1000);
+                        $("#parcelForm")[0].reset();
+                    } else {
+                        $(".alert-container").html(
+                            `<div class="alert alert-danger">${response.message}</div>`
+                        );
+                    }
+                }, "json").fail(function () {
+                    $(".alert-container").html(
+                        `<div class="alert alert-danger">Erreur de communication avec le serveur.</div>`
+                    );
+                });
+            });
+        });
+    </script>
+
 
 </body>
 
