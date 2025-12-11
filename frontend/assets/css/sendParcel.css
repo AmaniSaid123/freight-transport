@@ -1,44 +1,341 @@
-/* Progress bar */
-.progress-container {
+/* Modern send parcel layout - black/white theme */
+.send-parcel-shell {
+    background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+    padding: 10px;
+    border-radius: 16px;
+    border: 1px solid #e5e5e5;
+}
+
+.send-parcel-subtitle {
+    max-width: 720px;
+    color: #4a4a4a;
+}
+
+.section-card {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 14px;
+    padding: 24px 22px 18px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-card:hover {
+    box-shadow: 0 16px 46px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.section-card--accent {
+    background: linear-gradient(135deg, #fff 0%, #f6f6f6 60%);
+}
+
+.section-card__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.section-card__header + .client-toggle {
+    margin-bottom: 16px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 13px;
+    border: 1px solid #d5d5d5;
+    color: #111;
+    background: #f3f3f3;
+    letter-spacing: 0.01em;
+}
+
+.pill-primary {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+.pill-soft {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    font-size: 14px;
+}
+
+.chip-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #f4f4f4;
+    color: #111;
+    font-weight: 600;
+    font-size: 12px;
+    border: 1px solid #dcdcdc;
+    text-transform: none;
+}
+
+.chip-badge--ghost {
+    background: #fff;
+    color: #111;
+    border-color: #111;
+}
+
+.form-intro {
+    border: 1px dashed #dcdcdc;
+    background: linear-gradient(90deg, #fafafa 0%, #fff 100%);
+}
+
+.modern-input .input-group-text {
+    background: #f9f9f9;
+    border: 1px solid #dcdcdc;
+    border-right: 0;
+    color: #444;
+}
+
+.modern-input .form-control,
+.modern-input .form-select {
+    border: 1px solid #dcdcdc;
+    border-left: 0;
+    background: #fff;
+    color: #111;
+}
+
+.modern-input .form-control,
+.modern-input .form-select {
+    min-height: 48px;
+}
+
+.modern-input .form-control:focus,
+.modern-input .form-select:focus {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.14);
+    border-color: #111;
+}
+
+.phone-country-select {
+    max-width: 120px;
+}
+
+.expedition-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.expedition-card {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
+}
+
+.expedition-card__meta {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.progress-container::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    height: 4px;
-    width: 100%;
-    background: #e9ecef;
-    z-index: -1;
-}
-
-.progress-step {
-    width: 35px;
-    height: 35px;
-    background: #e9ecef;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    font-weight: bold;
-    color: #000;
+    margin-bottom: 10px;
 }
 
-.progress-step.active {
-    background: #4b8ef1;
+.expedition-card .btn-link {
+    text-decoration: none;
+    padding: 4px 8px;
+}
+
+.soft-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #dcdcdc, transparent);
+}
+
+.required-dot {
+    color: #b00020;
+    font-weight: 700;
+}
+
+.form-label.small {
+    letter-spacing: 0.01em;
+    color: #303030;
+}
+
+.field-error {
+    color: #b00020;
+    font-size: 12px;
+    margin-top: 6px;
+    min-height: 14px;
+}
+
+.client-mode .client-hide {
+    display: none !important;
+}
+
+.client-toggle .form-check-input {
+    cursor: pointer;
+}
+
+.client-toggle .form-check-label {
+    font-weight: 600;
+}
+
+.client-toggle .form-check-input:checked {
+    background-color: #111;
+    border-color: #111;
+}
+
+.client-toggle {
+    gap: 8px;
+}
+
+/* Button palette override for this page */
+.appointment-form .btn-primary {
+    background: #111;
+    border-color: #111;
+}
+
+.appointment-form .btn-primary:hover {
+    background: #000;
+    border-color: #000;
+}
+
+.appointment-form .btn-outline-primary {
+    color: #111;
+    border-color: #111;
+}
+
+.appointment-form .btn-outline-primary:hover {
+    background: #111;
     color: #fff;
 }
 
-.form-step {
-    display: none;
+.appointment-form .btn-light {
+    background: #f5f5f5;
+    border-color: #dcdcdc;
+    color: #444;
 }
 
-.form-step.active {
-    display: block;
+.appointment-form .btn-light:hover {
+    background: #ececec;
+}
+
+.form-actions {
+    border-top: 1px solid #e6e6e6;
+    padding-top: 12px;
+    margin-top: 8px;
+}
+
+.btn-send {
+    background: #111;
+    border: 1px solid #111;
+    color: #fff;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-send:hover {
+    background: #000;
+    border-color: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+    color: #fff;
+}
+
+.btn-send:active {
+    transform: translateY(0);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.btn-reset {
+    background: #fff;
+    color: #111;
+    border: 1px solid #d0d0d0;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.btn-reset:hover {
+    background: #f5f5f5;
+    border-color: #bfbfbf;
+    transform: translateY(-1px);
+}
+
+.btn-reset:active {
+    transform: translateY(0);
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    .section-card {
+        padding: 18px;
+    }
+
+    .form-intro {
+        gap: 10px;
+    }
+
+    .form-intro .text-muted {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .send-parcel-shell {
+        padding: 0;
+        border: none;
+    }
+
+    .form-intro {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 8px;
+    }
+
+    .chip-badge {
+        margin-top: 6px;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+
+    .form-actions > div,
+    .form-actions .text-end {
+        width: 100%;
+        text-align: center !important;
+    }
+
+    .btn-send,
+    .btn-reset,
+    .btn-outline-primary {
+        width: 100%;
+    }
+
+    .modern-input.flex-wrap {
+        flex-wrap: wrap !important;
+    }
+
+    .phone-country-select {
+        max-width: 100%;
+        width: 100%;
+    }
 }

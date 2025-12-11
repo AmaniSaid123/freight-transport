@@ -12,7 +12,7 @@
                 <div class="value-card">
                     <div class="value-icon-container">
                         <div class="value-icon-bg"></div>
-                        <i class="fas fa-handshake value-icon"></i>
+                        <i class="fas fa-info-circle value-icon"></i>
                     </div>
                     <h3><?= t('values_card1_title') ?></h3>
                     <p><?= t('values_card1_desc') ?></p>
@@ -21,7 +21,7 @@
                 <div class="value-card">
                     <div class="value-icon-container">
                         <div class="value-icon-bg"></div>
-                        <i class="fas fa-balance-scale value-icon"></i>
+                        <i class="fas fa-receipt value-icon"></i>
                     </div>
                     <h3><?= t('values_card2_title') ?></h3>
                     <p><?= t('values_card2_desc') ?></p>
@@ -30,7 +30,7 @@
                 <div class="value-card">
                     <div class="value-icon-container">
                         <div class="value-icon-bg"></div>
-                        <i class="fas fa-eye value-icon"></i>
+                        <i class="fas fa-calculator value-icon"></i>
                     </div>
                     <h3><?= t('values_card3_title') ?></h3>
                     <p><?= t('values_card3_desc') ?></p>

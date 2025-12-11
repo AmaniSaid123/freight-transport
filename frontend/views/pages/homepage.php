@@ -18,14 +18,12 @@ require_once __DIR__ . '/../../includes/translation.php';
 
     <?php include(__DIR__ . '/../layouts/menu.php'); ?>
 
-
-
     <!-- About Start -->
     <?php include(__DIR__ . '/about.php'); ?>
 
 
     <!-- About End -->
-
+    <?php include(__DIR__ . '/suivi.php'); ?>
     <?php include(__DIR__ . '/service.php'); ?>
 
     <!-- tracking Start -->
@@ -61,6 +59,7 @@ require_once __DIR__ . '/../../includes/translation.php';
 
     <?php include(__DIR__ . '/values.php'); ?>
     <?php include(__DIR__ . '/process.php'); ?>
+    <?php include(__DIR__ . '/communication.php'); ?>
     <?php include(__DIR__ . '/price.php'); ?>
 
     <?php include(__DIR__ . '/../layouts/footer.php'); ?>

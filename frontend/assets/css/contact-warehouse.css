@@ -106,15 +106,15 @@
     /* Contact Info */
     .contact-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
         margin-top: 20px;
     }
 
     .contact-card {
         background: var(--light);
         border-radius: 12px;
-        padding: 25px;
+        padding: 20px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         transition: transform 0.3s;
         border-left: 4px solid #000;
@@ -139,7 +139,7 @@
 
     .address {
         margin-bottom: 15px;
-        line-height: 1.6;
+        line-height: 1.5;
     }
 
     .contact-details {

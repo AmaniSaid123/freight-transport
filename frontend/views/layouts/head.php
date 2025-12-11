@@ -31,4 +31,6 @@ require_once __DIR__ . '/../../../config/constants.php';
     <link href="<?= BASE_URL ?>assets/css/payment.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>assets/css/sendParcel.css" rel="stylesheet">
     <link href="<?= BASE_URL ?>assets/css/price.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/tracking.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>assets/css/routes.css" rel="stylesheet">
 </head>

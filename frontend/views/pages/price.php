@@ -3,9 +3,8 @@
     <!-- En-tête -->
     <div class="row justify-content-center mb-4">
       <div class="col-lg-10 text-center">
-        <h3 class="section-title mb-3"><?= t('prices') ?></h3>
-        <p class="mb-3 small"><?= t('prices_intro_p1') ?></p>
-        <p class="mb-3 small"><?= t('prices_intro_p2') ?></p>
+        <h3 class="section-title mb-3"><?= t('prices_title') ?></h3>
+        <p class="mb-0 small"><?= t('prices_intro_full') ?></p>
 
 
       </div>
@@ -30,32 +29,11 @@
               <tbody>
                 <!-- Johannesburg -->
                 <tr class="table-row">
-                  <td rowspan="2" class="destination-cell">
+                  <td class="destination-cell">
                     <div class="destination-info">
                       <span class="city-name"><?= t('prices_row_jhb_destination') ?></span>
                     </div>
                   </td>
-                  <td class="type-cell">
-                    <span class="service-type air small">
-                      <i class="fas fa-plane"></i>
-                      <?= t('prices_row_jhb_air_type') ?>
-                    </span>
-                  </td>
-                  <td class="price-cell">
-                    <span class="price-value"><?= t('prices_row_jhb_air_price') ?></span>
-                  </td>
-                  <td class="delivery-cell">
-                    <div class="delivery-info small">
-                      <i class="fas fa-clock"></i>
-                      <span><?= t('prices_row_jhb_air_leadtime') ?></span>
-                    </div>
-                  </td>
-                  <td class="notes-cell small">
-                    <?= t('prices_row_jhb_air_notes') ?>
-                  </td>
-
-                </tr>
-                <tr class="table-row">
                   <td class="type-cell">
                     <span class="service-type sea small">
                       <i class="fas fa-ship"></i>
@@ -63,13 +41,11 @@
                     </span>
                   </td>
                   <td class="price-cell">
-                    <div class="price-with-doc">
-                      <span class="price-value"><?= t('prices_row_jhb_sea_price') ?></span>
-                    </div>
-                    <hr class="price-divider">
-                    <div class="price-detail-text"><?= t('prices_detail_note') ?>
+                    <span class="price-value"><?= t('prices_row_jhb_sea_price') ?></span>
+                    <div class="price-detail-inline">
+                      <?= t('prices_detail_note') ?>
                       <a href="<?= BASE_URL ?>assets/pdf/SA TRUSTED CARGO COMPANY SEA FREIGHT PRICE LIST.pdf"
-                        class="pdf-download-btn small" target="_blank">
+                        class="pdf-download-btn small" target="_blank" rel="noopener">
                         <i class="fas fa-file-pdf"></i>
                       </a>
                     </div>
@@ -153,7 +129,7 @@
 
                 <!-- Lubumbashi -->
                 <tr class="table-row">
-                  <td rowspan="2" class="destination-cell">
+                  <td rowspan="3" class="destination-cell">
                     <div class="destination-info">
                       <span class="city-name"><?= t('prices_row_lumb_destination') ?></span>
                     </div>
@@ -207,35 +183,43 @@
                   </td>
 
                 </tr>
-
-                <!-- Kwamouth -->
                 <tr class="table-row">
-                  <td rowspan="2" class="destination-cell">
-                    <div class="destination-info">
-                      <span class="city-name"><?= t('prices_row_kwz_destination') ?></span>
-                    </div>
-                  </td>
                   <td class="type-cell">
-                    <span class="service-type air small">
-                      <i class="fas fa-plane"></i>
-                      <?= t('prices_row_kwz_air_type') ?>
+                    <span class="service-type sea small">
+                      <i class="fas fa-truck"></i>
+                      <?= t('prices_row_lumb_road_type') ?>
                     </span>
                   </td>
                   <td class="price-cell">
-                    <span class="price-value"><?= t('prices_row_kwz_air_price') ?></span>
+                    <span class="price-value"><?= t('prices_row_lumb_road_price') ?></span>
                   </td>
                   <td class="delivery-cell">
                     <div class="delivery-info small">
                       <i class="fas fa-clock"></i>
-                      <span><?= t('prices_row_kwz_air_leadtime') ?></span>
+                      <span><?= t('prices_row_lumb_road_leadtime') ?></span>
                     </div>
                   </td>
                   <td class="notes-cell small">
-                    <?= t('prices_row_kwz_air_notes') ?>
+                    <div class="notes-content">
+                      <?= t('prices_row_lumb_road_notes') ?>
+                      <div class="included-features">
+                        <span class="feature-badge small">
+                          <i class="fas fa-check"></i>
+                          <?= t('prices_customs_included') ?>
+                        </span>
+                      </div>
+                    </div>
                   </td>
 
                 </tr>
+
+                <!-- Kolwezi -->
                 <tr class="table-row">
+                  <td class="destination-cell">
+                    <div class="destination-info">
+                      <span class="city-name"><?= t('prices_row_kwz_destination') ?></span>
+                    </div>
+                  </td>
                   <td class="type-cell">
                     <span class="service-type sea small">
                       <i class="fas fa-ship"></i>

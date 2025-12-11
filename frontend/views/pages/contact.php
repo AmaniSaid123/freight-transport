@@ -83,7 +83,7 @@ require_once __DIR__ . '/../../includes/translation.php';
         <div class="container py-5">
             <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="sub-style">
-                    <h4 class="sub-title px-3 mb-0">Contact Us</h4>
+                    <h4 class="sub-title px-3 mb-0"><?= t('contact_page_title') ?></h4>
                 </div>
 
             </div>
@@ -97,26 +97,80 @@ require_once __DIR__ . '/../../includes/translation.php';
                     </div>
                     <p><?= t('contact_general_info_paragraph') ?></p>
                 </section>
+
+                   <section class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h2 class="card-title"><?= t('contact_instructions_title_1') ?></h2>
+                    </div>
+                    <div class="mt-4">
+                        <p><?= t('contact_jhb_to_drc_intro') ?></p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th><?= t('contact_jhb_to_drc_table_field') ?></th>
+                                        <th><?= t('contact_jhb_to_drc_table_format') ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><?= t('contact_jhb_to_drc_field_buyer') ?></td>
+                                        <td>
+                                            <?= t('contact_jhb_to_drc_format_buyer') ?><br>
+                                            <small
+                                                class="text-muted"><?= t('contact_jhb_to_drc_format_buyer_example') ?></small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><?= t('contact_jhb_to_drc_field_address') ?></td>
+                                        <td><?= t('contact_jhb_to_drc_format_address') ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?= t('contact_jhb_to_drc_field_phone') ?></td>
+                                        <td><?= t('contact_jhb_to_drc_format_phone') ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?= t('contact_jhb_to_drc_field_email') ?></td>
+                                        <td><?= t('contact_jhb_to_drc_format_email') ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-3">
+                            <p class="mb-1"><strong><?= t('contact_jhb_to_drc_example_title') ?></strong></p>
+                            <p class="mb-1"><?= t('contact_jhb_to_drc_example_buyer') ?></p>
+                            <p class="mb-1"><?= t('contact_jhb_to_drc_example_address') ?></p>
+                            <p class="mb-1"><?= t('contact_jhb_to_drc_example_phone') ?></p>
+                            <p class="mb-0"><?= t('contact_jhb_to_drc_example_email') ?></p>
+                            <p class="mt-3 mb-0"><?= t('contact_jhb_to_drc_note') ?></p>
+                        </div>
+                    </div>
+
+
+                </section>
                 <section class="card">
                     <div class="card-header">
                         <div class="card-icon">
                             <i class="fas fa-download"></i>
                         </div>
-                        <h2 class="card-title"><?= t('contact_instructions_title') ?></h2>
-                    </div>
-                    <p><?= t('contact_instructions_p1') ?></p>
-                    <p><?= t('contact_instructions_p2') ?></p>
+                    <h2 class="card-title"><?= t('contact_instructions_title_2') ?></h2>
+                </div>
+                <p><?= t('contact_instructions_p1') ?></p>
+
 
                     <div class="image-gallery">
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <img src="<?= BASE_URL ?>assets/img/tcc-Joh.jpg" alt="Johannesburg">
+                                <img src="<?= BASE_URL ?>assets/img/tcc-Joh.gif" alt="Johannesburg">
                             </div>
 
                             <div class="image-info">
                                 <h3><?= t('contact_city_jhb') ?></h3>
                                 <p><?= t('contact_city_jhb_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Joh.jpg" class="download-btn" download><i
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Joh.gif" class="download-btn" download><i
                                         class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
 
@@ -125,12 +179,12 @@ require_once __DIR__ . '/../../includes/translation.php';
                         </div>
 
                         <div class="image-card">
-                            <div class="image-placeholder"> <img src="<?= BASE_URL ?>assets/img/tcc-Kin.jpg"
+                            <div class="image-placeholder"> <img src="<?= BASE_URL ?>assets/img/tcc-Kin.png"
                                     alt="Kinshasa"></div>
                             <div class="image-info">
                                 <h3><?= t('contact_city_kin') ?></h3>
                                 <p><?= t('contact_city_kin_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Kin.jpg" class="download-btn" download><i
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Kin.png" class="download-btn" download><i
                                         class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
@@ -138,12 +192,12 @@ require_once __DIR__ . '/../../includes/translation.php';
 
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <img src="<?= BASE_URL ?>assets/img/tcc-Lumb.jpg" alt="Lubumbashi">
+                                <img src="<?= BASE_URL ?>assets/img/tcc-Lumb.gif" alt="Lubumbashi">
                             </div>
                             <div class="image-info">
                                 <h3><?= t('contact_city_lub') ?></h3>
                                 <p><?= t('contact_city_lub_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Lumb.jpg" class="download-btn" download><i
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Lumb.gif" class="download-btn" download><i
                                         class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
@@ -151,92 +205,112 @@ require_once __DIR__ . '/../../includes/translation.php';
 
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <img src="<?= BASE_URL ?>assets/img/tcc-Kwz.jpg" alt="Lubumbashi">
+                                <img src="<?= BASE_URL ?>assets/img/tcc-Kwz.gif" alt="Lubumbashi">
                             </div>
                             <div class="image-info">
                                 <h3><?= t('contact_city_kwz') ?></h3>
                                 <p><?= t('contact_city_kwz_desc') ?></p>
-                                <a href="<?= BASE_URL ?>assets/img/tcc-Kwz.jpg" class="download-btn" download><i
+                                <a href="<?= BASE_URL ?>assets/img/tcc-Kwz.gif" class="download-btn" download><i
                                         class="fas fa-download"></i>
                                     <?= t('contact_download_file') ?></a>
                             </div>
                         </div>
                     </div>
                 </section>
+             
+
+
+
+
                 <section class="card">
                     <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-map-marker-alt"></i>
+                    <div class="card-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h2 class="card-title"><?= t('contact_pickup_points_title') ?></h2>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h4><i class="fas fa-city"></i> <?= t('contact_pickup_jhb_heading') ?></h4>
+                        <p class="text-danger mb-2"><?= t('contact_pickup_jhb_warning') ?></p>
+                        <div class="address">
+                            <p><?= t('contact_pickup_jhb_name') ?></p>
+                            <p><?= t('contact_pickup_jhb_line1') ?></p>
+                            <p><?= t('contact_pickup_jhb_line2') ?></p>
+                            <p><?= t('contact_pickup_jhb_line3') ?></p>
                         </div>
-                        <h2 class="card-title"><?= t('contact_pickup_points_title') ?></h2>
+                        <div class="contact-details">
+                            <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
+                                <?= t('contact_email') ?></a>
+                            <a href="tel:+27 73 298 5311"><i class="fas fa-phone"></i>
+                                +27 73 298 5311</a>
+                        </div>
+                        <p class="mt-3 fw-semibold"><?= t('contact_pickup_jhb_admin_heading') ?></p>
+                        <div class="address">
+                            <p><?= t('contact_pickup_jhb_admin_name') ?></p>
+                            <p><?= t('contact_pickup_jhb_admin_line1') ?></p>
+                            <p><?= t('contact_pickup_jhb_admin_line2') ?></p>
+                            <p><?= t('contact_pickup_jhb_admin_line3') ?></p>
+                        </div>
+                        <div class="contact-details">
+                            <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
+                                <?= t('contact_email') ?></a>
+                            <a href="tel:+27 73 298 5311"><i class="fas fa-phone"></i>
+                                +27 73 298 5311</a>
+                        </div>
+                        <p class="mt-2 mb-0"><em><?= t('contact_pickup_jhb_admin_note') ?></em></p>
                     </div>
 
-                    <div class="contact-grid">
-                        <div class="contact-card">
-                            <h4><i class="fas fa-city"></i> <?= t('contact_city_jhb_full') ?></h4>
-                            <div class="address">
-                                <p>Trusted Cargo Company</p>
-                                <p>30 Gaunt Road</p>
-                                <p>Bryanston Sandton</p>
-                                <p>Johannesburg 2191</p>
-                            </div>
-                            <div class="contact-details">
-                                <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
-                                    <?= t('contact_email') ?></a>
-                                <a href="tel:+27 73 298 5311"><i class="fas fa-phone"></i>
-                                    +27 73 298 5311</a>
-                            </div>
+
+                    <div class="contact-card">
+                        <h4><i class="fas fa-city"></i> <?= t('contact_pickup_kin_heading') ?></h4>
+                        <div class="address">
+                            <p><?= t('contact_pickup_kin_name') ?></p>
+                            <p><?= t('contact_pickup_kin_line1') ?></p>
+                            <p><?= t('contact_pickup_kin_line2') ?></p>
+                            <p><?= t('contact_pickup_kin_line3') ?></p>
                         </div>
-
-
-                        <div class="contact-card">
-                            <h4><i class="fas fa-city"></i> <?= t('contact_city_kin_full') ?></h4>
-                            <div class="address">
-                                <p>Trusted Cargo Company</p>
-                                <p>14, Avenue Sergent Moke</p>
-                                <p>Commune de Ngaliema Kinshasa</p>
-                                <p>Réf. : Rond Point Socimat</p>
-                            </div>
-                            <div class="contact-details">
-                                <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
-                                    <?= t('contact_email') ?></a>
-                                <a href="tel:+243 987 020 110"><i class="fas fa-phone"></i>
-                                    +243 987 020 110</a>
-                            </div>
-                        </div>
-
-                        <div class="contact-card">
-                            <h4><i class="fas fa-city"></i> <?= t('contact_city_lub_full') ?></h4>
-                            <div class="address">
-                                <p>Trusted Cargo Company</p>
-                                <p>108, Avenue Kasaï</p>
-                                <p>Commune de Lubumbashi</p>
-                                <p>Centre-ville</p>
-                                <p>Réf. : Cliniques universitaires</p>
-                            </div>
-                            <div class="contact-details">
-                                <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
-                                    <?= t('contact_email') ?></a>
-                                <a href="tel:+243 852 934 920<"><i class="fas fa-phone"></i>
-                                    +243 852 934 920</a>
-                            </div>
-                        </div>
-
-
-                        <div class="contact-card">
-                            <h4><i class="fas fa-city"></i> <?= t('contact_city_kwz_full') ?></h4>
-                            <div class="address">
-                                <p>Trusted Cargo Company</p>
-                                <p> NB : <?= t('footer_contact_des_kwz') ?></p>
-                            </div>
-                            <div class="contact-details">
-                                <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
-                                    <?= t('contact_email') ?></a>
-                                <a href="tel:+27 73 298 5311"><i class="fas fa-phone"></i>
-                                    +243 852 934 920</a>
-                            </div>
+                        <div class="contact-details">
+                            <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
+                                <?= t('contact_email') ?></a>
+                            <a href="tel:+243 987 020 110"><i class="fas fa-phone"></i>
+                                <?= t('contact_pickup_kin_phone') ?></a>
                         </div>
                     </div>
+
+                    <div class="contact-card">
+                        <h4><i class="fas fa-city"></i> <?= t('contact_pickup_lub_heading') ?></h4>
+                        <div class="address">
+                            <p><?= t('contact_pickup_lub_name') ?></p>
+                            <p><?= t('contact_pickup_lub_line1') ?></p>
+                            <p><?= t('contact_pickup_lub_line2') ?></p>
+                            <p><?= t('contact_pickup_lub_line3') ?></p>
+                            <p><?= t('contact_pickup_lub_line4') ?></p>
+                        </div>
+                        <div class="contact-details">
+                            <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
+                                <?= t('contact_email') ?></a>
+                            <a href="tel:+243 852 934 920"><i class="fas fa-phone"></i>
+                                <?= t('contact_pickup_lub_phone') ?></a>
+                        </div>
+                    </div>
+
+
+                    <div class="contact-card">
+                        <h4><i class="fas fa-city"></i> <?= t('contact_pickup_kwz_heading') ?></h4>
+                        <div class="address">
+                            <p><?= t('contact_pickup_kwz_name') ?></p>
+                            <p><?= t('contact_pickup_kwz_note') ?></p>
+                        </div>
+                        <div class="contact-details">
+                            <a href="mailto:<?= t('contact_email') ?>"><i class="fas fa-envelope"></i>
+                                <?= t('contact_email') ?></a>
+                            <a href="tel:+243 852 934 920"><i class="fas fa-phone"></i>
+                                <?= t('contact_pickup_kwz_phone') ?></a>
+                        </div>
+                    </div>
+                </div>
                 </section>
 
                 <section class="card">

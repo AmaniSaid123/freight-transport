@@ -11,12 +11,10 @@
             <div class="step">
                 <div class="step-number">1</div>
                 <h2><?= t('process_step1_title') ?></h2>
-                <p><?= t('process_step1_paragraph') ?></p>
-
-                <div class="step-details">
-                    <p><?= t('process_step1_detail') ?></p>
-                    <p><strong><?= t('process_step1_note') ?></strong></p>
-                </div>
+                <ul class="mb-4">
+                    <li><?= t('process_step1_bullet1') ?></li>
+                    <li><?= t('process_step1_bullet2') ?></li>
+                </ul>
 
                 <div class="step-actions">
 
@@ -29,9 +27,20 @@
             <div class="step">
                 <div class="step-number">2</div>
                 <h2><?= t('process_step2_title') ?></h2>
-                <p><?= t('process_step2_paragraph') ?></p>
+                <ul class="mb-4">
+                    <li><?= t('process_step2_bullet1') ?></li>
+                    <li>
+                        <?= t('process_step2_bullet2') ?>
+                        <ul class="mt-2">
+                            <li><?= t('process_step2_bullet2_option1') ?></li>
+                            <li><?= t('process_step2_bullet2_option2') ?></li>
+                        </ul>
+                    </li>
+                    <li><?= t('process_step2_bullet3') ?></li>
+                    <li><?= t('process_step2_bullet4') ?></li>
+                </ul>
 
-                <div class="contact-methods">
+                <div class="contact-methods mb-3">
                     <div class="contact-method">
                         <i class="fab fa-whatsapp"></i>
                         <span><?= t('process_contact_whatsapp') ?></span>
@@ -42,19 +51,28 @@
                     </div>
                 </div>
 
-                <div class="note">
-                    <p><strong><?= t('process_note_label') ?></strong> <?= t('process_note_text') ?></p>
-                </div>
-
                 <div class="step-actions">
-                    <a href="/contact.php" class="btn"><?= t('process_step2_button') ?></a>
+                    <a href="/contact" class="btn"><?= t('process_step2_button') ?></a>
                 </div>
             </div>
-        </div>
 
-        <div class="note" style="margin-top: 30px;">
-            <p><strong><?= t('process_important_label') ?></strong> <?= t('process_important_text') ?></p>
-            <p><?= t('process_important_note') ?></p>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h2><?= t('process_arrival_title') ?></h2>
+                <ul class="mb-0">
+                    <li><?= t('process_arrival_eval') ?></li>
+                    <li>
+                        <?= t('process_arrival_comm') ?>
+                        <ul class="mt-2">
+                            <li><?= t('process_arrival_tracking') ?></li>
+                            <li><?= t('process_arrival_price') ?></li>
+                            <li><?= t('process_arrival_payment_link') ?></li>
+                        </ul>
+                    </li>
+                    <li><strong><?= t('process_arrival_payment_required') ?></strong></li>
+                    <li><strong><?= t('process_arrival_storage_fee') ?></strong></li>
+                </ul>
+            </div>
         </div>
 
     </div>

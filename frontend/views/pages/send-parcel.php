@@ -15,19 +15,23 @@ require_once __DIR__ . '/../../controllers/ParcelController.php';
 global $bdd;
 $controller = new ParcelController();
 
+$form_message = null;
+$form_type = null;
 
 if (isset($_POST['send-parcel'])) {
-
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        header('Content-Type: application/json; charset=utf-8');
         $result = $controller->handleCreateParcel($_POST);
-        echo json_encode($result);
-        exit;
+        $form_message = $result['message'] ?? '';
+        $form_type = (!empty($result['success']) ? 'success' : 'error');
+        if (!empty($result['success'])) {
+            // Clear fields on success
+            $_POST = [];
+        }
+    } else {
+        http_response_code(405);
+        $form_message = 'Méthode non autorisée';
+        $form_type = 'error';
     }
-
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Méthode non autorisée']);
 }
 
 ?>
@@ -45,7 +49,7 @@ if (isset($_POST['send-parcel'])) {
     <!-- Header Start -->
     <div class="container-fluid bg-breadcrumb">
         <div class="container text-center py-5" style="max-width: 900px;">
-            <h3 class="display-7 mb-4 wow fadeInDown" data-wow-delay="0.1s"><?= t('send_parcel') ?></h1>
+            <h3 class="display-7 mb-4 wow fadeInDown" data-wow-delay="0.1s"><?= t('send_parcel') ?></h3>
                 <ol class="breadcrumb justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
                     <li class="breadcrumb-item"><a href="homepage.php"><?= t('home') ?></a></li>
                     <li class="breadcrumb-item"><a href="#">Pages</a></li>
@@ -62,7 +66,10 @@ if (isset($_POST['send-parcel'])) {
                 <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
                     <div class="appointment-form rounded p-5">
 
-                        <h1 class="display-5 mb-4"><?= t('send_parcel') ?></h1>
+                        <h1 class="display-5 mb-3"><?= t('send_parcel') ?></h1>
+                        <p class="text-muted lead fw-normal mb-4 send-parcel-subtitle">
+                            <?= t('send_parcel_subtitle') ?>
+                        </p>
 
                         <?php if (!empty($form_message)): ?>
                             <div class="mb-3">
@@ -75,132 +82,193 @@ if (isset($_POST['send-parcel'])) {
                         <?php endif; ?>
 
 
-                        <form method="post" action="<?= BASE_URL ?>views/pages/send-parcel.php" novalidate>
+                        <form id="sendParcelForm" method="post" action="<?= BASE_URL ?>views/pages/send-parcel.php" novalidate>
 
-                            <div class="row gy-3 gx-4">
-                                <div class="col-md-6">
-                                    <label for="full_name"
-                                        class="form-label visually-hidden"><?= t('full_name') ?></label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-primary"><i
-                                                class="fa fa-user"></i></span>
-                                        <input name="full_name" id="full_name" type="text"
-                                            class="form-control py-3 border-primary bg-transparent"
-                                            placeholder="<?= t('full_name') ?>" required aria-required="true"
-                                            value="<?= htmlspecialchars($_POST['full_name'] ?? '') ?>">
+                            <div class="send-parcel-shell">
+                                <div class="form-intro bg-light rounded-4 p-4 mb-4 d-flex flex-wrap align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="pill pill-primary"><?= t('send_parcel') ?></div>
+                                        <div class="text-muted small">
+                                            <span class="me-3"><i class="fa fa-check-circle text-success me-1"></i><?= t('full_name') ?></span>
+                                            <span class="me-3"><i class="fa fa-check-circle text-success me-1"></i><?= t('origin') ?>/<?= t('destination') ?></span>
+                                            <span><i class="fa fa-check-circle text-success me-1"></i><?= t('description') ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="chip-badge">
+                                        <i class="fa fa-bolt me-2"></i><?= t('express_shipping') ?>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label class="form-label visually-hidden"><?= t('phone') ?></label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-primary"><i
-                                                class="fa fa-phone"></i></span>
-                                        <select name="phone_country" id="phone_country"
-                                            class="form-select py-3 border-primary bg-transparent w-auto me-2 phone-country-select"
-                                            style="max-width:110px;" required>
-                                            <option value="+1" <?= (($_POST['phone_country'] ?? '') === '+1') ? 'selected' : '' ?>>🇺🇸 +1</option>
-                                            <option value="+33" <?= (($_POST['phone_country'] ?? '') === '+33') ? 'selected' : '' ?>>🇫🇷 +33</option>
-                                            <option value="+41" <?= (($_POST['phone_country'] ?? '') === '+41') ? 'selected' : '' ?>>🇨🇭 +41</option>
-                                            <option value="+243" <?= (($_POST['phone_country'] ?? '') === '+243') ? 'selected' : '' ?>>🇨🇩 +243</option>
-                                            <option value="+27" <?= (($_POST['phone_country'] ?? '') === '+27') ? 'selected' : '' ?>>🇿🇦 +27</option>
-                                            <!-- add more countries as needed -->
-                                        </select>
-                                        <input name="phone_local" id="phone_local" type="tel" pattern="[0-9() \-]{4,20}"
-                                            class="form-control py-3 border-primary bg-transparent"
-                                            placeholder="<?= t('phone') ?>" required aria-required="true"
-                                            value="<?= htmlspecialchars($_POST['phone_local'] ?? '') ?>">
-                                    </div>
+                                <div class="row g-4 align-items-stretch">
+                                    <div class="col-lg-6">
+                                        <div class="section-card shadow-sm h-100">
+                                            <div class="section-card__header">
+                                                <div class="pill pill-soft">1</div>
+                                                <div>
+                                                    <h2 class="h5 mb-1"><?= t('send_parcel_step1_title') ?></h2>
+                                                    <p class="text-muted small mb-0"><?= t('send_parcel_step1_desc') ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="client-toggle d-flex align-items-center gap-2 mb-3">
+                                                <div class="form-check form-switch mb-0">
+                                                    <input class="form-check-input" type="checkbox" id="clientToggle" name="client_mode">
+                                                    <label class="form-check-label" for="clientToggle"><?= t('client_toggle_label') ?></label>
+                                                </div>
+                       
+                                            </div>
+                                            <div class="row gy-3">
+                                                <div class="col-12 client-hide">
+                                                    <label for="full_name" class="form-label small text-muted"><?= t('full_name') ?> <span class="required-dot">*</span></label>
+                                                    <div class="input-group modern-input">
+                                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                                        <input name="full_name" id="full_name" type="text"
+                                                            class="form-control"
+                                                            placeholder="<?= t('full_name') ?>" required aria-required="true"
+                                                            value="<?= htmlspecialchars($_POST['full_name'] ?? '') ?>"
+                                                            data-required="full_name">
+                                                    </div>
+                                                    <div class="field-error" data-error-for="full_name"></div>
+                                                </div>
 
-                                </div>
+                                                <div class="col-12 client-hide">
+                                                    <label class="form-label small text-muted"><?= t('phone') ?> <span class="required-dot">*</span></label>
+                                                    <div class="input-group modern-input flex-wrap">
+                                                        <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                                        <select name="phone_country" id="phone_country"
+                                                            class="form-select phone-country-select"
+                                                            required data-required="phone_country">
+                                                            <option value="+1" <?= (($_POST['phone_country'] ?? '') === '+1') ? 'selected' : '' ?>>🇺🇸 +1</option>
+                                                            <option value="+33" <?= (($_POST['phone_country'] ?? '') === '+33') ? 'selected' : '' ?>>🇫🇷 +33</option>
+                                                            <option value="+41" <?= (($_POST['phone_country'] ?? '') === '+41') ? 'selected' : '' ?>>🇨🇭 +41</option>
+                                                            <option value="+243" <?= (($_POST['phone_country'] ?? '') === '+243') ? 'selected' : '' ?>>🇨🇩 +243</option>
+                                                            <option value="+27" <?= (($_POST['phone_country'] ?? '') === '+27') ? 'selected' : '' ?>>🇿🇦 +27</option>
+                                                        </select>
+                                                        <input name="phone_local" id="phone_local" type="tel" pattern="[0-9() \-]{4,20}"
+                                                            class="form-control"
+                                                            placeholder="<?= t('phone') ?>" required aria-required="true"
+                                                            value="<?= htmlspecialchars($_POST['phone_local'] ?? '') ?>"
+                                                            data-required="phone_local">
+                                                    </div>
+                                                    <div class="field-error" data-error-for="phone"></div>
+                                                </div>
 
-                                <div class="col-md-6">
-                                    <label for="email" class="form-label visually-hidden"><?= t('email') ?></label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-primary"><i
-                                                class="fa fa-envelope"></i></span>
-                                        <input name="email" id="email" type="email"
-                                            class="form-control py-3 border-primary bg-transparent"
-                                            placeholder="<?= t('email') ?>" required aria-required="true"
-                                            value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
-                                    </div>
-                                </div>
+                                                <div class="col-12">
+                                                    <label for="email" class="form-label small text-muted"><?= t('email') ?> <span class="required-dot">*</span></label>
+                                                    <div class="input-group modern-input">
+                                                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                                        <input name="email" id="email" type="email"
+                                                            class="form-control"
+                                                            placeholder="<?= t('email') ?>" required aria-required="true"
+                                                            value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                                                            data-required="email">
+                                                    </div>
+                                                    <div class="field-error" data-error-for="email"></div>
+                                                </div>
 
-                                <div class="col-md-6">
-                                    <label for="address" class="form-label visually-hidden"><?= t('address') ?></label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-primary"><i
-                                                class="fa fa-map-marker"></i></span>
-                                        <input name="address" id="address" type="text"
-                                            class="form-control py-3 border-primary bg-transparent"
-                                            placeholder="<?= t('address') ?>" required aria-required="true"
-                                            value="<?= htmlspecialchars($_POST['address'] ?? '') ?>">
-                                    </div>
-                                </div>
+                                                <div class="col-12 client-hide">
+                                                    <label for="address" class="form-label small text-muted"><?= t('address') ?> <span class="required-dot">*</span></label>
+                                                    <div class="input-group modern-input">
+                                                        <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+                                                        <input name="address" id="address" type="text"
+                                                            class="form-control"
+                                                            placeholder="<?= t('address') ?>" required aria-required="true"
+                                                            value="<?= htmlspecialchars($_POST['address'] ?? '') ?>"
+                                                            data-required="address">
+                                                    </div>
+                                                    <div class="field-error" data-error-for="address"></div>
+                                                </div>
 
-                            </div>
-                            <div id="expeditions">
-                                <!-- Bloc d'expédition -->
-                                <div class="row gy-3 gx-4 expedition-item border rounded p-3 mb-3">
-                                    <div class="col-xl-6">
-                                        <label class="form-label visually-hidden"><?= t('origin') ?></label>
-                                        <select class="form-select py-3 border-primary bg-transparent" name="origin[]"
-                                            required>
-                                            <option value="" disabled selected><?= t('select_origin') ?? t('origin') ?>
-                                            </option>
-                                            <option value="Chine">Chine</option>
-                                            <option value="Johannesburg">Johannesburg</option>
-                                            <option value="Kinshasa">Kinshasa</option>
-                                            <option value="Lubumbashi">Lubumbashi</option>
-                                            <option value="Kolwezi">Kolwezi</option>
-                                        </select> </select>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="section-card shadow-sm section-card--accent h-100">
+                                            <div class="section-card__header justify-content-between align-items-start flex-wrap">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="pill pill-soft">2</div>
+                                                    <div>
+                                                        <h2 class="h5 mb-1"><?= t('send_parcel_step2_title') ?></h2>
+                                                        <p class="text-muted small mb-0"><?= t('send_parcel_step2_desc') ?></p>
+                                                    </div>
+                                                </div>
+                                                <div class="chip-badge chip-badge--ghost">
+                                                    <i class="fa fa-layer-group me-2"></i><?= t('add_expedition') ?>
+                                                </div>
+                                            </div>
 
-                                    <div class="col-xl-6">
-                                        <label class="form-label visually-hidden"><?= t('destination') ?></label>
-                                        <select class="form-select py-3 border-primary bg-transparent"
-                                            name="destination[]" required>
-                                            <option value="" disabled selected>
-                                                <?= t('select_destination') ?? t('destination') ?>
-                                            </option>
-                                            <option value="Chine">Chine</option>
-                                            <option value="Johannesburg">Johannesburg</option>
-                                            <option value="Kinshasa">Kinshasa</option>
-                                            <option value="Lubumbashi">Lubumbashi</option>
-                                            <option value="Kolwezi">Kolwezi</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <label class="form-label visually-hidden"><?= t('description') ?></label>
-                                        <textarea class="form-control py-3 border-primary bg-transparent text-dark"
-                                            placeholder="<?= t('description') ?>" name="description[]" rows="2"
-                                            required></textarea>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <label class="form-label visually-hidden"><?= t('commentaire') ?></label>
-                                        <textarea class="form-control py-3 border-primary bg-transparent text-dark"
-                                            placeholder="<?= t('commentaire') ?>" name="commentaire[]"
-                                            rows="2"></textarea>
-                                    </div>
+                                            <div id="expeditions" class="expedition-stack">
+                                                <!-- Bloc d'expédition -->
+                                                <div class="row gy-3 gx-3 expedition-item expedition-card">
+                                                    <div class="expedition-card__meta">
+                                                        <div class="chip-badge"><?= t('expedition_label') ?> #1</div>
+                                                        <button type="button" class="btn btn-link text-danger btn-sm remove-expedition" aria-label="<?= t('remove_expedition') ?>">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <label class="form-label small text-muted"><?= t('origin') ?> <span class="required-dot">*</span></label>
+                                                        <select class="form-select" name="origin[]"
+                                                            required data-required="origin">
+                                                            <option value="" disabled selected><?= t('select_origin') ?? t('origin') ?>
+                                                            </option>
+                                                            <option value="Chine">Chine</option>
+                                                            <option value="Johannesburg">Johannesburg</option>
+                                                            <option value="Kinshasa">Kinshasa</option>
+                                                            <option value="Lubumbashi">Lubumbashi</option>
+                                                            <option value="Kolwezi">Kolwezi</option>
+                                                        </select>
+                                                        <div class="field-error" data-error-for="origin"></div>
+                                                    </div>
 
-                                    <div class="col-12 text-end">
-                                        <button type="button" class="btn btn-outline-danger btn-sm remove-expedition"
-                                            aria-label="<?= t('remove_expedition') ?>">✖</button>
-                                    </div>
-                                </div>
-                            </div>
+                                                    <div class="col-xl-6">
+                                                        <label class="form-label small text-muted"><?= t('destination') ?> <span class="required-dot">*</span></label>
+                                                        <select class="form-select"
+                                                            name="destination[]" required data-required="destination">
+                                                            <option value="" disabled selected>
+                                                                <?= t('select_destination') ?? t('destination') ?>
+                                                            </option>
+                                                            <option value="Chine">Chine</option>
+                                                            <option value="Johannesburg">Johannesburg</option>
+                                                            <option value="Kinshasa">Kinshasa</option>
+                                                            <option value="Lubumbashi">Lubumbashi</option>
+                                                            <option value="Kolwezi">Kolwezi</option>
+                                                        </select>
+                                                        <div class="field-error" data-error-for="destination"></div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <label class="form-label small text-muted"><?= t('description') ?> <span class="required-dot">*</span></label>
+                                                        <textarea class="form-control"
+                                                            placeholder="<?= t('description') ?>" name="description[]" rows="2"
+                                                            required data-required="description"></textarea>
+                                                        <div class="field-error" data-error-for="description"></div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <label class="form-label small text-muted"><?= t('commentaire') ?></label>
+                                                        <textarea class="form-control"
+                                                            placeholder="<?= t('commentaire') ?>" name="commentaire[]"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                            <!-- Bouton ajouter -->
-                            <div class="d-flex justify-content-between mb-3">
-                                <div>
-                                    <button type="button" id="add" class="btn btn-success">➕
-                                        <?= t('add_expedition') ?></button>
-                                    <button type="reset" id="resetForm" class="btn btn-secondary ms-2">↺
-                                        <?= t('reset') ?></button>
-                                </div>
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-primary btn-lg text-white px-4"
-                                        name="send-parcel">📦 <?= t('send') ?></button>
+                                            <div class="soft-divider my-4"></div>
+                                            <!-- Bouton ajouter -->
+                                            <div class="form-actions d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                                <div class="d-flex gap-2">
+                                                    <button type="button" id="add" class="btn btn-outline-primary rounded-pill px-4">
+                                                        <i class="fa fa-plus me-2"></i><?= t('add_expedition') ?>
+                                                    </button>
+                                                    <button type="reset" id="resetForm" class="btn btn-reset">
+                                                        <i class="fa fa-undo me-2"></i><?= t('reset') ?>
+                                                    </button>
+                                                </div>
+                                                <div class="text-end">
+                                                    <button type="submit" class="btn btn-send"
+                                                        name="send-parcel"><i class="fa fa-box me-2"></i><?= t('send') ?></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -210,6 +278,7 @@ if (isset($_POST['send-parcel'])) {
             </div>
         </div>
     </div>
+
 
 
 
@@ -230,36 +299,48 @@ if (isset($_POST['send-parcel'])) {
         $(document).ready(function () {
             // Ajouter une expédition
             $("#add").click(function () {
+                const expeditionNumber = $(".expedition-item").length + 1;
                 let newExpedition = `
-                <div class="row gy-3 gx-4 expedition-item border rounded p-3 mb-3 align-items-end">
+                <div class="row gy-3 gx-3 expedition-item expedition-card">
+                    <div class="expedition-card__meta">
+                        <div class="chip-badge"><?= t('expedition_label') ?> #${expeditionNumber}</div>
+                        <button type="button" class="btn btn-link text-danger btn-sm remove-expedition" aria-label="<?= t('remove_expedition') ?>">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
                     <div class="col-md-6">
-                        <label class="form-label visually-hidden"><?= t('origin') ?></label>
-                        <select class="form-select py-3 border-primary bg-transparent" name="origin[]" required>
+                        <label class="form-label small text-muted"><?= t('origin') ?> <span class="required-dot">*</span></label>
+                        <select class="form-select" name="origin[]" required data-required="origin">
                             <option value="" disabled selected><?= t('select_origin') ?? t('origin') ?></option>
                             <option value="Chine">Chine</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label visually-hidden"><?= t('destination') ?></label>
-                        <select class="form-select py-3 border-primary bg-transparent" name="destination[]" required>
-                            <option value="" disabled selected><?= t('select_destination') ?? t('destination') ?></option>
                             <option value="Johannesburg">Johannesburg</option>
                             <option value="Kinshasa">Kinshasa</option>
                             <option value="Lubumbashi">Lubumbashi</option>
                             <option value="Kolwezi">Kolwezi</option>
                         </select>
+                        <div class="field-error" data-error-for="origin"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted"><?= t('destination') ?> <span class="required-dot">*</span></label>
+                        <select class="form-select" name="destination[]" required data-required="destination">
+                            <option value="" disabled selected><?= t('select_destination') ?? t('destination') ?></option>
+                            <option value="Chine">Chine</option>
+                            <option value="Johannesburg">Johannesburg</option>
+                            <option value="Kinshasa">Kinshasa</option>
+                            <option value="Lubumbashi">Lubumbashi</option>
+                            <option value="Kolwezi">Kolwezi</option>
+                        </select>
+                        <div class="field-error" data-error-for="destination"></div>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label visually-hidden"><?= t('description') ?></label>
-                        <textarea class="form-control py-3 border-primary bg-transparent text-dark" placeholder="<?= t('description') ?>" name="description[]" rows="2" required></textarea>
+                        <label class="form-label small text-muted"><?= t('description') ?> <span class="required-dot">*</span></label>
+                        <textarea class="form-control" placeholder="<?= t('description') ?>" name="description[]" rows="2" required data-required="description"></textarea>
+                        <div class="field-error" data-error-for="description"></div>
                     </div>
-                    <div class="col-md-5">
-                        <label class="form-label visually-hidden"><?= t('commentaire') ?></label>
-                        <textarea class="form-control py-3 border-primary bg-transparent text-dark" placeholder="<?= t('commentaire') ?>" name="commentaire[]" rows="2"></textarea>
-                    </div>
-                    <div class="col-md-1 text-end">
-                        <button type="button" class="btn btn-outline-danger btn-sm remove-expedition" aria-label="<?= t('remove_expedition') ?>">✖</button>
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted"><?= t('commentaire') ?></label>
+                        <textarea class="form-control" placeholder="<?= t('commentaire') ?>" name="commentaire[]" rows="2"></textarea>
                     </div>
                 </div>`;
                 $("#expeditions").append(newExpedition);
@@ -274,31 +355,91 @@ if (isset($_POST['send-parcel'])) {
 
     <script>
         $(document).ready(function () {
-            $("#parcelForm").on("submit", function (e) {
-                e.preventDefault();
-                const formData = $(this).serialize();
+            const form = document.getElementById('sendParcelForm');
+            const clientToggle = document.getElementById('clientToggle');
+            const emailField = document.getElementById('email');
+            const contactFields = form.querySelectorAll('.client-hide input, .client-hide select');
+            const messages = {
+                full_name: "<?= t('required_full_name') ?>",
+                phone: "<?= t('required_phone') ?>",
+                email: "<?= t('required_email') ?>",
+                address: "<?= t('required_address') ?>",
+                origin: "<?= t('required_origin') ?>",
+                destination: "<?= t('required_destination') ?>",
+                description: "<?= t('required_description') ?>"
+            };
 
-                $.post("<?= BASE_URL ?>controllers/api/create_parcel_action.php", formData, function (response) {
-                    $(".alert-container").html("");
+            const clearErrors = (context) => {
+                context.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+            };
 
-                    if (response.success) {
-                        $(".alert-container").html(
-                            `<div class="alert alert-success">${response.message}</div>`
-                        );
-                        setTimeout(() => {
-                            window.location.href = "<?= BASE_URL ?>views/pages/detail.php?parcel_id=" + response.parcel_id;
-                        }, 1000);
-                        $("#parcelForm")[0].reset();
-                    } else {
-                        $(".alert-container").html(
-                            `<div class="alert alert-danger">${response.message}</div>`
-                        );
-                    }
-                }, "json").fail(function () {
-                    $(".alert-container").html(
-                        `<div class="alert alert-danger">Erreur de communication avec le serveur.</div>`
-                    );
+            const setError = (field, message) => {
+                const errEl = field.closest('.col-md-6, .col-xl-6, .col-12')?.querySelector('.field-error[data-error-for]');
+                if (errEl) errEl.textContent = message;
+            };
+
+            const toggleClientMode = () => {
+                const isClient = clientToggle.checked;
+                form.classList.toggle('client-mode', isClient);
+                contactFields.forEach(el => {
+                    el.disabled = isClient;
                 });
+                emailField.disabled = false;
+                emailField.readOnly = false;
+            };
+
+            toggleClientMode();
+            clientToggle.addEventListener('change', toggleClientMode);
+
+            form.addEventListener('submit', function (e) {
+                clearErrors(form);
+                let hasError = false;
+
+                const requiredFields = [
+                    { selector: '[data-required=\"full_name\"]', message: messages.full_name },
+                    { selector: '[data-required=\"phone_country\"]', message: messages.phone },
+                    { selector: '[data-required=\"phone_local\"]', message: messages.phone },
+                    { selector: '[data-required=\"email\"]', message: messages.email },
+                    { selector: '[data-required=\"address\"]', message: messages.address }
+                ];
+
+                requiredFields.forEach(({ selector, message }) => {
+                    const field = form.querySelector(selector);
+                    if (field && !field.disabled && !field.value.trim()) {
+                        setError(field, message);
+                        hasError = true;
+                    }
+                });
+
+                // Expeditions validation
+                const expeditions = form.querySelectorAll('.expedition-item');
+                expeditions.forEach(exp => {
+                    const origin = exp.querySelector('[data-required=\"origin\"]');
+                    const destination = exp.querySelector('[data-required=\"destination\"]');
+                    const description = exp.querySelector('[data-required=\"description\"]');
+
+                    if (origin && !origin.value) {
+                        setError(origin, messages.origin);
+                        hasError = true;
+                    }
+                    if (destination && !destination.value) {
+                        setError(destination, messages.destination);
+                        hasError = true;
+                    }
+                    if (description && !description.value.trim()) {
+                        setError(description, messages.description);
+                        hasError = true;
+                    }
+                });
+
+                if (hasError) {
+                    e.preventDefault();
+                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    // Ensure email is submitted even if disabled
+                    emailField.disabled = false;
+                    emailField.readOnly = false;
+                }
             });
         });
     </script>

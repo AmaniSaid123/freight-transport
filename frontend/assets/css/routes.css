@@ -1,0 +1,267 @@
+.process {
+    background: #f9fafb;
+}
+
+.process .section-title {
+    text-align: center;
+}
+
+.process .process-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.process .process-tab {
+    background: transparent;
+    border: 2px solid #111;
+    color: #111;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.process .process-tab.active,
+.process .process-tab:hover {
+    background: #111;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.process .process-section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.process .process-section.active {
+    display: block;
+}
+
+.process .process-subnav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.process .process-subtab {
+    background: #fff;
+    border: 1px solid #111;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-weight: 700;
+    color: #111;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.process .process-subtab.active,
+.process .process-subtab:hover {
+    background: #111;
+    color: #fff;
+}
+
+.process .process-subsection {
+    display: none;
+}
+
+.process .process-subsection.active {
+    display: grid;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.process .process-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 26px;
+    margin-bottom: 10px;
+}
+
+.process .process-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 26px 22px 22px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.process .process-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.process .process-step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    background: #111;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+    border-bottom-right-radius: 14px;
+}
+
+.process .process-icon {
+    font-size: 2rem;
+    color: #111;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.process .process-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.process .process-card p {
+    color: #4b5563;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.process .highlight,
+.process .warning-note {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 12px;
+    border-left: 4px solid #999;
+    margin: 12px 0;
+}
+
+.process .warning-note {
+    border-left-color: #333;
+}
+
+.process .warning-note i,
+.process .highlight i {
+    color: #111;
+    margin-right: 8px;
+}
+
+.process .city-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.process .city-tag {
+    background: #f5f5f5;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 8px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #111;
+    font-weight: 600;
+}
+
+.process .transport-options,
+.process .payment-options {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.process .transport-card,
+.process .payment-option {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px 12px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.process .transport-card h4,
+.process .payment-option h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #111;
+}
+
+.process .transport-icon,
+.process .payment-icon {
+    font-size: 1.6rem;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.process .note-box {
+    background: #f5f5f5;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 12px;
+    color: #4b5563;
+}
+
+.process .note-box strong {
+    color: #111;
+}
+
+@media (max-width: 992px) {
+    .process .process-container {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .process .process-tab {
+        padding: 9px 14px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .process .process-card {
+        padding: 22px 16px 18px;
+    }
+
+    .process .process-step {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+
+    .process .transport-card,
+    .process .payment-option {
+        width: 100%;
+    }
+}

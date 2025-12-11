@@ -13,12 +13,21 @@
                 <a href="homepage" class="nav-item nav-link active"><?= t('home') ?></a>
                 <a href="/#about" class="nav-item nav-link"><?= t('about') ?></a>
                 <a href="/#services" class="nav-item nav-link"><?= t('services') ?></a>
-                <a href="/#tracking" class="nav-item nav-link"><?= t('tracking') ?></a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><?= t('tracking_parcel') ?></a>
+                    <div class="dropdown-menu m-0">
+                        <a href="/#tracking" class="dropdown-item"><?= t('tracking') ?></a>
+                        <a href="/#communication" class="dropdown-item"><?= t('communication_tracking') ?></a>
+                    </div>
+                </div>
                 <a href="/#values" class="nav-item nav-link"><?= t('values') ?></a>
                 <a href="/#process" class="nav-item nav-link"><?= t('proceed') ?></a>
+
                 <a href="/#price" class="nav-item nav-link"><?= t('prices') ?></a>
+                <a href="routes.php" class="nav-item nav-link"><?= t('routes') ?></a>
                 <a href="contact.php" class="nav-item nav-link"><?= t('contact') ?></a>
-                   <a href="payment.php" class="nav-item nav-link"><?= t('payment_title') ?></a>
+                <a href="payment.php" class="nav-item nav-link"><?= t('payment_title') ?></a>
+
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><?= t('language') ?></a>
                     <div class="dropdown-menu m-0">

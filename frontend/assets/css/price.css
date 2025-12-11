@@ -273,6 +273,17 @@
   gap: 0.4rem;
 }
 
+.price-detail-inline {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #d32f2f;
+  font-style: italic;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.15rem;
+}
+
 /* Bouton PDF plus grand et élégant */
 .pdf-download-btn.small {
   background: #d32f2f;
