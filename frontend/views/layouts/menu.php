@@ -24,7 +24,13 @@
                 <a href="/#process" class="nav-item nav-link"><?= t('proceed') ?></a>
 
                 <a href="/#price" class="nav-item nav-link"><?= t('prices') ?></a>
-                <a href="routes.php" class="nav-item nav-link"><?= t('routes') ?></a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><?= t('routes') ?></a>
+                    <div class="dropdown-menu m-0">
+                        <a href="routes-sa.php" class="dropdown-item"><?= t('routes_sa_menu') ?></a>
+                        <a href="routes-china.php" class="dropdown-item"><?= t('routes_china_menu') ?></a>
+                    </div>
+                </div>
                 <a href="contact.php" class="nav-item nav-link"><?= t('contact') ?></a>
                 <a href="payment.php" class="nav-item nav-link"><?= t('payment_title') ?></a>
 

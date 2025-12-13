@@ -17,13 +17,17 @@ return [
     'values' => 'Nos valeurs',
     'proceed' => 'Comment procéder',
     'prices' => 'Nos prix',
-    'communication_tracking' => 'Communication & Suivi',
+    'communication_tracking' => 'Nos routes logistiques',
     'routes' => 'Nos routes logistiques',
+    'routes_sa_menu' => 'De Johannesburg vers Kinshasa et Lubumbashi (avion ou route)',
+    'routes_china_menu' => 'De la Chine vers la RDC et l\'Afrique du Sud par bateau',
+    'routes_sa_page_title' => 'De Johannesburg vers Kinshasa et Lubumbashi par avion ou par route',
+    'routes_china_page_title' => 'De la Chine vers la RDC et l\'Afrique du Sud par bateau',
     'tracking_parcel' => 'Suivi',
-    
+
     // carousel
     'carousel-1' => 'Agence de fret maritime et aérien',
-    'carousel-text-1' => 'Meilleures solutions pour vos cargos venant de la Chine vers l’Afrique du sud et la RD. Congo',
+    'carousel-text-1' => 'La meilleure solution pour votre fret aérien de Johannesburg à la Rép. dém. du Congo et maritime de Chine à la Rép. dém. du Congo et à Johannesburg.',
     'carousel-description-1' => 'Faites livrer vos colis à notre entrepôt en Chine et recevez les à notre entrepôt dans votre ville ',
 
     'carousel-2' => 'La joie de recevoir votre colis en bonne et due forme',
@@ -76,10 +80,8 @@ return [
     'blog_text' => 'Facilitation pour différents types de transport de vos colis',
     'blog_description' => 'Vos colis peuvent être transportés par avion, par bateau tout comme par véhicules lorsqu’il s’agit de vous le livrer à domicile',
     'blog_content_title_1' => 'Par Avion (Fret aérien)',
-    'blog_content_description_1' => 'Veuillez livrer vos colis à notre entrepôt en Chine sur base des indications que vous trouverez dans la rubrique <a href="/contact">Nos contacts et entrepôts</a> et
-    sélectionnez l’image qui convient à votre ville de destination finale, et envoyez cette image  à votre fournisseur en Chine et précisez lui que vous voulez le fret aérien pour
-    votre colis. Faites nous un message WhatsApp ou email nous informant que vous faites livrer vos colis en Chine pour le fret aérien. Créez aussi
-    votre dossier MyFret pour nous permettre de vous tenir informé étape par étape sur votre colis en route',
+    'blog_content_description_1' => 'Commandez en ligne et utilisez notre entrepôt de Johannesburg comme adresse de livraison. Nous réceptionnerons vos colis et les expédierons par avion jusqu\'à votre ville en RDC, où vous pourrez ensuite les récupérer dans notre entrepôt local.
+    Consultez la section <a href="/contact">Nos contacts et entrepôts</a> pour obtenir des instructions et commencer dès aujourd\'hui.',
     'blog_content_title_2' => 'Par bateau (Fret maritime)',
     'blog_content_description_2' => 'Veuillez livrer vos colis à notre entrepôt en Chine sur base des indications que vous trouverez dans la rubrique <a href="/contact">Nos contacts et entrepôts</a>
     et sélectionnez l’image qui convient à votre ville de destination finale, et envoyez cette image  à votre fournisseur en Chine et précisez lui que vous voulez
@@ -261,12 +263,12 @@ return [
 
     'process_step2_title' => 'Deuxième étape : Demande des adresses et instructions',
     'process_step2_paragraph' => 'Par WhatsApp ou par mail à admin@trustedcargo.co.za, faites nous un message simple demandant nos adresses en Chine (si vous ne les avez pas encore prises toujours ici dans notre site web, rubrique <a href="/contact">Nos contacts et entrepôts</a>) et précisez nous si vous voulez le fret maritime ou aérien, et dites nous la ville de destination finale de votre colis, nous vous enverrons un fichier format photo contenant TOUS les détails dont votre fournisseur en Chine a besoin pour livrer vos colis chez nous. Si vous envoyez cette photo à votre fournisseur, c’est suffisant pour qu’il sache où et comment il va livrer vos colis à notre entrepôt en Chine.',
-    'process_step2_bullet1' => 'Contactez-nous par WhatsApp ou e-mail (admin@trustedcargo.co.za) pour obtenir nos adresses de Chine ou d’Afrique du Sud ou obtenez-les dans la rubrique « Nos Contacts et Entrepôts » sur notre site web.',
+    'process_step2_bullet1' => 'Contactez-nous par WhatsApp ou e-mail (admin@trustedcargo.co.za) pour obtenir nos adresses de Chine ou d’Afrique du Sud ou obtenez-les dans la rubrique « <a href="/contact">Nos Contacts et Entrepôts</a> » sur notre site web.',
     'process_step2_bullet2' => 'Dites à votre fournisseur d’indiquer clairement :',
     'process_step2_bullet2_option1' => 'Si vous souhaitez le fret maritime ou aérien (pour la Chine).',
     'process_step2_bullet2_option2' => 'La ville de destination finale de votre colis.',
     'process_step2_bullet3' => 'Nous vous enverrons un fichier photo (ou vous pouvez le télécharger vous-même sur notre site) contenant toutes les instructions nécessaires à transmettre à votre fournisseur en Chine pour la livraison de vos colis à notre entrepôt.',
-    'process_step2_bullet4' => 'Les instructions pour les colis allant de Johannesburg vers Kinshasa ou Lubumbashi sont également disponibles dans la rubrique « Nos contacts et entrepôts » pour insérer les détails de livraison lors de vos achats en ligne sur des sites sud-africains ou étrangers qui livrent en Afrique du Sud.',
+    'process_step2_bullet4' => 'Les instructions pour les colis allant de Johannesburg vers Kinshasa ou Lubumbashi sont également disponibles dans la rubrique « <a href="/contact">Nos contacts et entrepôts</a> » pour insérer les détails de livraison lors de vos achats en ligne sur des sites sud-africains ou étrangers qui livrent en Afrique du Sud.',
     'process_contact_whatsapp' => 'WhatsApp',
     'process_note_label' => 'Note :',
     'process_note_text' => 'Dans la rubrique <a href="/contact">Nos contacts et entrepôts</a>, vous trouverez les détails en format photo qu’il faut télécharger pour envoyer à votre fournisseur en Chine. Ca contient toutes les orientations dont votre fournisseur a besoin pour livrer vos colis à notre entrepôt en Chine selon qu’il s\'agit du fret aérien ou maritime et selon la destination finale de votre colis.',
@@ -300,14 +302,14 @@ return [
     'process_sa_step4_title' => 'Évaluation et Devis :',
     'process_sa_step4_desc' => 'Une fois les colis réceptionnés, nous procédons à leur évaluation pour vous communiquer le prix du transport. Ils sont ensuite planifiés pour la prochaine expédition vers votre destination finale en RDC (Kinshasa ou Lubumbashi).',
     'process_sa_step5_title' => 'Options de Paiement :',
-    'process_sa_step5_desc' => 'Le règlement de vos frais d\'expédition peut se faire en ligne via la rubrique "Paiement" de notre site web ou en espèces à notre entrepôt lors du dépôt/envoi du colis ou lors de la réception du colis dans votre ville.',
+    'process_sa_step5_desc' => 'Le règlement de vos frais d\'expédition peut se faire en ligne via la rubrique <a href="payment.php">"Paiement"</a> de notre site web ou en espèces à notre entrepôt lors du dépôt/envoi du colis ou lors de la réception du colis dans votre ville.',
     'process_tab_china' => 'Chine vers Afrique',
     'process_tab_sa' => 'Afrique du Sud vers RDC',
     'process_transport_air_desc' => 'Livraison rapide par fret aérien.',
     'process_transport_sea_desc' => 'Solution économique par fret maritime.',
     'process_sa_info_list' => 'Numéro de suivi, description et ville de destination finale (Kinshasa ou Lubumbashi).',
     'process_payment_online' => 'Paiement en ligne',
-    'process_payment_online_desc' => 'Via la rubrique "Paiement" du site.',
+    'process_payment_online_desc' => 'Via la rubrique <a href="payment.php">"Paiement"</a> du site.',
     'process_payment_cash' => 'Paiement en espèces',
     'process_payment_cash_desc' => 'Lors du dépôt ou à la réception du colis.',
     'process_arrival_title' => "À l'arrivée du colis à notre entrepôt (Chine ou Johannesburg)",
@@ -431,7 +433,7 @@ return [
 
     // buttons
     'button_info' => 'Information importante !',
-    'text_info' => 'Cette fonctionnalité sera bientôt disponible. Nous y travaillons encore. En attendant, vous pouvez commencer votre expédition en envoyant directement vos colis à notre entrepôt en Chine et en envoyant un message à notre équipe dans votre ville pour assurer le suivi. Rendez-vous dans « Nos contacts et entrepôts » pour commencer.',
+    'text_info' => 'Cette fonctionnalité sera bientôt disponible. Nous y travaillons encore. En attendant, vous pouvez expédier vos colis directement à nos entrepôts de Johannesburg (pour les envois aériens vers la RDC) ou de Chine (pour les envois maritimes vers la RDC et Johannesburg). Ensuite, contactez notre entrepôt dans votre ville pour que nous puissions suivre votre colis. Rendez-vous dans la section « Nos contacts et entrepôts » pour commencer.',
     // terms and conditions
     'terms_title' => 'Termes et Conditions',
 

@@ -17,12 +17,16 @@ return [
     'values' => 'Our Values',
     'proceed' => 'How to proceed',
     'prices' => 'Our Prices',
-    'communication_tracking' => 'Communication & Tracking',
+    'communication_tracking' => 'Our shipping routes',
     'routes' => 'Our Shipping Routes',
+    'routes_sa_menu' => 'From Johannesburg to Kinshasa and Lubumbashi (Air or Road)',
+    'routes_china_menu' => 'From China to DR. Congo and South Africa by sea',
+    'routes_sa_page_title' => 'From Johannesburg to Kinshasa and Lubumbashi by Air or Road',
+    'routes_china_page_title' => 'From China to DR. Congo and South Africa by sea',
     'tracking_parcel' => 'Track',
     // carousel
     'carousel-1' => 'Sea and air freight agency',
-    'carousel-text-1' => 'The best solutions for your cargo from China to South Africa and to the Dem. Republic of Congo',
+    'carousel-text-1' => 'The best solution for your cargo from Johannesburg to the DR. Congo by Air and from China to the DR. Congo and Johannesburg by sea.',
     'carousel-description-1' => 'Have your parcels delivered to our warehouse in China and receive them at our warehouse in your city ',
 
     'carousel-2' => 'The joy of receiving your package in good and proper condition',
@@ -75,7 +79,8 @@ return [
     'blog_text' => 'Facilitating different types of parcel transport',
     'blog_description' => 'Your parcels can be transported by plane, ship, or vehicle for home delivery',
     'blog_content_title_1' => 'By Air (Air Freight)',
-    'blog_content_description_1' => 'Please deliver your parcels to our warehouse in China based on the information you\'ll find in the "<a href="/contact"> Our Contacts and Warehouses</a>" section.
+    'blog_content_description_1' => 'Shop online and use our Johannesburg warehouse as your delivery address. We’ll receive your packages and air-freight them to your city in the DRC, where you can then collect them from our local warehouse.
+    Head to the  "<a href="/contact"> Our Contacts and Warehouses</a>" section for guidelines to begin today.
     Select the image that best suits your final destination city. Send this image to your supplier in China, specifying that you require air freight for your parcel.
     Send us a WhatsApp message or email informing us that you are having your parcels delivered to China for air freight. Also create your MyFret account so we can keep you updated
     step by step on your parcel\'s journey to your final destination city.',
@@ -250,7 +255,7 @@ return [
 
     'process_step2_title' => 'Step Two: Request addresses and instructions',
     'process_step2_paragraph' => 'By WhatsApp or email to admin@trustedcargo.co.za, send us a simple message requesting our addresses in China (if you haven\'t taken it already, still here on our website, under Our <a href="/contact">Contacts and Warehouses</a>). Specify whether you want sea or air freight, and tell us the final destination city for your parcel. We will send you a photo file containing ALL the details your supplier in China needs to deliver your packages to us. If you send this photo to your supplier, it\'s enough for them to know where and how they will deliver your packages to our warehouse in China.',
-    'process_step2_bullet1' => 'Contact us via WhatsApp or email (admin@trustedcargo.co.za) to obtain our China or South Africa addresses, or grab them in the "Our Contacts and Warehouses" section on our website.',
+    'process_step2_bullet1' => 'Contact us via WhatsApp or email (admin@trustedcargo.co.za) to obtain our China or South Africa addresses, or grab them in the "<a href="/contact">Our Contacts and Warehouses</a>" section on our website.',
     'process_step2_bullet2' => 'Ask your supplier to clearly indicate:',
     'process_step2_bullet2_option1' => 'Whether you want sea or air freight (for China).',
     'process_step2_bullet2_option2' => 'The final destination city of your parcel.',
@@ -289,14 +294,14 @@ return [
     'process_sa_step4_title' => 'Evaluation and Quotation:',
     'process_sa_step4_desc' => 'Once the packages are received, we proceed with their evaluation to provide you with the transport price. They are then scheduled for the next shipment to your final destination in the DRC (Kinshasa or Lubumbashi).',
     'process_sa_step5_title' => 'Payment Options:',
-    'process_sa_step5_desc' => 'Payment for your shipping fees can be made online via the "Payment" section of our website or in cash at our warehouse when dropping off/sending the package or upon receipt of the package in your city.',
+    'process_sa_step5_desc' => 'Payment for your shipping fees can be made online via the <a href="payment.php">"Payment"</a> section of our website or in cash at our warehouse when dropping off/sending the package or upon receipt of the package in your city.',
     'process_tab_china' => 'China to Africa',
     'process_tab_sa' => 'South Africa to DRC',
     'process_transport_air_desc' => 'Fast delivery via air freight.',
     'process_transport_sea_desc' => 'Cost-effective delivery via sea freight.',
     'process_sa_info_list' => 'Tracking number, description, and final destination city (Kinshasa or Lubumbashi).',
     'process_payment_online' => 'Online payment',
-    'process_payment_online_desc' => 'Through the "Payment" section of the site.',
+    'process_payment_online_desc' => 'Through the <a href="payment.php">"Payment"</a> section of the site.',
     'process_payment_cash' => 'Cash payment',
     'process_payment_cash_desc' => 'When dropping off or upon receiving the parcel.',
     'process_arrival_title' => 'When the parcel arrives at our warehouse (China or Johannesburg)',
@@ -442,7 +447,7 @@ return [
 
     // buttons
     'button_info' => 'Important information !',
-    'text_info' => 'This feature will be available soon. We\'re still working on it. In the meantime, you can start your shipment by sending your parcels directly to our warehouse in China and sending a message to our team in your city to track it.Go to « Our Contacts and Warehouses » to get started.',
+    'text_info' => 'This feature will be available soon. We\'re still working on it. In the meantime, you can start your shipment by sending your parcels directly to our warehouses in Johannesburg for air shipments to DRC or in China for sea shipments to DRC and Johannesburg, then send a message to our warehouse in your city to track it for you. Please go to Our Contacts and Warehouses » to get started.',
 
     // terms and conditions
     'terms_title' => 'Terms and Conditions',
