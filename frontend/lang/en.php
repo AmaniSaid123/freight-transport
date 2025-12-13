@@ -109,7 +109,7 @@ return [
     'services_description' => 'We offer a comprehensive set of services to ship your goods safely and efficiently. From air and sea freight to warehousing and real-time tracking, we support you at every step.',
 
     'service1_title' => 'Air Freight',
-    'service1_desc' => 'Fast transport from China to Africa by air.',
+    'service1_desc' => 'Fast transport from Johannesburg to Kinshasa and Lubumbashi by air.',
 
     'service2_title' => 'Sea Freight',
     'service2_desc' => 'Cost-effective shipping by sea for small or large volumes of goods.',
@@ -186,6 +186,17 @@ return [
     'prices_table_leadtime' => 'Lead time',
     'prices_table_notes' => 'Notes',
     'prices_customs_included' => 'Customs included',
+    'prices_comparison_title' => 'International Freight Options Overview',
+    'prices_comparison_subtitle' => 'Routes from Johannesburg first, followed by routes from China',
+    'prices_disclaimer' => 'Important: Standard customs fees are included in all listed prices.',
+    'prices_section_from_jhb' => 'Routes from Johannesburg, South Africa',
+    'prices_section_from_china' => 'Routes from China',
+    'prices_table_origin' => 'Origin',
+    'prices_origin_jhb' => 'Johannesburg, South Africa',
+    'prices_origin_china' => 'China',
+    'prices_note_pay_jhb_kins' => 'Payment possible in Johannesburg at shipment or in Kinshasa at pickup',
+    'prices_note_pay_jhb_lub' => 'Payment possible in Johannesburg at shipment or in Lubumbashi at pickup',
+    'prices_note_road_lub' => 'Road option from South Africa',
 
     'prices_row_jhb_destination' => 'Johannesburg',
     'prices_row_jhb_sea_type' => 'Sea Freight',
@@ -195,7 +206,7 @@ return [
 
     'prices_row_kins_destination' => 'Kinshasa',
     'prices_row_kins_air_type' => 'Air Freight',
-    'prices_row_kins_air_price' => '10 USD (R175) per Kg',
+    'prices_row_kins_air_price' => 'From 10 USD (R175) per Kg',
     'prices_row_kins_air_leadtime' => '3 to 10 days',
     'prices_row_kins_air_notes' => 'Customs clearance included',
 
@@ -207,22 +218,22 @@ return [
 
     'prices_row_lumb_destination' => 'Lubumbashi',
     'prices_row_lumb_air_type' => 'Air Freight',
-    'prices_row_lumb_air_price' => '10 USD (R175) per Kg',
+    'prices_row_lumb_air_price' => 'From 10 USD (R175) per Kg',
     'prices_row_lumb_air_leadtime' => '3 to 10 days',
     'prices_row_lumb_air_notes' => 'Customs clearance included',
 
     'prices_row_lumb_sea_type' => 'Sea Freight',
-    'prices_row_lumb_sea_price' => 'From USD 545 per CBM',
+    'prices_row_lumb_sea_price' => 'From 545 USD per CBM',
     'prices_row_lumb_sea_leadtime' => '50 to 60 days',
     'prices_row_lumb_sea_notes' => 'Customs clearance included',
     'prices_row_lumb_road_type' => 'Road Freight',
-    'prices_row_lumb_road_price' => '3 USD (R55) per Kg',
+    'prices_row_lumb_road_price' => 'From 3 USD (R55) per Kg',
     'prices_row_lumb_road_leadtime' => '5 to 12 days',
     'prices_row_lumb_road_notes' => 'Customs clearance included',
 
     'prices_row_kwz_destination' => 'Kolwezi',
     'prices_row_kwz_sea_type' => 'Sea Freight',
-    'prices_row_kwz_sea_price' => 'From USD 545 per CBM',
+    'prices_row_kwz_sea_price' => 'From 545 USD per CBM',
     'prices_row_kwz_sea_leadtime' => '50 to 60 days',
     'prices_row_kwz_sea_notes' => 'Customs clearance included',
     'prices_detail_note' => 'Detailed pricing available in the PDF document',

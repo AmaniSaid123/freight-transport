@@ -13,6 +13,16 @@
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.section-title-bar {
+  background: #f4f4f4;
+  color: #111;
+  font-weight: 700;
+  padding: 0.65rem 0.75rem;
+  border-left: 4px solid #000;
+  margin: -1rem -1rem 0.75rem;
 }
 
 /* Tableau compact */
@@ -96,6 +106,12 @@
   background: #e8f5e8;
   color: #2e7d32;
   border: 1px solid #c8e6c9;
+}
+
+.service-type.road.small {
+  background: #fef6e6;
+  color: #c17b00;
+  border: 1px solid #f0d9a7;
 }
 
 /* Prix */
@@ -306,4 +322,144 @@
   background: #b71c1c;
   color: white;
   transform: scale(1.05);
+}
+
+/* New comparison layout */
+.pricing-compare {
+  background: #fafafa;
+}
+
+.compare-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.compare-header h3 {
+  font-weight: 700;
+  color: #111;
+}
+
+.compare-subtitle {
+  color: #444;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+.compare-disclaimer {
+  background: #f3f3f3;
+  border-left: 4px solid #111;
+  padding: 14px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #222;
+  margin-bottom: 18px;
+}
+
+.pricing-section-block {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+}
+
+.section-title-bar {
+  background: #f4f4f4;
+  color: #111;
+  font-weight: 700;
+  padding: 12px 14px;
+  border-left: 4px solid #000;
+}
+
+.compare-table-wrapper {
+  padding: 0 12px 12px;
+}
+
+.compare-table thead th {
+  background: #f7f7f7;
+  color: #111;
+  border-bottom: 2px solid #e1e1e1;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.compare-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.compare-table td,
+.compare-table th {
+  vertical-align: middle;
+  padding: 14px 10px;
+}
+
+.origin-col {
+  font-weight: 700;
+  color: #111;
+}
+
+.destination-col {
+  font-weight: 600;
+  color: #222;
+}
+
+.price-col {
+  font-weight: 700;
+  color: #111;
+}
+
+.days-col {
+  background: #efefef;
+  padding: 6px 12px;
+  border-radius: 18px;
+  display: inline-block;
+  font-size: 0.9rem;
+  color: #111;
+  font-weight: 600;
+}
+
+.notes-col {
+  color: #444;
+  font-size: 0.92rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  background: #f2f2f2;
+  color: #111;
+  border: 1px solid #d8d8d8;
+}
+
+.badge-air,
+.badge-sea,
+.badge-road {
+  background: #f2f2f2;
+  color: #111;
+  border: 1px solid #d8d8d8;
+}
+
+@media (max-width: 768px) {
+  .compare-table td,
+  .compare-table th {
+    padding: 12px 8px;
+    font-size: 0.9rem;
+  }
+
+  .badge {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .compare-header h3 {
+    font-size: 1.2rem;
+  }
 }

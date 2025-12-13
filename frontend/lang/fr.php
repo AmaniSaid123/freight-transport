@@ -118,7 +118,7 @@ return [
     'services_description' => "Nous vous offrons un ensemble complet de services pour expédier vos marchandises en toute sécurité et efficacité. Du fret aérien et maritime à l’entreposage, en passant par le suivi en temps réel, nous vous accompagnons à chaque étape.",
 
     'service1_title' => 'Fret Aérien',
-    'service1_desc' => 'Transport rapide depuis la Chine vers l’Afrique par avion.',
+    'service1_desc' => 'Transport aérien rapide de Johannesburg à Kinshasa et Lubumbashi.',
 
     'service2_title' => 'Fret Maritime',
     'service2_desc' => 'Expédition économique par bateau pour petits ou gros volumes des colis.',
@@ -197,6 +197,17 @@ return [
     'prices_table_leadtime' => 'Délais',
     'prices_table_notes' => 'Notes',
     'prices_customs_included' => 'Douane incluse',
+    'prices_comparison_title' => 'Tableau Comparatif des Options de Fret International',
+    'prices_comparison_subtitle' => 'Trajets depuis Johannesburg en premier, suivis des trajets depuis la Chine',
+    'prices_disclaimer' => 'Note importante : Les frais standards de douane sont inclus dans tous les prix indiqués.',
+    'prices_section_from_jhb' => 'Trajets depuis Johannesburg, Afrique du Sud',
+    'prices_section_from_china' => 'Trajets depuis la Chine',
+    'prices_table_origin' => 'Origine',
+    'prices_origin_jhb' => 'Johannesburg, Afrique du Sud',
+    'prices_origin_china' => 'Chine',
+    'prices_note_pay_jhb_kins' => 'Paiement possible à Johannesburg lors de l\'expédition ou à Kinshasa lors de la collecte',
+    'prices_note_pay_jhb_lub' => 'Paiement possible à Johannesburg lors de l\'expédition ou à Lubumbashi lors de la collecte',
+    'prices_note_road_lub' => 'Option terrestre depuis l\'Afrique du Sud',
 
     'prices_row_jhb_destination' => 'Johannesburg',
     'prices_row_jhb_sea_type' => 'Fret Maritime',
@@ -206,7 +217,7 @@ return [
 
     'prices_row_kins_destination' => 'Kinshasa',
     'prices_row_kins_air_type' => 'Fret Aérien',
-    'prices_row_kins_air_price' => '10 USD (R175) par Kg',
+    'prices_row_kins_air_price' => 'À partir de 10 USD (R175) par Kg',
     'prices_row_kins_air_leadtime' => '3 à 10 jours',
     'prices_row_kins_air_notes' => 'Dédouanement inclus',
 
@@ -218,7 +229,7 @@ return [
 
     'prices_row_lumb_destination' => 'Lubumbashi',
     'prices_row_lumb_air_type' => 'Fret Aérien',
-    'prices_row_lumb_air_price' => '10 USD (R175) par Kg',
+    'prices_row_lumb_air_price' => 'À partir de 10 USD (R175) par Kg',
     'prices_row_lumb_air_leadtime' => '3 à 10 jours',
     'prices_row_lumb_air_notes' => 'Dédouanement inclus',
 
@@ -227,7 +238,7 @@ return [
     'prices_row_lumb_sea_leadtime' => '50 à 60 jours',
     'prices_row_lumb_sea_notes' => 'Dédouanement inclus',
     'prices_row_lumb_road_type' => 'Fret Routier',
-    'prices_row_lumb_road_price' => '3 USD (R55) par Kg',
+    'prices_row_lumb_road_price' => 'À partir de 3 USD (R55) par Kg',
     'prices_row_lumb_road_leadtime' => '5 à 12 jours',
     'prices_row_lumb_road_notes' => 'Dédouanement inclus',
 
