@@ -45,38 +45,59 @@
                     <a href="mailto:admin@trustedcargo.co.za"><i
                             class="fas fa-envelope me-2"></i>admin@trustedcargo.co.za</a>
                     <div class="location-title">Johannesburg</div>
-                    <a href=""><i class="fa fa-map-marker-alt me-2"></i>Trusted Cargo Company
-                        30 Gaunt Road
-                        Bryanston Sandton
-                        Johannesburg 2191
-                    </a>
-                    <a href="tel:+27 73 298 5311"><i class="fas fa-phone me-2"></i>
-                        +27 73 298 5311</a>
+                    <div class="footer-contact-grid">
+                        <div class="footer-contact-card">
+                        <div class="footer-card-badge"><?= t('footer_badge_depot') ?></div>
+                        <div class="footer-card-note"><?= t('footer_note_depot') ?></div>
+                            <div class="footer-card-title">Trusted Cargo Company</div>
+                            <div class="footer-card-text">
+                                30 Gaunt Road<br>
+                                Bryanston Sandton<br>
+                                Johannesburg 2191
+                            </div>
+                            <a href="tel:+27 73 298 5311"><i class="fas fa-phone me-2"></i>+27 73 298 5311</a>
+                        </div>
+                        <div class="footer-contact-card">
+                        <div class="footer-card-badge"><?= t('footer_badge_admin') ?></div>
+                        <div class="footer-card-note"><?= t('footer_note_admin') ?></div>
+                            <div class="footer-card-title">Trusted Cargo Company</div>
+                            <div class="footer-card-text">
+                                Legal Hub Office Park<br>
+                                411 Main Ave, Ferndale<br>
+                                Randburg, 2125
+                            </div>
+                            <a href="tel:+27 73 298 5311"><i class="fas fa-phone me-2"></i>+27 73 298 5311</a>
+                        </div>
+                    </div>
 
                     <div class="location-title">Kinshasa</div>
-                    <a href=""><i class="fa fa-map-marker-alt me-2"></i> Trusted Cargo Company
-                        14, Avenue Sergent Moke
-                        Commune de Ngaliema Kinshasa
-                        Réf. : Rond Point Socimat
-                    </a>
-                    <a href="tel:+243 987 020 110"><i class="fas fa-phone me-2"></i>
-                        +243 987 020 110</a>
+                    <div class="footer-contact-card">
+                        <div class="footer-card-title">Trusted Cargo Company</div>
+                        <div class="footer-card-text">
+                            14, Avenue Sergent Moke<br>
+                            Commune de Ngaliema, Kinshasa<br>
+                            Réf. : Rond Point Socimat
+                        </div>
+                        <a href="tel:+243 987 020 110"><i class="fas fa-phone me-2"></i>+243 987 020 110</a>
+                    </div>
 
                     <div class="location-title">Lubumbashi</div>
-                    <a href=""><i class="fa fa-map-marker-alt me-2"></i>Trusted Cargo Company
-                        108, Avenue Kasaï
-                        Commune de Lubumbashi
-                        Centre-ville
-                        Réf. : Cliniques universitaires
-                    </a> <a href="tel:+243 852 934 920"><i class="fas fa-phone me-2"></i>
-                        +243 852 934 920</a>
+                    <div class="footer-contact-card">
+                        <div class="footer-card-title">Trusted Cargo Company</div>
+                        <div class="footer-card-text">
+                            108, Avenue Kasaï<br>
+                            Commune de Lubumbashi, Centre-ville<br>
+                            Réf. : Cliniques universitaires
+                        </div>
+                        <a href="tel:+243 852 934 920"><i class="fas fa-phone me-2"></i>+243 852 934 920</a>
+                    </div>
 
                     <div class="location-title">Kolwezi</div>
-                    <a href=""><i class="fa fa-map-marker-alt me-2"></i>Trusted Cargo Company
-                        NB : <?= t('footer_contact_des_kwz') ?>
-                    </a>
-                    <a href="tel:+243 852 934 920"><i class="fas fa-phone me-2"></i>
-                        +243 852 934 920</a>
+                    <div class="footer-contact-card">
+                        <div class="footer-card-title">Trusted Cargo Company</div>
+                        <div class="footer-card-note"><?= t('footer_contact_des_kwz') ?></div>
+                        <a href="tel:+243 852 934 920"><i class="fas fa-phone me-2"></i>+243 852 934 920</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row justify-content-center mb-4">
       <div class="col-lg-10 text-center">
-        <h3 class="section-title mb-3"><?= t('prices_comparison_title') ?></h3>
+        <h3 class="section-title mb-3"><?= t('prices_title') ?></h3>
         <p class="mb-0 small"><?= t('prices_comparison_subtitle') ?></p>
       </div>
     </div>

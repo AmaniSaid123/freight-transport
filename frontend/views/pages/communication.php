@@ -1,34 +1,34 @@
 <div class="container-fluid communication-section py-5" id="communication">
     <div class="container communication-wrapper py-5">
         <div class="communication-title">
-            <h2><i class="fas fa-comments me-2"></i>Communication et Suivi</h2>
-            <p>TCC maintient un contact régulier avec ses clients pour garantir une expérience transparente et fiable tout au long du processus d'expédition.</p>
+            <h2><i class="fas fa-comments me-2"></i><?= t('communication_title') ?></h2>
+            <p><?= t('communication_intro') ?></p>
         </div>
 
         <div class="communication-grid">
             <div class="communication-card">
                 <div class="communication-icon"><i class="fas fa-tag"></i></div>
-                <h3>Prix du Transport</h3>
-                <p>Nous vous communiquons rapidement et clairement le prix du transport dès la réception de vos colis dans nos entrepôts. Aucun coût caché - tout est transparent.</p>
-                <div class="highlight">Devis détaillé et compétitif</div>
+                <h3><?= t('communication_card_price_title') ?></h3>
+                <p><?= t('communication_card_price_desc') ?></p>
+                <div class="highlight"><?= t('communication_card_price_highlight') ?></div>
             </div>
 
             <div class="communication-card">
                 <div class="communication-icon"><i class="fas fa-map-marked-alt"></i></div>
-                <h3>Suivi du Colis</h3>
-                <p>Suivez votre colis en temps réel tout au long de son transit. Nous vous fournissons des mises à jour régulières sur la localisation et le statut de votre envoi.</p>
-                <div class="highlight">Mises à jour en temps réel</div>
+                <h3><?= t('communication_card_tracking_title') ?></h3>
+                <p><?= t('communication_card_tracking_desc') ?></p>
+                <div class="highlight"><?= t('communication_card_tracking_highlight') ?></div>
             </div>
 
             <div class="communication-card">
                 <div class="communication-icon"><i class="fas fa-truck-loading"></i></div>
-                <h3>Processus de Livraison</h3>
-                <p>Nous vous informons à chaque étape du processus de livraison, de l'expédition à la réception finale dans votre ville.</p>
+                <h3><?= t('communication_card_delivery_title') ?></h3>
+                <p><?= t('communication_card_delivery_desc') ?></p>
                 <div class="cities-list">
-                    <div class="city-tag">Johannesburg</div>
-                    <div class="city-tag">Kinshasa</div>
-                    <div class="city-tag">Lubumbashi</div>
-                    <div class="city-tag">Kolwezi</div>
+                    <div class="city-tag"><?= t('prices_row_jhb_destination') ?></div>
+                    <div class="city-tag"><?= t('prices_row_kins_destination') ?></div>
+                    <div class="city-tag"><?= t('prices_row_lumb_destination') ?></div>
+                    <div class="city-tag"><?= t('prices_row_kwz_destination') ?></div>
                 </div>
             </div>
         </div>
@@ -36,36 +36,36 @@
         <div class="contact-methods">
             <div class="contact-method">
                 <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
-                <div class="contact-label">WhatsApp</div>
+                <div class="contact-label"><?= t('communication_contact_whatsapp') ?></div>
             </div>
             <div class="contact-method">
                 <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                <div class="contact-label">E-mail</div>
+                <div class="contact-label"><?= t('communication_contact_email') ?></div>
             </div>
         </div>
 
         <div class="timeline-container">
-            <h3 class="timeline-title">Notre Processus de Communication</h3>
+            <h3 class="timeline-title"><?= t('communication_timeline_title') ?></h3>
             <div class="timeline">
                 <div class="timeline-step">
                     <div class="step-icon"><i class="fas fa-warehouse"></i></div>
-                    <div class="step-label">Réception du Colis</div>
+                    <div class="step-label"><?= t('communication_step_reception') ?></div>
                 </div>
                 <div class="timeline-step">
                     <div class="step-icon"><i class="fas fa-calculator"></i></div>
-                    <div class="step-label">Calcul du Prix</div>
+                    <div class="step-label"><?= t('communication_step_pricing') ?></div>
                 </div>
                 <div class="timeline-step">
                     <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
-                    <div class="step-label">Expédition</div>
+                    <div class="step-label"><?= t('communication_step_shipping') ?></div>
                 </div>
                 <div class="timeline-step">
                     <div class="step-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="step-label">Suivi en Transit</div>
+                    <div class="step-label"><?= t('communication_step_tracking') ?></div>
                 </div>
                 <div class="timeline-step">
                     <div class="step-icon"><i class="fas fa-home"></i></div>
-                    <div class="step-label">Livraison Finale</div>
+                    <div class="step-label"><?= t('communication_step_delivery') ?></div>
                 </div>
             </div>
         </div>
