@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../../../php/function.php';
 require_once __DIR__ . '/../models/Status.php';
 require_once __DIR__ . '/../controllers/StatusController.php';
 
+$get_active_menu = 'status';
+
 $controller = new StatusController($bdd);
 $message = '';
 $alertClass = 'alert-info';

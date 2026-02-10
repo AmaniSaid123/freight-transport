@@ -6,7 +6,7 @@ class ContactController {
     private $current_user_id;
     private $emailService;
     
-    public function __construct($database, $user_id, EmailService $emailService = null) {
+    public function __construct($database, $user_id, ?EmailService $emailService = null) {
         $this->model = new Contact($database);
         $this->current_user_id = $user_id;
         $this->emailService = $emailService ?: new EmailService($database);

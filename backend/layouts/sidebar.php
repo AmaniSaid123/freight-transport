@@ -1,3 +1,7 @@
+<?php
+// Avoid undefined variable warnings when the caller doesn't set it.
+$get_active_menu = $get_active_menu ?? '';
+?>
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
