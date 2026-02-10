@@ -15,7 +15,7 @@ class MailingController {
         $errors = [];
         
         // Validation des champs requis
-        $requiredFields = ['titre_email', 'objet', 'contenu_fr'];
+        $requiredFields = ['titre_email_fr', 'titre_email_en', 'objet_fr', 'objet_en', 'contenu_fr'];
         foreach ($requiredFields as $field) {
             if (empty($data[$field])) {
                 $errors[$field] = "Ce champ est obligatoire";
@@ -33,13 +33,15 @@ class MailingController {
         try {
             // Préparation des données
             $mailData = [
-                'titre_email' => $data['titre_email'],
-                'objet' => $data['objet'],
+                'titre_email_fr' => $data['titre_email_fr'] ?? null,
+                'titre_email_en' => $data['titre_email_en'] ?? null,
+                'objet_fr' => $data['objet_fr'] ?? null,
+                'objet_en' => $data['objet_en'] ?? null,
                 'contenu_fr' => $data['contenu_fr'],
                 'contenu_en' => $data['contenu_en'] ?? null,
                 'destinataires' => $data['destinataires'] ?? null,
                 'type_destinataires' => $data['type_destinataires'] ?? 'tous',
-                'statut' => $data['statut'] ?? 'brouillon',
+                'status_code' => $data['statut'] ?? 'brouillon',
                 'date_programmation' => !empty($data['date_programmation']) ? $data['date_programmation'] : null,
                 'pieces_jointes' => $data['pieces_jointes'] ?? null,
                 'created_by' => $this->current_user_id
@@ -74,7 +76,7 @@ class MailingController {
         $errors = [];
         
         // Validation des champs requis
-        $requiredFields = ['titre_email', 'objet', 'contenu_fr'];
+        $requiredFields = ['titre_email_fr', 'titre_email_en', 'objet_fr', 'objet_en', 'contenu_fr'];
         foreach ($requiredFields as $field) {
             if (empty($data[$field])) {
                 $errors[$field] = "Ce champ est obligatoire";
@@ -92,13 +94,15 @@ class MailingController {
         try {
             // Préparation des données
             $mailData = [
-                'titre_email' => $data['titre_email'],
-                'objet' => $data['objet'],
+                'titre_email_fr' => $data['titre_email_fr'] ?? null,
+                'titre_email_en' => $data['titre_email_en'] ?? null,
+                'objet_fr' => $data['objet_fr'] ?? null,
+                'objet_en' => $data['objet_en'] ?? null,
                 'contenu_fr' => $data['contenu_fr'],
                 'contenu_en' => $data['contenu_en'] ?? null,
                 'destinataires' => $data['destinataires'] ?? null,
                 'type_destinataires' => $data['type_destinataires'] ?? 'tous',
-                'statut' => $data['statut'] ?? 'brouillon',
+                'status_code' => $data['statut'] ?? 'brouillon',
                 'date_programmation' => !empty($data['date_programmation']) ? $data['date_programmation'] : null,
                 'pieces_jointes' => $data['pieces_jointes'] ?? null
             ];
@@ -173,6 +177,27 @@ class MailingController {
         return $this->model->getStats();
     }
 
+ 
+
+    public function getStatusOptions()
+    {
+        $defs = [];
+        $rows = $this->model->getStatusDefinitions();
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
+                if (!isset($row['code'])) {
+                    continue;
+                }
+                $defs[$row['code']] = [
+                    'label_en' => $row['name_en'] ?? $row['code'],
+                    'label_fr' => $row['name_fr'] ?? $row['code'],
+                    'badge' => $row['badge_class'] ?? 'secondary'
+                ];
+            }
+        }
+        return $defs;
+    }
+
     /**
      * Formate la date pour l'affichage
      */
@@ -187,24 +212,19 @@ class MailingController {
      * Retourne le badge pour le statut
      */
     public function getStatusBadge($statut) {
-        $badges = [
-            'brouillon' => 'secondary',
-            'programme' => 'warning',
-            'envoye' => 'success',
-            'erreur' => 'danger'
-        ];
-        
-        $labels = [
-            'brouillon' => 'Brouillon',
-            'programme' => 'Programmé',
-            'envoye' => 'Envoyé',
-            'erreur' => 'Erreur'
-        ];
-        
-        $class = $badges[$statut] ?? 'secondary';
-        $label = $labels[$statut] ?? $statut;
-        
-        return '<span class="badge badge-' . $class . '">' . $label . '</span>';
+        // Pull from parcel_status if available
+        if (method_exists($this->model, 'getStatusDefinitions')) {
+            $rows = $this->model->getStatusDefinitions();
+            foreach ($rows as $row) {
+                if ($row['code'] === $statut) {
+                    $class = $row['badge_class'] ?: 'secondary';
+                    $label = $row['name_fr'] ?? $row['name_en'] ?? $statut;
+                    return '<span class="badge badge-' . htmlspecialchars($class) . '">' . htmlspecialchars($label) . '</span>';
+                }
+            }
+        }
+        // Minimal fallback
+        return '<span class="badge badge-secondary">' . htmlspecialchars($statut) . '</span>';
     }
 }
 ?>

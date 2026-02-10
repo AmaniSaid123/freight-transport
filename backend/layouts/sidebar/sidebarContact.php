@@ -1,11 +1,11 @@
 <?php
-// Définir les accès pour le profil
+
 $contactAccess = [
     'view' => get_access($bdd, 19, $_SESSION['my_idprofile']),
     
 ];
 
-// Configuration du menu (centralisé)
+
 $profileMenu = [
     'title' => 'Gestion des Contacts',
     'icon' => 'fas fa-fw fa-envelope',

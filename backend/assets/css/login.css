@@ -120,6 +120,35 @@ body {
     font-size: 14px;
 }
 
+.alert {
+    width: 100%;
+}
+
+.error-banner {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #f5c2c7;
+    background: linear-gradient(135deg, #fff5f5, #ffe2e2);
+    color: #9f1c22;
+    box-shadow: 0 8px 18px rgba(159, 28, 34, 0.08);
+}
+
+.error-banner i {
+    font-size: 18px;
+    margin-top: 2px;
+    color: #c53030;
+}
+
+.error-banner p {
+    margin-top: 6px;
+    color: #7a1c22;
+    line-height: 1.4;
+}
+
 @media (max-width: 480px) {
     .container {
         width: 90%;

@@ -1,13 +1,17 @@
 <?php
+require_once __DIR__ . '/../../../../services/EmailService.php';
+
 class ParcelController
 {
     private $model;
     private $current_user_id;
+    private $emailService;
 
-    public function __construct($database, $user_id)
+    public function __construct($database, $user_id, EmailService $emailService = null)
     {
         $this->model = new Parcel($database);
         $this->current_user_id = $user_id;
+        $this->emailService = $emailService ?: new EmailService($database);
     }
 
 
@@ -160,6 +164,7 @@ class ParcelController
     public function handleUpdateShipmentStatus($shipment_id, $status, $notes = null, $notifications = [])
     {
         try {
+            $notes = trim((string)$notes);
             $availableStatuses = $this->getStatusDefinitions();
             if (!isset($availableStatuses[$status])) {
                 return [
@@ -169,6 +174,8 @@ class ParcelController
             }
 
             $shipment = $this->model->getShipmentById($shipment_id);
+           
+    
             if (!$shipment) {
                 return [
                     'success' => false,
@@ -177,31 +184,25 @@ class ParcelController
             }
 
             $result = $this->model->updateShipmentStatus($shipment_id, $status, $notes, $this->current_user_id);
-
+        
             $emailInfo = null;
-            $smsInfo = null;
-
+         
             if ($result) {
+       
+
                 if (!empty($notifications['notify_email'])) {
                     $emailRecipient = $notifications['email_contact'] ?? $shipment['email'];
-                    $emailInfo = $this->sendStatusEmail($status, $shipment, $emailRecipient);
+                    $language = $notifications['email_language'] ?? null;     
+                    $emailInfo = $this->sendStatusEmail($status, $shipment, $emailRecipient, $language, $notes);
+         
                 }
 
-                if (!empty($notifications['notify_sms'])) {
-                    $phoneRecipient = $notifications['phone_contact'] ?? $shipment['phone'];
-                    $smsInfo = $this->sendStatusSms($status, $shipment, $phoneRecipient);
-                }
 
-                $message = 'Statut mis à jour avec succès';
+                $message = 'Statut mis à jour avec succèss';
                 if ($emailInfo && !$emailInfo['success']) {
                     $message .= ' (email: ' . $emailInfo['message'] . ')';
                 } elseif ($emailInfo && $emailInfo['success']) {
                     $message .= ' (email envoyé)';
-                }
-                if ($smsInfo && !$smsInfo['success']) {
-                    $message .= ' (sms: ' . $smsInfo['message'] . ')';
-                } elseif ($smsInfo && $smsInfo['success']) {
-                    $message .= ' (sms envoyé)';
                 }
 
                 return [
@@ -223,25 +224,77 @@ class ParcelController
     }
 
     /**
+     * Enregistre un commentaire interne sur une expédition
+     */
+    public function handleAddInternalComment($shipment_id, $comment)
+    {
+        if (empty($shipment_id)) {
+            return [
+                'success' => false,
+                'message' => 'Expédition introuvable'
+            ];
+        }
+
+        $shipment = $this->model->getShipmentById($shipment_id);
+        if (!$shipment) {
+            return [
+                'success' => false,
+                'message' => 'Expédition introuvable'
+            ];
+        }
+
+        $cleanComment = trim($comment ?? '');
+        if ($cleanComment === '') {
+            return [
+                'success' => false,
+                'message' => 'Le commentaire ne peut pas être vide'
+            ];
+        }
+
+        try {
+            $this->model->updateShipment(['comment' => $cleanComment], $shipment_id);
+
+            return [
+                'success' => true,
+                'message' => 'Commentaire interne enregistré'
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erreur lors de l\'enregistrement du commentaire: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    /**
      * Gère la suppression d'un dossier client
      */
     public function handleDeleteCustomerRecord($id)
     {
         try {
+            $this->model->beginTransaction();
+
+            // Supprimer toutes les expéditions liées
+            $this->model->deleteShipmentsByCustomerRecord($id);
+
+            // Supprimer logiquement le dossier
             $result = $this->model->deleteCustomerRecord($id, $this->current_user_id);
 
             if ($result) {
+                $this->model->commit();
                 return [
                     'success' => true,
-                    'message' => 'Dossier client supprimé avec succès'
+                    'message' => 'Dossier client et expéditions supprimés avec succès'
                 ];
             } else {
+                $this->model->rollBack();
                 return [
                     'success' => false,
                     'message' => 'Erreur lors de la suppression du dossier'
                 ];
             }
         } catch (Exception $e) {
+            $this->model->rollBack();
             return [
                 'success' => false,
                 'message' => 'Erreur: ' . $e->getMessage()
@@ -286,7 +339,7 @@ class ParcelController
     {
         $definitions = $this->getStatusDefinitions();
         $badgeClass = $definitions[$status]['badge'] ?? 'secondary';
-        $label = $definitions[$status]['label'] ?? $status;
+        $label = $definitions[$status]['label_fr'] ?? $definitions[$status]['label_en'] ?? $status;
 
         return '<span class="badge badge-' . $badgeClass . '">' . $label . '</span>';
     }
@@ -314,6 +367,7 @@ class ParcelController
     public function getAvailableDestinations()
     {
         return [
+            'Chine',
             'Johannesburg',
             'Kinshasa',
             'Lubumbashi',
@@ -341,115 +395,63 @@ class ParcelController
      */
     private function getStatusDefinitions()
     {
-        return [
-            'en_attente' => ['label' => 'En attente', 'badge' => 'warning'],
-            'en_cours' => ['label' => 'En cours', 'badge' => 'info'],
-            'livre' => ['label' => 'Livré', 'badge' => 'success'],
-            'annule' => ['label' => 'Annulé', 'badge' => 'danger']
-        ];
+        $rows = $this->model->getStatusDefinitions();
+        $definitions = [];
+        foreach ($rows as $code => $row) {
+            $definitions[$code] = [
+                'label' => $row['label_fr'] ?? $row['label_en'] ?? $code,
+                'label_fr' => $row['label_fr'] ?? $code,
+                'label_en' => $row['label_en'] ?? $code,
+                'badge' => $row['badge'] ?? 'secondary'
+            ];
+        }
+        return $definitions;
     }
 
     /**
      * Construit et envoie l'email selon le statut choisi
      */
-    private function sendStatusEmail($status, $shipment, $recipient)
+    private function sendStatusEmail($status, $shipment, $recipient, $language = null, $notes = '')
     {
+      
         if (empty($recipient) || !filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
             return ['success' => false, 'message' => 'Email client invalide'];
         }
 
-        $templates = $this->getStatusEmailTemplates();
+        $language = $this->resolveEmailLanguage($language);
         $definitions = $this->getStatusDefinitions();
-        $label = $definitions[$status]['label'] ?? $status;
+        $label = $definitions[$status]["label_{$language}"] ?? $definitions[$status]['label_fr'] ?? $definitions[$status]['label_en'] ?? $status;
 
-        $subject = '[' . $label . '] Mise à jour de votre expédition ' . ($shipment['tracking_reference'] ?? '');
+        $templateRow = $this->model->getEmailTemplateByStatus($status) ?: [];
 
-        $template = $templates[$status] ?? $templates['default'];
-        $body = sprintf(
-            $template,
-            htmlspecialchars($shipment['full_name'] ?? 'Client'),
-            htmlspecialchars($shipment['tracking_reference'] ?? ''),
-            $label
+        $subjectTpl = $this->pickLocalizedValue($templateRow, 'objet', $language);
+        $bodyTpl = $this->pickLocalizedValue($templateRow, 'contenu', $language);
+   
+
+        // Fallback sur l'autre langue si vide
+        if (empty($subjectTpl)) {
+            $subjectTpl = $this->pickLocalizedValue($templateRow, 'objet', $language === 'fr' ? 'en' : 'fr');
+        }
+        if (empty($bodyTpl)) {
+            $bodyTpl = $this->pickLocalizedValue($templateRow, 'contenu', $language === 'fr' ? 'en' : 'fr');
+        }
+
+        $placeholders = $this->buildEmailPlaceholders($shipment, $status, $label, $notes);
+        $subject = $this->applyEmailPlaceholders(
+            $subjectTpl ?: "[{$label}] Mise à jour de votre expédition {{tracking_number}}",
+            $placeholders
+        );
+
+        $body = $this->applyEmailPlaceholders(
+            $bodyTpl ?: "<p>Bonjour {{customer_name}},</p><p>Votre expédition <strong>{{tracking_number}}</strong> a été mise à jour : <strong>{{status_label}}</strong>.</p><p>{{notes_html}}</p>",
+            $placeholders
         );
 
         $headers = $this->buildEmailHeaders();
-        $sent = mail($recipient, $subject, $body, $headers);
-
-        if ($sent) {
-            return ['success' => true, 'message' => 'Email envoyé'];
-        }
-
-        return ['success' => false, 'message' => 'Envoi email impossible'];
+    
+        return $this->emailService->sendHtmlEmail($recipient, $subject, $body, $headers);
     }
 
-    /**
-     * Envoie un SMS de statut si activé
-     */
-    private function sendStatusSms($status, $shipment, $recipient)
-    {
-        if (empty($recipient)) {
-            return ['success' => false, 'message' => 'Numéro client manquant'];
-        }
-
-        $definitions = $this->getStatusDefinitions();
-        $label = $definitions[$status]['label'] ?? $status;
-        $tracking = $shipment['tracking_reference'] ?? '';
-        $message = "Mise a jour: votre colis {$tracking} est {$label}. Merci de votre confiance.";
-
-        if (function_exists('send_sms')) {
-            // Sender et type restent génériques pour éviter de casser l'existant
-            send_sms($recipient, $message, 'TCC', 'parcel_status');
-            return ['success' => true, 'message' => 'SMS en file d\'envoi'];
-        }
-
-        return ['success' => false, 'message' => 'Service SMS indisponible'];
-    }
-
-    /**
-     * Templates HTML pour les emails de statut
-     */
-    private function getStatusEmailTemplates()
-    {
-        return [
-            'en_attente' => "
-                <html><body style='font-family: Arial, sans-serif; color:#333;'>
-                    <h2 style='color:#4e73df;'>Suivi de votre expédition</h2>
-                    <p>Bonjour %s,</p>
-                    <p>Nous avons bien enregistré votre demande. Votre colis <strong>%s</strong> est actuellement <strong>%s</strong>.</p>
-                    <p>Nous vous tiendrons informé dès qu'une nouvelle étape sera franchie.</p>
-                    <p>Cordialement,<br>L'équipe support</p>
-                </body></html>",
-            'en_cours' => "
-                <html><body style='font-family: Arial, sans-serif; color:#333;'>
-                    <h2 style='color:#17a2b8;'>Votre colis est en cours</h2>
-                    <p>Bonjour %s,</p>
-                    <p>Bonne nouvelle ! Votre colis <strong>%s</strong> est <strong>%s</strong>.</p>
-                    <p>Vous recevrez un nouveau message lorsque la livraison sera finalisée.</p>
-                    <p>Merci pour votre confiance.</p>
-                </body></html>",
-            'livre' => "
-                <html><body style='font-family: Arial, sans-serif; color:#333;'>
-                    <h2 style='color:#1cc88a;'>Votre colis est livré</h2>
-                    <p>Bonjour %s,</p>
-                    <p>Nous confirmons la livraison du colis <strong>%s</strong>. Statut actuel : <strong>%s</strong>.</p>
-                    <p>Si quelque chose ne correspond pas à vos attentes, contactez-nous.</p>
-                    <p>Cordialement,<br>L'équipe support</p>
-                </body></html>",
-            'annule' => "
-                <html><body style='font-family: Arial, sans-serif; color:#333;'>
-                    <h2 style='color:#e74a3b;'>Mise à jour de votre dossier</h2>
-                    <p>Bonjour %s,</p>
-                    <p>Votre expédition <strong>%s</strong> est maintenant <strong>%s</strong>.</p>
-                    <p>Pour plus d'informations ou pour reprogrammer un envoi, merci de nous contacter.</p>
-                    <p>Cordialement,<br>L'équipe support</p>
-                </body></html>",
-            'default' => "
-                <html><body style='font-family: Arial, sans-serif; color:#333;'>
-                    <p>Bonjour %s,</p>
-                    <p>Votre expédition <strong>%s</strong> a été mise à jour : <strong>%s</strong>.</p>
-                </body></html>"
-        ];
-    }
 
     /**
      * Headers HTML pour les emails
@@ -463,6 +465,50 @@ class ParcelController
         $headers .= "X-Mailer: PHP/" . phpversion();
 
         return $headers;
+    }
+
+    /**
+     * Détermine la langue pour l'email
+     */
+    private function resolveEmailLanguage($language = null)
+    {
+        $language = strtolower($language ?? ($_SESSION['lang'] ?? 'fr'));
+        return in_array($language, ['fr', 'en'], true) ? $language : 'fr';
+    }
+
+    /**
+     * Récupère une valeur localisée (fr/en) depuis le template
+     */
+    private function pickLocalizedValue(array $row, $prefix, $language)
+    {
+        $key = "{$prefix}_{$language}";
+        return $row[$key] ?? null;
+    }
+
+    /**
+     * Prépare les remplacements de variables pour les emails
+     */
+    private function buildEmailPlaceholders($shipment, $status, $label, $notes)
+    {
+        $cleanNotes = trim($notes ?? '');
+        return [
+            '{{customer_name}}' => htmlspecialchars($shipment['full_name'] ?? 'Client', ENT_QUOTES, 'UTF-8'),
+            '{{tracking_number}}' => htmlspecialchars($shipment['tracking_reference'] ?? '', ENT_QUOTES, 'UTF-8'),
+            '{{status_label}}' => htmlspecialchars($label, ENT_QUOTES, 'UTF-8'),
+            '{{status_code}}' => htmlspecialchars($status, ENT_QUOTES, 'UTF-8'),
+            '{{destination}}' => htmlspecialchars($shipment['destination'] ?? '', ENT_QUOTES, 'UTF-8'),
+            '{{origin}}' => htmlspecialchars($shipment['origin'] ?? '', ENT_QUOTES, 'UTF-8'),
+            '{{notes}}' => htmlspecialchars($cleanNotes, ENT_QUOTES, 'UTF-8'),
+            '{{notes_html}}' => nl2br(htmlspecialchars($cleanNotes, ENT_QUOTES, 'UTF-8'))
+        ];
+    }
+
+    /**
+     * Applique les placeholders sur une chaine
+     */
+    private function applyEmailPlaceholders($template, array $replacements)
+    {
+        return strtr($template, $replacements);
     }
 }
 ?>

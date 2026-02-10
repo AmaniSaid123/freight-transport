@@ -113,24 +113,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                 id="mailForm"
                                 novalidate>
                                 
-                                <!-- Titre Email -->
+                                <!-- Titre Email (FR / EN) -->
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">
-                                        Titre de l'email
+                                        Titre (FR)
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-sm-10">
                                         <input type="text"
-                                            class="form-control <?= (!empty($errors['titre_email']) ? 'is-invalid' : '') ?>"
-                                            name="titre_email" 
-                                            placeholder="Donnez un titre à cet email"
-                                            value="<?= htmlspecialchars($formData['titre_email'] ?? '') ?>" 
+                                            class="form-control <?= (!empty($errors['titre_email_fr']) ? 'is-invalid' : '') ?>"
+                                            name="titre_email_fr" 
+                                            placeholder="Titre en français"
+                                            value="<?= htmlspecialchars($formData['titre_email_fr'] ?? '') ?>" 
                                             required
-                                            data-required-message="Le titre de l'email est obligatoire">
-                                        <?php if (!empty($errors['titre_email'])): ?>
+                                            data-required-message="Le titre (FR) est obligatoire">
+                                        <?php if (!empty($errors['titre_email_fr'])): ?>
                                             <div class="invalid-feedback d-block">
                                                 <i class="fas fa-exclamation-circle"></i>
-                                                <?= htmlspecialchars($errors['titre_email']) ?>
+                                                <?= htmlspecialchars($errors['titre_email_fr']) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">
+                                        Titre (EN)
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                            class="form-control <?= (!empty($errors['titre_email_en']) ? 'is-invalid' : '') ?>"
+                                            name="titre_email_en" 
+                                            placeholder="Title in English"
+                                            value="<?= htmlspecialchars($formData['titre_email_en'] ?? '') ?>" 
+                                            required
+                                            data-required-message="Le titre (EN) est obligatoire">
+                                        <?php if (!empty($errors['titre_email_en'])): ?>
+                                            <div class="invalid-feedback d-block">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <?= htmlspecialchars($errors['titre_email_en']) ?>
                                             </div>
                                         <?php endif; ?>
                                     </div>
@@ -139,21 +161,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                 <!-- Objet -->
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">
-                                        Objet
+                                        Objet (FR)
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-sm-10">
                                         <input type="text"
-                                            class="form-control <?= (!empty($errors['objet']) ? 'is-invalid' : '') ?>"
-                                            name="objet" 
-                                            placeholder="Objet de l'email"
-                                            value="<?= htmlspecialchars($formData['objet'] ?? '') ?>" 
+                                            class="form-control <?= (!empty($errors['objet_fr']) ? 'is-invalid' : '') ?>"
+                                            name="objet_fr" 
+                                            placeholder="Objet de l'email (FR)"
+                                            value="<?= htmlspecialchars($formData['objet_fr'] ?? '') ?>" 
                                             required
-                                            data-required-message="L'objet de l'email est obligatoire">
-                                        <?php if (!empty($errors['objet'])): ?>
+                                            data-required-message="L'objet (FR) est obligatoire">
+                                        <?php if (!empty($errors['objet_fr'])): ?>
                                             <div class="invalid-feedback d-block">
                                                 <i class="fas fa-exclamation-circle"></i>
-                                                <?= htmlspecialchars($errors['objet']) ?>
+                                                <?= htmlspecialchars($errors['objet_fr']) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">
+                                        Objet (EN)
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                            class="form-control <?= (!empty($errors['objet_en']) ? 'is-invalid' : '') ?>"
+                                            name="objet_en" 
+                                            placeholder="Email subject (EN)"
+                                            value="<?= htmlspecialchars($formData['objet_en'] ?? '') ?>" 
+                                            required
+                                            data-required-message="L'objet (EN) est obligatoire">
+                                        <?php if (!empty($errors['objet_en'])): ?>
+                                            <div class="invalid-feedback d-block">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <?= htmlspecialchars($errors['objet_en']) ?>
                                             </div>
                                         <?php endif; ?>
                                     </div>
@@ -236,15 +280,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                     </div>
                                 </div>
 
-                                <!-- Statut -->
+                                <!-- Statut (codes parcel_status) -->
+                                <?php $statusOptions = $controller->getStatusOptions();?>
+
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">
                                         Statut
                                     </label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" name="statut">
-                                            <option value="brouillon" <?= ($formData['statut'] ?? '') == 'brouillon' ? 'selected' : '' ?>>Brouillon</option>
-                                            <option value="programme" <?= ($formData['statut'] ?? '') == 'programme' ? 'selected' : '' ?>>Programmé</option>
+                                        <select class="form-control" name="statut" id="statutSelect">
+                                            <?php foreach ($statusOptions as $code => $def): ?>
+                                                <option value="<?= htmlspecialchars($code); ?>" <?= ($formData['statut'] ?? '') == $code ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($code); ?>
+                                                </option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>

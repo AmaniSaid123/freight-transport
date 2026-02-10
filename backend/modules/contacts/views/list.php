@@ -58,38 +58,59 @@ $categories = $controller->getCategories();
 
 <?php include_once __DIR__ . '/../../../layouts/head.php'; ?>
 <style>
-    .stat-card {
-        border-left: 4px solid;
-    }
-    .stat-total { border-left-color: #4e73df; }
-    .stat-nouveau { border-left-color: #e74a3b; }
-    .stat-lu { border-left-color: #36b9cc; }
-    .stat-en-cours { border-left-color: #f6c23e; }
-    .stat-repondu { border-left-color: #1cc88a; }
-    .stat-ferme { border-left-color: #858796; }
-    
-    .contact-preview {
-        max-height: 80px;
-        overflow: hidden;
-        position: relative;
-    }
-    .contact-preview::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 20px;
-        background: linear-gradient(transparent, #f8f9fc);
-    }
-    .urgent-contact {
-        background-color: #f8d7da !important;
-        border-left: 4px solid #e74a3b;
-    }
-    .high-priority-contact {
-        background-color: #fff3cd !important;
-        border-left: 4px solid #f6c23e;
-    }
+.stat-card {
+    border-left: 4px solid;
+}
+
+.stat-total {
+    border-left-color: #4e73df;
+}
+
+.stat-nouveau {
+    border-left-color: #e74a3b;
+}
+
+.stat-lu {
+    border-left-color: #36b9cc;
+}
+
+.stat-en-cours {
+    border-left-color: #f6c23e;
+}
+
+.stat-repondu {
+    border-left-color: #1cc88a;
+}
+
+.stat-ferme {
+    border-left-color: #858796;
+}
+
+.contact-preview {
+    max-height: 80px;
+    overflow: hidden;
+    position: relative;
+}
+
+.contact-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(transparent, #f8f9fc);
+}
+
+.urgent-contact {
+    background-color: #f8d7da !important;
+    border-left: 4px solid #e74a3b;
+}
+
+.high-priority-contact {
+    background-color: #fff3cd !important;
+    border-left: 4px solid #f6c23e;
+}
 </style>
 
 <link href="<?= BASE_URL ?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -121,128 +142,128 @@ $categories = $controller->getCategories();
 
                     <!-- Message Alert -->
                     <?php if (!empty($message)): ?>
-                        <div class="alert <?= $alertClass; ?> text-center" role="alert">
-                            <?= htmlspecialchars($message); ?>
-                        </div>
+                    <div class="alert <?= $alertClass; ?> text-center" role="alert">
+                        <?= htmlspecialchars($message); ?>
+                    </div>
                     <?php endif; ?>
 
                     <!-- Statistics Cards -->
                     <?php if (!empty($stats)): ?>
-                        <div class="row mb-4">
-                            <div class="col-xl-2 col-md-4 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2 stat-card stat-total">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Total</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['total'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                    <div class="row mb-4">
+                        <div class="col-xl-2 col-md-4 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2 stat-card stat-total">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Total</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['total'] ?? 0 ?>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-2 col-md-4 mb-4">
-                                <div class="card border-left-danger shadow h-100 py-2 stat-card stat-nouveau">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                    Nouveaux</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['nouveaux'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-exclamation-circle fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-2 col-md-4 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2 stat-card stat-lu">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                    Lus</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['lus'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-eye fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-2 col-md-4 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2 stat-card stat-en-cours">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    En cours</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['en_cours'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-2 col-md-4 mb-4">
-                                <div class="card border-left-success shadow h-100 py-2 stat-card stat-repondu">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    Répondus</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['repondus'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-2 col-md-4 mb-4">
-                                <div class="card border-left-secondary shadow h-100 py-2 stat-card stat-ferme">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
-                                                    Fermés</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['fermes'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-archive fa-2x text-gray-300"></i>
-                                            </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-xl-2 col-md-4 mb-4">
+                            <div class="card border-left-danger shadow h-100 py-2 stat-card stat-nouveau">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                Nouveaux</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['nouveaux'] ?? 0 ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-exclamation-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 col-md-4 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2 stat-card stat-lu">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Lus</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['lus'] ?? 0 ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-eye fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 col-md-4 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2 stat-card stat-en-cours">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                En cours</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['en_cours'] ?? 0 ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 col-md-4 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2 stat-card stat-repondu">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Répondus</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['repondus'] ?? 0 ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 col-md-4 mb-4">
+                            <div class="card border-left-secondary shadow h-100 py-2 stat-card stat-ferme">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                                Fermés</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['fermes'] ?? 0 ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-archive fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php endif; ?>
 
                     <!-- Filtres -->
@@ -256,45 +277,64 @@ $categories = $controller->getCategories();
                                     <label for="statut" class="sr-only">Statut</label>
                                     <select class="form-control" id="statut" name="statut">
                                         <option value="">Tous les statuts</option>
-                                        <option value="nouveau" <?= ($filters['statut'] ?? '') == 'nouveau' ? 'selected' : '' ?>>Nouveau</option>
-                                        <option value="lu" <?= ($filters['statut'] ?? '') == 'lu' ? 'selected' : '' ?>>Lu</option>
-                                        <option value="en_cours" <?= ($filters['statut'] ?? '') == 'en_cours' ? 'selected' : '' ?>>En cours</option>
-                                        <option value="repondu" <?= ($filters['statut'] ?? '') == 'repondu' ? 'selected' : '' ?>>Répondu</option>
-                                        <option value="ferme" <?= ($filters['statut'] ?? '') == 'ferme' ? 'selected' : '' ?>>Fermé</option>
+                                        <option value="nouveau"
+                                            <?= ($filters['statut'] ?? '') == 'nouveau' ? 'selected' : '' ?>>Nouveau
+                                        </option>
+                                        <option value="lu" <?= ($filters['statut'] ?? '') == 'lu' ? 'selected' : '' ?>>
+                                            Lu</option>
+                                        <option value="en_cours"
+                                            <?= ($filters['statut'] ?? '') == 'en_cours' ? 'selected' : '' ?>>En cours
+                                        </option>
+                                        <option value="repondu"
+                                            <?= ($filters['statut'] ?? '') == 'repondu' ? 'selected' : '' ?>>Répondu
+                                        </option>
+                                        <option value="ferme"
+                                            <?= ($filters['statut'] ?? '') == 'ferme' ? 'selected' : '' ?>>Fermé
+                                        </option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group mr-3 mb-2">
                                     <label for="priorite" class="sr-only">Priorité</label>
                                     <select class="form-control" id="priorite" name="priorite">
                                         <option value="">Toutes les priorités</option>
-                                        <option value="urgente" <?= ($filters['priorite'] ?? '') == 'urgente' ? 'selected' : '' ?>>Urgente</option>
-                                        <option value="haute" <?= ($filters['priorite'] ?? '') == 'haute' ? 'selected' : '' ?>>Haute</option>
-                                        <option value="normale" <?= ($filters['priorite'] ?? '') == 'normale' ? 'selected' : '' ?>>Normale</option>
-                                        <option value="basse" <?= ($filters['priorite'] ?? '') == 'basse' ? 'selected' : '' ?>>Basse</option>
+                                        <option value="urgente"
+                                            <?= ($filters['priorite'] ?? '') == 'urgente' ? 'selected' : '' ?>>Urgente
+                                        </option>
+                                        <option value="haute"
+                                            <?= ($filters['priorite'] ?? '') == 'haute' ? 'selected' : '' ?>>Haute
+                                        </option>
+                                        <option value="normale"
+                                            <?= ($filters['priorite'] ?? '') == 'normale' ? 'selected' : '' ?>>Normale
+                                        </option>
+                                        <option value="basse"
+                                            <?= ($filters['priorite'] ?? '') == 'basse' ? 'selected' : '' ?>>Basse
+                                        </option>
                                     </select>
                                 </div>
-                                
+
                                 <?php if (!empty($categories)): ?>
                                 <div class="form-group mr-3 mb-2">
                                     <label for="categorie" class="sr-only">Catégorie</label>
                                     <select class="form-control" id="categorie" name="categorie">
                                         <option value="">Toutes les catégories</option>
                                         <?php foreach ($categories as $categorie): ?>
-                                            <option value="<?= htmlspecialchars($categorie) ?>" <?= ($filters['categorie'] ?? '') == $categorie ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($categorie) ?>
-                                            </option>
+                                        <option value="<?= htmlspecialchars($categorie) ?>"
+                                            <?= ($filters['categorie'] ?? '') == $categorie ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($categorie) ?>
+                                        </option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <?php endif; ?>
-                                
+
                                 <div class="form-group mr-3 mb-2">
                                     <label for="search" class="sr-only">Recherche</label>
-                                    <input type="text" class="form-control" id="search" name="search" 
-                                           placeholder="Rechercher..." value="<?= htmlspecialchars($filters['search'] ?? '') ?>">
+                                    <input type="text" class="form-control" id="search" name="search"
+                                        placeholder="Rechercher..."
+                                        value="<?= htmlspecialchars($filters['search'] ?? '') ?>">
                                 </div>
-                                
+
                                 <button type="submit" class="btn btn-primary mb-2">
                                     <i class="fas fa-filter"></i> Filtrer
                                 </button>
@@ -328,7 +368,7 @@ $categories = $controller->getCategories();
                                     </thead>
                                     <tbody>
                                         <?php if ($contacts && count($contacts) > 0): ?>
-                                            <?php foreach ($contacts as $index => $contact): 
+                                        <?php foreach ($contacts as $index => $contact): 
                                                 $rowClass = '';
                                                 if ($contact['priorite'] === 'urgente') {
                                                     $rowClass = 'urgent-contact';
@@ -336,65 +376,73 @@ $categories = $controller->getCategories();
                                                     $rowClass = 'high-priority-contact';
                                                 }
                                             ?>
-                                                <tr class="<?= $rowClass ?>">
-                                                    <td><?= $index + 1 ?></td>
-                                                    <td>
-                                                        <strong><?= htmlspecialchars($contact['nom']) ?></strong><br>
-                                                        <small class="text-muted"><?= htmlspecialchars($contact['email']) ?></small>
-                                                        <?php if (!empty($contact['telephone'])): ?>
-                                                            <br><small class="text-muted"><?= htmlspecialchars($contact['telephone']) ?></small>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td>
-                                                        <strong><?= htmlspecialchars($contact['sujet']) ?></strong>
-                                                        <?php if (!empty($contact['categorie'])): ?>
-                                                            <br><span class="badge badge-light"><?= htmlspecialchars($contact['categorie']) ?></span>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td>
-                                                        <div class="contact-preview">
-                                                            <?= nl2br(htmlspecialchars($controller->shortenText($contact['message'], 150))) ?>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?= $controller->getStatusBadge($contact['statut']) ?>
-                                                        <?php if ($contact['statut'] === 'nouveau'): ?>
-                                                            <br>
-                                                            <form method="post" class="d-inline">
-                                                                <input type="hidden" name="contact_id" value="<?= $contact['id'] ?>">
-                                                                <input type="hidden" name="statut" value="lu">
-                                                                <button type="submit" name="update_status" class="btn btn-sm btn-outline-primary mt-1">
-                                                                    <i class="fas fa-eye"></i> Marquer lu
-                                                                </button>
-                                                            </form>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td><?= $controller->getPriorityBadge($contact['priorite']) ?></td>
-                                                    <td><?= $controller->formatDate($contact['date_creation']) ?></td>
-                                                    <td class="text-center">
-                                                        <div class="action-buttons d-flex justify-content-center">
-                                                            <!-- Voir détails -->
-                                                            <a href="detail.php?id=<?= $contact['id'] ?>"
-                                                                class="btn btn-info btn-xs" title="Voir détails">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
+                                        <tr class="<?= $rowClass ?>">
+                                            <td><?= $index + 1 ?></td>
+                                            <td>
+                                                <strong><?= htmlspecialchars($contact['nom']) ?></strong><br>
+                                                <small
+                                                    class="text-muted"><?= htmlspecialchars($contact['email']) ?></small>
+                                                <?php if (!empty($contact['telephone'])): ?>
+                                                <br><small
+                                                    class="text-muted"><?= htmlspecialchars($contact['telephone']) ?></small>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <strong><?= htmlspecialchars($contact['sujet']) ?></strong>
+                                                <?php if (!empty($contact['categorie'])): ?>
+                                                <br><span
+                                                    class="badge badge-light"><?= htmlspecialchars($contact['categorie']) ?></span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <div class="contact-preview">
+                                                    <?= nl2br(htmlspecialchars($controller->shortenText($contact['message'], 150))) ?>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <?= $controller->getStatusBadge($contact['statut']) ?>
+                                                <?php if ($contact['statut'] === 'nouveau'): ?>
+                                                <br>
+                                                <form method="post" class="d-inline">
+                                                    <input type="hidden" name="contact_id"
+                                                        value="<?= $contact['id'] ?>">
+                                                    <input type="hidden" name="statut" value="lu">
+                                                    <button type="submit" name="update_status"
+                                                        class="btn btn-sm btn-outline-primary mt-1">
+                                                        <i class="fas fa-eye"></i> Marquer lu
+                                                    </button>
+                                                </form>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td><?= $controller->getPriorityBadge($contact['priorite']) ?></td>
+                                            <td><?= $controller->formatDate($contact['date_creation']) ?></td>
+                                            <td class="text-center">
+                                                <div class="action-buttons d-flex justify-content-center">
+                                                    <!-- Voir détails -->
+                                                    <?php if (get_access($bdd, 20, $_SESSION['my_idprofile']) == 1): ?>
+                                                    <a href="detail.php?id=<?= $contact['id'] ?>"
+                                                        class="btn btn-info btn-xs" title="Voir détails">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <?php endif; ?>
+                                                    <!-- Répondre -->
+                                                    <?php if (get_access($bdd, 21, $_SESSION['my_idprofile']) == 1): ?>
 
-                                                            <!-- Répondre -->
-                                                            <a href="detail.php?id=<?= $contact['id'] ?>#reponse"
-                                                                class="btn btn-primary btn-xs" title="Répondre">
-                                                                <i class="fa fa-reply"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
+                                                    <a href="reply.php?id=<?= $contact['id'] ?>"
+                                                        class="btn btn-primary btn-xs" title="Répondre">
+                                                        <i class="fa fa-reply"></i>
+                                                    </a> <?php endif; ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
                                         <?php else: ?>
-                                            <tr>
-                                                <td colspan="8" class="text-center py-4">
-                                                    <i class="fa fa-envelope fa-3x text-muted mb-3"></i><br>
-                                                    <span class="text-muted">Aucun message trouvé</span>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td colspan="8" class="text-center py-4">
+                                                <i class="fa fa-envelope fa-3x text-muted mb-3"></i><br>
+                                                <span class="text-muted">Aucun message trouvé</span>
+                                            </td>
+                                        </tr>
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
@@ -432,32 +480,36 @@ $categories = $controller->getCategories();
     <script src="<?= BASE_URL ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialisation DataTable
-            $('#dataTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/French.json"
-                },
-                "pageLength": 25,
-                "order": [[0, 'desc']],
-                "columnDefs": [
-                    { "orderable": false, "targets": [7] }
-                ]
-            });
-
-            // Auto-dissimulation des messages après 5 secondes
-            setTimeout(function () {
-                const alerts = document.querySelectorAll('.alert');
-                alerts.forEach(function (alert) {
-                    if (alert.classList.contains('alert-dismissible')) {
-                        const closeButton = alert.querySelector('.close');
-                        if (closeButton) {
-                            closeButton.click();
-                        }
-                    }
-                });
-            }, 5000);
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialisation DataTable
+        $('#dataTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/French.json"
+            },
+            "pageLength": 25,
+            "order": [
+                [0, 'desc']
+            ],
+            "columnDefs": [{
+                "orderable": false,
+                "targets": [7]
+            }]
         });
+
+        // Auto-dissimulation des messages après 5 secondes
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                if (alert.classList.contains('alert-dismissible')) {
+                    const closeButton = alert.querySelector('.close');
+                    if (closeButton) {
+                        closeButton.click();
+                    }
+                }
+            });
+        }, 5000);
+    });
     </script>
 </body>
+
 </html>

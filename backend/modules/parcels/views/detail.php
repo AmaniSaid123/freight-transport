@@ -1,6 +1,6 @@
 <?php
 //****************** PAGE SETUP ******************
-$idpage = 14;
+$idpage = 29;
 
 require_once __DIR__ . '/../../../views/pages/session_check.php';
 require_once __DIR__ . '/../../../../config/debug.php';
@@ -38,27 +38,26 @@ if (!$customer) {
 
 // Récupérer les expéditions
 $shipments = $controller->getShipmentsByCustomerId($customer_id);
-$phoneContacts = array_filter(array_unique([$customer['phone'] ?? '']));
 $emailContacts = array_filter(array_unique([$customer['email'] ?? '']));
 
 // Traitement du changement de statut
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
+
     $shipment_id = $_POST['shipment_id'];
     $status = $_POST['status'];
     $notes = $_POST['notes'] ?? '';
     $notifications = [
         'notify_email' => isset($_POST['notify_email']),
-        'notify_sms' => isset($_POST['notify_sms']),
-        'phone_contact' => $_POST['phone_contact'] ?? ($customer['phone'] ?? ''),
-        'email_contact' => $_POST['email_contact'] ?? ($customer['email'] ?? '')
+        'email_contact' => $_POST['email_contact'] ?? ($customer['email'] ?? ''),
+        'email_language' => $_POST['email_language'] ?? null
     ];
-    
+
     $result = $controller->handleUpdateShipmentStatus($shipment_id, $status, $notes, $notifications);
-    
+
     if ($result['success']) {
         $message = $result['message'];
         $alertClass = 'alert-success';
-        
+
         // Recharger les données
         $shipments = $controller->getShipmentsByCustomerId($customer_id);
     } else {
@@ -70,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
 // Traitement de la suppression
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
     $result = $controller->handleDeleteCustomerRecord($customer_id);
-    
+
     if ($result['success']) {
         $_SESSION['message'] = $result['message'];
         $_SESSION['alert_class'] = 'alert-success';
@@ -82,7 +81,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
     }
 }
 
+// Ajout d'un commentaire interne
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_internal_comment'])) {
+    $shipment_id = $_POST['comment_shipment_id'] ?? null;
+    $internal_comment = $_POST['internal_comment'] ?? '';
+
+    $result = $controller->handleAddInternalComment($shipment_id, $internal_comment);
+
+    if ($result['success']) {
+        $message = $result['message'];
+        $alertClass = 'alert-success';
+        $shipments = $controller->getShipmentsByCustomerId($customer_id);
+    } else {
+        $message = $result['message'];
+        $alertClass = 'alert-danger';
+    }
+}
+
 $statuses = $controller->getAvailableStatuses();
+$primaryShipment = $shipments[0] ?? null;
+$primaryComment = '-';
+if ($shipments) {
+    foreach ($shipments as $ship) {
+        if (!empty($ship['comment'])) {
+            $primaryComment = $ship['comment'];
+            break;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -94,14 +120,32 @@ $statuses = $controller->getAvailableStatuses();
         border-left: 4px solid #4e73df;
         margin-bottom: 15px;
     }
+
     .status-history {
         max-height: 200px;
         overflow-y: auto;
     }
+
     .timeline-item {
         border-left: 2px solid #4e73df;
         padding-left: 15px;
         margin-bottom: 10px;
+    }
+
+    .detail-header-card .info-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #858796;
+        margin-bottom: 4px;
+    }
+
+    .detail-header-card .info-value {
+        font-weight: 600;
+    }
+
+    .detail-header-card .info-block {
+        min-width: 180px;
     }
 </style>
 
@@ -130,6 +174,61 @@ $statuses = $controller->getAvailableStatuses();
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Détail du Dossier</h1>
 
+
+
+
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2 stat-card stat-customers">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Add Internal Comment</div>
+                                            <button type="button"
+                                                class="btn btn-light text-primary mr-2 mb-2 add-comment-btn"
+                                                data-toggle="modal" data-target="#commentModal"
+                                                data-shipment-id="<?= $primaryShipment['id'] ?? '' ?>"
+                                                data-tracking="<?= htmlspecialchars($primaryShipment['tracking_reference'] ?? '') ?>"
+                                                <?php if (!$primaryShipment)
+                                                    echo 'disabled'; ?>>
+                                                <i class="fa fa-comment"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2 stat-card stat-shipments">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Edit File Status</div>
+                                            <button type="button"
+                                                 class="btn btn-light text-primary mr-2 mb-2 edit-status-btn"
+                                                data-toggle="modal" data-target="#statusModal"
+                                                data-shipment-id="<?= $primaryShipment['id'] ?? '' ?>"
+                                                data-current-status="<?= htmlspecialchars($primaryShipment['status_code'] ?? '') ?>"
+                                                data-email="<?= htmlspecialchars($customer['email'] ?? '') ?>"
+                                                data-tracking="<?= htmlspecialchars($primaryShipment['tracking_reference'] ?? '') ?>"
+                                                <?php if (!$primaryShipment)
+                                                    echo 'disabled'; ?>>
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
                     <!-- Message Alert -->
                     <?php if (!empty($message)): ?>
                         <div class="alert <?= $alertClass; ?> text-center" role="alert">
@@ -145,9 +244,6 @@ $statuses = $controller->getAvailableStatuses();
                                 <a href="list.php" class="btn btn-secondary btn-sm">
                                     <i class="fa fa-arrow-left"></i> Retour
                                 </a>
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                    <i class="fa fa-trash"></i> Supprimer
-                                </button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -180,7 +276,8 @@ $statuses = $controller->getAvailableStatuses();
                                         </tr>
                                         <tr>
                                             <th>Statut:</th>
-                                            <td><?= $controller->getCustomerStatusBadge($customer['deletion_status']) ?></td>
+                                            <td><?= $controller->getCustomerStatusBadge($customer['deletion_status']) ?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Nombre d'expéditions:</th>
@@ -207,26 +304,17 @@ $statuses = $controller->getAvailableStatuses();
                         </div>
                         <div class="card-body">
                             <?php if ($shipments && count($shipments) > 0): ?>
-                                <?php foreach ($shipments as $shipment): 
+                                <?php foreach ($shipments as $shipment):
                                     $history = $controller->getShipmentStatusHistory($shipment['id']);
-                                ?>
+                                    ?>
                                     <div class="card shipment-card mb-4">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h6 class="m-0 font-weight-bold">
                                                 <?= htmlspecialchars($shipment['tracking_reference']) ?>
                                             </h6>
                                             <div class="d-flex align-items-center">
-                                                <?= $controller->getShipmentStatusBadge($shipment['status']) ?>
-                                                <button class="btn btn-outline-primary btn-sm ml-2 edit-status-btn"
-                                                        data-toggle="modal"
-                                                        data-target="#statusModal"
-                                                        data-shipment-id="<?= $shipment['id'] ?>"
-                                                        data-current-status="<?= $shipment['status'] ?>"
-                                                        data-email="<?= htmlspecialchars($customer['email']) ?>"
-                                                        data-phone="<?= htmlspecialchars($customer['phone']) ?>"
-                                                        data-tracking="<?= htmlspecialchars($shipment['tracking_reference']) ?>">
-                                                    <i class="fa fa-edit"></i> Modifier
-                                                </button>
+                                                <?= $controller->getShipmentStatusBadge($shipment['status_code'] ?? '') ?>
+
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -279,7 +367,7 @@ $statuses = $controller->getAvailableStatuses();
                                                                     <?php endif; ?>
                                                                 </div>
                                                                 <div>
-                                                                    <?= $controller->getShipmentStatusBadge($event['status']) ?>
+                                                                    <?= $controller->getShipmentStatusBadge($event['status_code']) ?>
                                                                     <?php if ($event['notes']): ?>
                                                                         : <?= htmlspecialchars($event['notes']) ?>
                                                                     <?php endif; ?>
@@ -320,7 +408,8 @@ $statuses = $controller->getAvailableStatuses();
     <!-- End of Page Wrapper -->
 
     <!-- Modal de statut -->
-    <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="post">
@@ -332,51 +421,53 @@ $statuses = $controller->getAvailableStatuses();
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="update_status" value="1">
-                        <input type="hidden" name="shipment_id" id="modal_shipment_id">
+                        <div class="form-group">
+                            <label for="modal_shipment_id">Sélectionner un colis</label>
+                            <select class="form-control" name="shipment_id" id="modal_shipment_id" required>
+                                <?php if ($shipments && count($shipments) > 0): ?>
+                                    <?php foreach ($shipments as $shipment): ?>
+                                        <option value="<?= $shipment['id']; ?>"
+                                            data-tracking="<?= htmlspecialchars($shipment['tracking_reference']); ?>">
+                                            <?= htmlspecialchars($shipment['tracking_reference']); ?>
+                                            <?= $shipment['destination'] ? ' - ' . htmlspecialchars($shipment['destination']) : '' ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <option value="">Aucun colis disponible</option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="modal_status">File Status</label>
                             <select class="form-control" name="status" id="modal_status" required>
                                 <option value="">Sélectionner un statut</option>
                                 <?php foreach ($statuses as $key => $label): ?>
-                                    <option value="<?= $key ?>"><?= $label ?></option>
+                                    <option value="<?= htmlspecialchars($key) ?>"><?= htmlspecialchars($label) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="modal_notes">Notes internes</label>
-                            <input type="text" class="form-control" name="notes" id="modal_notes" placeholder="Notes (optionnel)">
+                            <input type="text" class="form-control" name="notes" id="modal_notes"
+                                placeholder="Notes (optionnel)">
                         </div>
                         <div class="form-group">
                             <label class="d-block">Notify Client</label>
+                          
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="notify_sms" name="notify_sms">
-                                <label class="form-check-label" for="notify_sms">
-                                    SMS (e.g., 3334353636)
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="notify_email" name="notify_email" checked>
+                                <input class="form-check-input" type="checkbox" value="1" id="notify_email"
+                                    name="notify_email">
                                 <label class="form-check-label" for="notify_email">
                                     Email (e.g., <?= htmlspecialchars($customer['email']) ?>)
                                 </label>
                             </div>
-                            <small class="form-text text-muted">Un email dédié est envoyé automatiquement en fonction du statut choisi.</small>
+                            <small class="form-text text-muted">Un email dédié est envoyé automatiquement en fonction du
+                                statut choisi.</small>
                         </div>
-                        <div class="form-group">
-                            <label for="modal_phone_contact">Phone Contact</label>
-                            <select class="form-control" name="phone_contact" id="modal_phone_contact">
-                                <?php if (count($phoneContacts) === 0): ?>
-                                    <option value="">Aucun numéro disponible</option>
-                                <?php else: ?>
-                                    <?php foreach ($phoneContacts as $phone): ?>
-                                        <option value="<?= htmlspecialchars($phone) ?>"><?= htmlspecialchars($phone) ?></option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
-                        </div>
+               
                         <div class="form-group">
                             <label for="modal_email_contact">Email Contact</label>
-                            <select class="form-control" name="email_contact" id="modal_email_contact">
+                            <select class="form-control" name="email_contact" id="modal_email_contact" disabled>
                                 <?php if (count($emailContacts) === 0): ?>
                                     <option value="">Aucun email disponible</option>
                                 <?php else: ?>
@@ -384,6 +475,13 @@ $statuses = $controller->getAvailableStatuses();
                                         <option value="<?= htmlspecialchars($email) ?>"><?= htmlspecialchars($email) ?></option>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="email_language">Langue de l'email</label>
+                            <select class="form-control" name="email_language" id="email_language" disabled>
+                                <option value="fr">Français</option>
+                                <option value="en">English</option>
                             </select>
                         </div>
                     </div>
@@ -396,31 +494,46 @@ $statuses = $controller->getAvailableStatuses();
         </div>
     </div>
 
-    <!-- Modal de suppression -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <!-- Modal de commentaire interne -->
+    <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Êtes-vous sûr de vouloir supprimer le dossier client <strong><?= htmlspecialchars($customer['full_name']) ?></strong> ?
-                    <br><br>
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i> 
-                        Cette action supprimera également toutes les expéditions associées à ce client.
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="commentModalLabel">Add Internal Comment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                    <form method="post" style="display: inline;">
-                        <input type="hidden" name="delete_customer" value="1">
-                        <button type="submit" class="btn btn-danger">Supprimer définitivement</button>
-                    </form>
-                </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="add_internal_comment" value="1">
+                        <div class="form-group">
+                            <label for="comment_shipment_id">Sélectionner une expédition</label>
+                            <select class="form-control" id="comment_shipment_id" name="comment_shipment_id" required>
+                                <?php if ($shipments && count($shipments) > 0): ?>
+                                    <?php foreach ($shipments as $shipment): ?>
+                                        <option value="<?= $shipment['id'] ?>">
+                                            <?= htmlspecialchars($shipment['tracking_reference']) ?> -
+                                            <?= htmlspecialchars($shipment['destination']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <option value="">Aucune expédition disponible</option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="internal_comment">Internal Note</label>
+                            <textarea class="form-control" id="internal_comment" name="internal_comment" rows="3"
+                                placeholder="Ajouter une note interne" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -435,17 +548,20 @@ $statuses = $controller->getAvailableStatuses();
 
     <?php include_once __DIR__ . '/../../../layouts/script.php'; ?>
     <script>
-        $(function() {
+        $(function () {
             $('.edit-status-btn').on('click', function () {
                 var button = $(this);
                 var shipmentId = button.data('shipment-id');
                 var status = button.data('current-status');
                 var email = button.data('email');
-                var phone = button.data('phone');
                 var tracking = button.data('tracking');
 
                 $('#modal_shipment_id').val(shipmentId);
-                $('#statusModalLabel').text('Edit File Status - ' + tracking);
+                if (tracking) {
+                    $('#statusModalLabel').text('Edit File Status - ' + tracking);
+                } else {
+                    updateStatusModalLabel();
+                }
                 $('#modal_status').val(status);
                 $('#modal_notes').val('');
 
@@ -456,18 +572,55 @@ $statuses = $controller->getAvailableStatuses();
                     $('#modal_email_contact').val(email);
                 }
 
-                if (phone) {
-                    if ($('#modal_phone_contact option[value="' + phone + '"]').length === 0) {
-                        $('#modal_phone_contact').append('<option value="' + phone + '">' + phone + '</option>');
-                    }
-                    $('#modal_phone_contact').val(phone);
-                }
-
-                $('#notify_email').prop('checked', true);
-                $('#notify_sms').prop('checked', !!phone);
+                $('#notify_email').prop('checked', false);
+                $('#email_language').val('fr');
+                toggleEmailFields();
             });
+
+            $('#notify_email').on('change', function () {
+                toggleEmailFields();
+            });
+
+            $('.add-comment-btn').on('click', function () {
+                var button = $(this);
+                var shipmentId = button.data('shipment-id');
+                var tracking = button.data('tracking');
+
+                $('#internal_comment').val('');
+                $('#commentModalLabel').text(tracking ? 'Add Internal Comment - ' + tracking : 'Add Internal Comment');
+
+                if (shipmentId) {
+                    $('#comment_shipment_id').val(String(shipmentId));
+                } else {
+                    $('#comment_shipment_id').prop('selectedIndex', 0);
+                }
+            });
+
+            function toggleEmailFields() {
+                var enabled = $('#notify_email').is(':checked');
+                $('#modal_email_contact').prop('disabled', !enabled);
+                $('#email_language').prop('disabled', !enabled);
+            }
+
+            $('#modal_shipment_id').on('change', function () {
+                updateStatusModalLabel();
+            });
+
+            function updateStatusModalLabel() {
+                var selected = $('#modal_shipment_id option:selected');
+                var trackingVal = selected.data('tracking');
+                if (trackingVal) {
+                    $('#statusModalLabel').text('Edit File Status - ' + trackingVal);
+                } else {
+                    $('#statusModalLabel').text('Edit File Status');
+                }
+            }
+
+            // Initialise le titre si un colis est déjà sélectionné
+            updateStatusModalLabel();
         });
     </script>
 
 </body>
+
 </html>

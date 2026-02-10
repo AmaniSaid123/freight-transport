@@ -1,6 +1,6 @@
 <?php
 //****************** PAGE SETUP ******************
-$idpage = 14;
+$idpage = 28;
 
 require_once __DIR__ . '/../../../views/pages/session_check.php';
 require_once __DIR__ . '/../../../../config/debug.php';

@@ -87,17 +87,17 @@ $date_envoi = $controller->formatDate($mail['date_envoi']);
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Détails de l'email</h1>
-                        <div>
-                            <a href="edit.php?id=<?= $mail_id ?>" class="btn btn-primary btn-sm" <?= $mail['statut'] === 'envoye' ? 'disabled' : '' ?>>
-                                <i class="fas fa-edit"></i> Modifier
-                            </a>
-                            <a href="list.php" class="btn btn-secondary btn-sm">
-                                <i class="fas fa-arrow-left"></i> Retour
-                            </a>
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Détails de l'email</h1>
+                            <div>
+                                <a href="edit.php?id=<?= $mail_id ?>" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </a>
+                                <a href="list.php" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-arrow-left"></i> Retour
+                                </a>
+                            </div>
                         </div>
-                    </div>
 
                     <!-- Message Alert -->
                     <?php if (!empty($message)): ?>
@@ -112,11 +112,11 @@ $date_envoi = $controller->formatDate($mail['date_envoi']);
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h6 class="m-0 font-weight-bold text-primary">Contenu de l'email</h6>
-                                    <span><?= $controller->getStatusBadge($mail['statut']) ?></span>
+                                    <span><?= $controller->getStatusBadge($mail['status_code'] ?? '') ?></span>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="text-gray-800"><?= htmlspecialchars($mail['titre_email']) ?></h4>
-                                    <p class="text-muted">Objet: <strong><?= htmlspecialchars($mail['objet']) ?></strong></p>
+                                    <h4 class="text-gray-800"><?= htmlspecialchars($mail['titre_email_fr'] ?? $mail['titre_email'] ?? '') ?></h4>
+                                    <p class="text-muted">Objet: <strong><?= htmlspecialchars($mail['objet_fr'] ?? $mail['objet'] ?? '') ?></strong></p>
                                     
                                     <div class="email-content">
                                         <h5>Version Française:</h5>
@@ -208,11 +208,12 @@ $date_envoi = $controller->formatDate($mail['date_envoi']);
                                 <div class="card-body">
                                     <div class="d-grid gap-2">
                                         <a href="edit.php?id=<?= $mail_id ?>" 
-                                           class="btn btn-primary btn-block <?= $mail['statut'] === 'envoye' ? 'disabled' : '' ?>">
+                                           class="btn btn-primary btn-block">
                                             <i class="fas fa-edit"></i> Modifier
                                         </a>
                                         
-                                        <?php if ($mail['statut'] === 'brouillon' || $mail['statut'] === 'programme'): ?>
+                                        <?php $mailStatus = $mail['status_code'] ?? ''; ?>
+                                        <?php if ($mailStatus === 'brouillon' || $mailStatus === 'programme'): ?>
                                             <button type="button" class="btn btn-success btn-block">
                                                 <i class="fas fa-paper-plane"></i> Envoyer maintenant
                                             </button>

@@ -1,8 +1,9 @@
 <?php
 // process_contact.php
 session_start();
-require_once __DIR__ . '/../../../../config/constants.php';
-require_once __DIR__ . '/../../../../php/function.php';
+require_once __DIR__ . '/../config/constants.php';
+require_once __DIR__ . '/../php/function.php';
+require_once __DIR__ . '/../services/EmailService.php';
 
 // Headers pour JSON
 header('Content-Type: application/json');
@@ -62,18 +63,38 @@ if (!empty($errors)) {
 
 try {
     // Connexion à la base de données
-    require_once __DIR__ . '/../../../../param.php';
+    require_once __DIR__ . '/../param.php';
+    $emailService = new EmailService($bdd);
+
+    // Vérifier si la colonne lang existe
+    $langColumnExists = false;
+    try {
+        $checkLang = $bdd->prepare("SHOW COLUMNS FROM contact LIKE 'lang'");
+        $checkLang->execute();
+        $langColumnExists = (bool) $checkLang->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        $langColumnExists = false;
+    }
 
     // Insérer dans la base de données
-    $sql = "INSERT INTO contact (nom, email, telephone, categorie, sujet, message, ip_address, user_agent, date_creation) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+    if ($langColumnExists) {
+        $sql = "INSERT INTO contact (nom, email, telephone, categorie, sujet, message, ip_address, user_agent, lang, statut, priorite, date_creation) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'nouveau', 'normale', NOW())";
+    } else {
+        $sql = "INSERT INTO contact (nom, email, telephone, categorie, sujet, message, ip_address, user_agent, statut, priorite, date_creation) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'nouveau', 'normale', NOW())";
+    }
 
     $stmt = $bdd->prepare($sql);
-    $result = $stmt->execute([$nom, $email, $telephone, $categorie, $sujet, $message, $ip_address, $user_agent]);
+    if ($langColumnExists) {
+        $result = $stmt->execute([$nom, $email, $telephone, $categorie, $sujet, $message, $ip_address, $user_agent, $lang]);
+    } else {
+        $result = $stmt->execute([$nom, $email, $telephone, $categorie, $sujet, $message, $ip_address, $user_agent]);
+    }
 
     if ($result) {
         // Envoyer un email de notification (optionnel)
-        $this->sendNotificationEmail($nom, $email, $sujet, $message);
+        sendNotificationEmail($emailService, $nom, $email, $sujet, $message);
 
         echo json_encode([
             'success' => true,
@@ -95,7 +116,7 @@ try {
 /**
  * Envoie un email de notification aux administrateurs
  */
-function sendNotificationEmail($nom, $email, $sujet, $message)
+function sendNotificationEmail(EmailService $emailService, $nom, $email, $sujet, $message)
 {
     try {
         $to = "contact@votresociete.com"; // Email de notification
@@ -145,7 +166,7 @@ function sendNotificationEmail($nom, $email, $sujet, $message)
         $headers .= "Reply-To: $email" . "\r\n";
         $headers .= "X-Mailer: PHP/" . phpversion();
 
-        mail($to, $subject, $emailContent, $headers);
+        $emailService->sendHtmlEmail($to, $subject, $emailContent, $headers);
 
     } catch (Exception $e) {
         error_log("Erreur envoi notification contact: " . $e->getMessage());

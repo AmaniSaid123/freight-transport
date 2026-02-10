@@ -1,6 +1,6 @@
 <?php
 //****************** PAGE SETUP ******************
-$idpage = 14;
+$idpage = 26;
 
 require_once __DIR__ . '/../../../views/pages/session_check.php';
 require_once __DIR__ . '/../../../../config/debug.php';
@@ -22,6 +22,22 @@ $controller = new ParcelController($bdd, $_SESSION['my_userId']);
 $message = '';
 $alertClass = 'alert-info';
 
+// Suppression d'un dossier client
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_customer'])) {
+    $deleteId = $_POST['delete_customer_id'] ?? null;
+
+    if ($deleteId) {
+        $result = $controller->handleDeleteCustomerRecord($deleteId);
+        if ($result['success']) {
+            $message = $result['message'];
+            $alertClass = 'alert-success';
+        } else {
+            $message = $result['message'];
+            $alertClass = 'alert-danger';
+        }
+    }
+}
+
 // Filtres
 $filters = [];
 if (isset($_GET['search']) && !empty($_GET['search'])) {
@@ -40,41 +56,41 @@ $stats = $controller->getStats();
 
 <link href="<?= BASE_URL ?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
-    .stat-card {
-        border-left: 4px solid;
-    }
+.stat-card {
+    border-left: 4px solid;
+}
 
-    .stat-customers {
-        border-left-color: #4e73df;
-    }
+.stat-customers {
+    border-left-color: #4e73df;
+}
 
-    .stat-shipments {
-        border-left-color: #1cc88a;
-    }
+.stat-shipments {
+    border-left-color: #1cc88a;
+}
 
-    .stat-pending {
-        border-left-color: #f6c23e;
-    }
+.stat-pending {
+    border-left-color: #f6c23e;
+}
 
-    .stat-delivered {
-        border-left-color: #36b9cc;
-    }
+.stat-delivered {
+    border-left-color: #36b9cc;
+}
 
-    .customer-card {
-        transition: all 0.3s ease;
-        border-left: 4px solid #4e73df;
-    }
+.customer-card {
+    transition: all 0.3s ease;
+    border-left: 4px solid #4e73df;
+}
 
-    .customer-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+.customer-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    .shipment-item {
-        border-left: 3px solid #e74a3b;
-        padding-left: 10px;
-        margin-bottom: 10px;
-    }
+.shipment-item {
+    border-left: 3px solid #e74a3b;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
 </style>
 
 <body id="page-top">
@@ -104,90 +120,90 @@ $stats = $controller->getStats();
 
                     <!-- Message Alert -->
                     <?php if (!empty($message)): ?>
-                        <div class="alert <?= $alertClass; ?> text-center" role="alert">
-                            <?= htmlspecialchars($message); ?>
-                        </div>
+                    <div class="alert <?= $alertClass; ?> text-center" role="alert">
+                        <?= htmlspecialchars($message); ?>
+                    </div>
                     <?php endif; ?>
 
                     <!-- Statistics Cards -->
                     <?php if (!empty($stats)): ?>
-                        <div class="row mb-4">
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2 stat-card stat-customers">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Clients</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['total_customers'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-users fa-2x text-gray-300"></i>
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2 stat-card stat-customers">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Clients</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['total_customers'] ?? 0 ?>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-2 stat-card stat-shipments">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    Expéditions</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['total_shipments'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-box fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2 stat-card stat-pending">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    En attente</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['pending_shipments'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2 stat-card stat-delivered">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                    Livrés</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?= $stats['delivered_shipments'] ?? 0 ?>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                                            </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2 stat-card stat-shipments">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Expéditions</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['total_shipments'] ?? 0 ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-box fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2 stat-card stat-pending">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                En attente</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['pending_shipments'] ?? 0 ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2 stat-card stat-delivered">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Livrés</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?= $stats['delivered_shipments'] ?? 0 ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php endif; ?>
 
 
@@ -195,9 +211,11 @@ $stats = $controller->getStats();
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Liste des Colis</h6>
+                            <?php if (get_access($bdd, 27, $_SESSION['my_idprofile']) == 1): ?>
                             <a href="add.php" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i> Nouveau Colis
                             </a>
+                            <?php endif; ?>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -210,7 +228,6 @@ $stats = $controller->getStats();
                                             <th>Email</th>
                                             <th>Téléphone</th>
                                             <th>Adresse</th>
-                                            <th>Expéditions</th>
                                             <th>Statut</th>
                                             <th>Créé le</th>
                                             <th>Actions</th>
@@ -218,60 +235,55 @@ $stats = $controller->getStats();
                                     </thead>
                                     <tbody>
                                         <?php if ($parcels && count($parcels) > 0): ?>
-                                            <?php foreach ($parcels as $index => $parcel):
+                                        <?php foreach ($parcels as $index => $parcel):
                                                 $shipments = $controller->getShipmentsByCustomerId($parcel['id']);
                                                 ?>
-                                                <tr>
-                                                    <td><?= $index + 1 ?></td>
-                                                    <td><strong><?= htmlspecialchars($parcel['full_name']) ?></strong></td>
-                                                    <td><?= htmlspecialchars($parcel['customer_id']) ?></td>
-                                                    <td><?= htmlspecialchars($parcel['email']) ?></td>
-                                                    <td><?= htmlspecialchars($parcel['phone']) ?></td>
-                                                    <td><?= htmlspecialchars($controller->shortenText($parcel['address'], 60)) ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php if ($shipments && count($shipments) > 0): ?>
-                                                            <ul class="list-unstyled mb-0">
-                                                                <?php foreach (array_slice($shipments, 0, 2) as $shipment): ?>
-                                                                    <li>
-                                                                        <strong><?= htmlspecialchars($shipment['tracking_reference']) ?></strong><br>
-                                                                        <small class="text-muted">
-                                                                            <?= htmlspecialchars($shipment['origin']) ?> →
-                                                                            <?= htmlspecialchars($shipment['destination']) ?>
-                                                                        </small><br>
-                                                                        <?= $controller->getShipmentStatusBadge($shipment['status']) ?>
-                                                                    </li>
-                                                                <?php endforeach; ?>
-                                                                <?php if (count($shipments) > 2): ?>
-                                                                    <li class="text-muted small">+<?= count($shipments) - 2 ?> autres
-                                                                    </li>
-                                                                <?php endif; ?>
-                                                            </ul>
-                                                        <?php else: ?>
-                                                            <span class="text-muted small">Aucune</span>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td><?= $controller->getCustomerStatusBadge($parcel['deletion_status']) ?>
-                                                    </td>
-                                                    <td><?= $parcel['created_at'] ?></td>
-                                                    <td>
-                                                        <a href="detail.php?id=<?= $parcel['id'] ?>" class="btn btn-info btn-sm"
-                                                            title="Voir détails">
-                                                            <i class="fa fa-eye"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
+                                        <tr>
+                                            <td><?= $index + 1 ?></td>
+                                            <td><strong><?= htmlspecialchars($parcel['full_name']) ?></strong></td>
+                                            <td><?= htmlspecialchars($parcel['customer_id']) ?></td>
+                                            <td><?= htmlspecialchars($parcel['email']) ?></td>
+                                            <td><?= htmlspecialchars($parcel['phone']) ?></td>
+                                            <td><?= htmlspecialchars($controller->shortenText($parcel['address'], 60)) ?>
+                                            </td>
+                                            <td><?= $controller->getCustomerStatusBadge($parcel['deletion_status']) ?>
+                                            </td>
+                                            <td><?= $parcel['created_at'] ?></td>
+                                            <td>
+                                                <?php if (get_access($bdd, 29, $_SESSION['my_idprofile']) == 1): ?>
+                                                <a href="detail.php?id=<?= $parcel['id'] ?>" class="btn btn-info btn-sm"
+                                                    title="Voir détails">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <?php endif; ?>
+                                                <?php if (get_access($bdd, 28, $_SESSION['my_idprofile']) == 1): ?>
+                                                <a href="edit.php?id=<?= $parcel['id'] ?>"
+                                                    class="btn btn-primary btn-sm" title="Modifier">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <?php endif; ?>
+                                                <?php if (get_access($bdd, 30, $_SESSION['my_idprofile']) == 1): ?>
+                                                <button type="button" class="btn btn-danger btn-sm delete-parcel-btn"
+                                                    data-toggle="modal" data-target="#deleteParcelModal"
+                                                    data-id="<?= $parcel['id'] ?>"
+                                                    data-name="<?= htmlspecialchars($parcel['full_name']) ?>"
+                                                    data-ref="<?= htmlspecialchars($parcel['customer_id']) ?>">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
                                         <?php else: ?>
-                                            <tr>
-                                                <td colspan="10" class="text-center py-4">
-                                                    <i class="fa fa-box fa-2x text-muted mb-2"></i><br>
-                                                    <span class="text-muted">Aucun dossier trouvé</span><br>
-                                                    <a href="add.php" class="btn btn-primary btn-sm mt-2">
-                                                        <i class="fa fa-plus"></i> Créer votre premier colis
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td colspan="10" class="text-center py-4">
+                                                <i class="fa fa-box fa-2x text-muted mb-2"></i><br>
+                                                <span class="text-muted">Aucun dossier trouvé</span><br>
+                                                <a href="add.php" class="btn btn-primary btn-sm mt-2">
+                                                    <i class="fa fa-plus"></i> Créer votre premier colis
+                                                </a>
+                                            </td>
+                                        </tr>
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
@@ -304,6 +316,39 @@ $stats = $controller->getStats();
     <!-- Logout Modal-->
     <?php include_once __DIR__ . '/../../../layouts/logout.php'; ?>
 
+    <!-- Delete Parcel Modal -->
+    <div class="modal fade" id="deleteParcelModal" tabindex="-1" role="dialog" aria-labelledby="deleteParcelModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteParcelModalLabel">Delete Parcel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-warning mb-0">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            Confirm deletion of the parcel and all associated shipments.
+                        </div>
+                        <div class="mt-3">
+                            <strong id="deleteParcelName"></strong><br>
+                            <span class="text-muted" id="deleteParcelRef"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="hidden" name="delete_customer" value="1">
+                        <input type="hidden" name="delete_customer_id" id="delete_customer_id">
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <?php include_once __DIR__ . '/../../../layouts/script.php'; ?>
 
     <script src="<?= BASE_URL ?>assets/vendor/datatables/jquery.dataTables.min.js"></script>
@@ -311,6 +356,20 @@ $stats = $controller->getStats();
 
     <!-- Page level custom scripts -->
     <script src="<?= BASE_URL ?>assets/js/demo/datatables-demo.js"></script>
+    <script>
+    $(function() {
+        $('.delete-parcel-btn').on('click', function() {
+            var button = $(this);
+            var parcelId = button.data('id');
+            var parcelName = button.data('name') || 'Parcel';
+            var parcelRef = button.data('ref') || '';
+
+            $('#delete_customer_id').val(parcelId);
+            $('#deleteParcelName').text(parcelName);
+            $('#deleteParcelRef').text(parcelRef ? 'Ref: ' + parcelRef : '');
+        });
+    });
+    </script>
 </body>
 
 </html>

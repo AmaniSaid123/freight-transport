@@ -240,7 +240,6 @@ $stats = $controller->getStats();
                                             <th width="5%">#</th>
                                             <th width="15%">Titre</th>
                                             <th width="15%">Objet</th>
-                                            <th width="20%">Contenu (FR)</th>
                                             <th width="10%">Statut</th>
                                             <th width="10%">Programmation</th>
                                             <th width="10%">Crée le</th>
@@ -253,16 +252,11 @@ $stats = $controller->getStats();
                                                 <tr>
                                                     <td><?= $index + 1 ?></td>
                                                     <td>
-                                                        <strong><?= htmlspecialchars($mail['titre_email']) ?></strong>
+                                                        <strong><?= htmlspecialchars($mail['titre_email_fr'] ?? $mail['titre_email'] ?? '') ?></strong>
                                                     </td>
-                                                    <td><?= htmlspecialchars($mail['objet']) ?></td>
-                                                    <td>
-                                                        <div class="email-preview">
-                                                            <?= nl2br(htmlspecialchars(substr($mail['contenu_fr'], 0, 200))) ?>
-                                                            <?= strlen($mail['contenu_fr']) > 200 ? '...' : '' ?>
-                                                        </div>
-                                                    </td>
-                                                    <td><?= $controller->getStatusBadge($mail['statut']) ?></td>
+                                                    <td><?= htmlspecialchars($mail['objet_fr'] ?? $mail['objet'] ?? '') ?></td>
+                                        
+                                                    <td><?= $controller->getStatusBadge($mail['status_code'] ?? '') ?></td>
                                                     <td><?= $controller->formatDate($mail['date_programmation']) ?></td>
                                                     <td><?= $controller->formatDate($mail['created_at']) ?></td>
                                                     <td class="text-center">
@@ -286,7 +280,7 @@ $stats = $controller->getStats();
                                                             <?php if (get_access($bdd, 17, $_SESSION['my_idprofile']) == 1): ?>
                                                                 <button type="button" class="btn btn-danger btn-xs delete-mail-btn"
                                                                     title="Supprimer" data-mail-id="<?= $mail['id'] ?>"
-                                                                    data-mail-title="<?= htmlspecialchars($mail['titre_email']) ?>">
+                                                                    data-mail-title="<?= htmlspecialchars($mail['titre_email_fr'] ?? $mail['titre_email'] ?? '') ?>">
                                                                     <i class="fa fa-trash"></i>
                                                                 </button>
                                                             <?php endif; ?>
@@ -358,6 +352,7 @@ $stats = $controller->getStats();
                     </div>
                     <p>Êtes-vous sûr de vouloir supprimer l'email :</p>
                     <p class="font-weight-bold" id="deleteMailTitle"></p>
+                    <p class="text-muted">ID: <span id="deleteMailIdDisplay"></span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -386,6 +381,7 @@ $stats = $controller->getStats();
             const deleteMailForm = document.getElementById('deleteMailForm');
             const deleteMailIdElement = document.getElementById('deleteMailId');
             const deleteMailTitle = document.getElementById('deleteMailTitle');
+            const deleteMailIdDisplay = document.getElementById('deleteMailIdDisplay');
 
             // Événement pour les boutons de suppression
             document.querySelectorAll('.delete-mail-btn').forEach(button => {
@@ -396,6 +392,9 @@ $stats = $controller->getStats();
                     // Mettre à jour le contenu du modal
                     deleteMailIdElement.value = mailId;
                     deleteMailTitle.textContent = '"' + mailTitle + '"';
+                    if (deleteMailIdDisplay) {
+                        deleteMailIdDisplay.textContent = mailId;
+                    }
 
                     // Ouvrir le modal
                     $(deleteModal).modal('show');

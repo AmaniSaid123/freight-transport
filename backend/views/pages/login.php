@@ -16,12 +16,6 @@ session_start();
     <title>TrustedCargo</title>
     <link href="<?= BASE_URL ?>assets/css/login.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .error {
-            color: red;
-            margin: 10px;
-        }
-    </style>
 </head>
 
 <body>
@@ -31,6 +25,24 @@ session_start();
             <h1>TrustedCargo</h1>
             <p>Solutions logistiques pour fret aérien et maritime</p>
         </div>
+        <?php
+        // Gestion des messages d'erreur
+        $errorMessages = [
+            'auth_failed' => "Mot de Passe ou nom d'utilisateur incorrect",
+            'login' => "Veuillez vous reconnecter d'abord",
+            'inactivity' => "Votre Session a pris fin pour non utilisation au dela de 3 heures",
+            'autorisation' => "Votre profile n'a pas le droit d'accéder à cette page",
+            'acces_caisse' => "Désolé vous devez avoir un accès caisse pour accéder à cette page"
+        ];
+
+        if (isset($_GET['error']) && isset($errorMessages[$_GET['error']])) :
+        ?>
+            <div class="alert error-banner">
+                <div>
+                    <p><?= $errorMessages[$_GET['error']] ?></p>
+                </div>
+            </div>
+        <?php endif; ?>
 
         <form method="post" action="<?= BASE_URL ?>views/pages/authentification.php">
 
@@ -54,22 +66,6 @@ session_start();
 
         </form>
     </div>
-
-
-    <?php
-    // Gestion des messages d'erreur
-    $errorMessages = [
-        'auth_failed' => "Mot de Passe ou nom d'utilisateur incorrect",
-        'login' => "Veuillez vous reconnecter d'abord",
-        'inactivity' => "Votre Session a pris fin pour non utilisation au dela de 3 heures",
-        'autorisation' => "Votre profile n'a pas le droit d'accéder à cette page",
-        'acces_caisse' => "Désolé vous devez avoir un accès caisse pour accéder à cette page"
-    ];
-
-    if (isset($_GET['error']) && isset($errorMessages[$_GET['error']])) {
-        echo '<div class="error">' . $errorMessages[$_GET['error']] . '</div>';
-    }
-    ?>
 
 </body>
 

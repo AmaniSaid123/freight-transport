@@ -1,11 +1,15 @@
 <?php
+require_once __DIR__ . '/../../../../services/EmailService.php';
+
 class ContactController {
     private $model;
     private $current_user_id;
+    private $emailService;
     
-    public function __construct($database, $user_id) {
+    public function __construct($database, $user_id, EmailService $emailService = null) {
         $this->model = new Contact($database);
         $this->current_user_id = $user_id;
+        $this->emailService = $emailService ?: new EmailService($database);
     }
 
     /**
@@ -51,25 +55,42 @@ class ContactController {
     /**
      * Ajoute une réponse à un contact
      */
-    public function addResponse($contact_id, $reponse) {
+    public function addResponse($contact_id, $reponse, $email_subject = null) {
         try {
+            $contact = $this->model->getContactById($contact_id);
+            if (!$contact) {
+                return [
+                    'success' => false,
+                    'message' => 'Contact non trouvé'
+                ];
+            }
+
+            $payload = $this->resolveEmailPayload($contact, $reponse, $email_subject);
+
             // Valider la réponse
-            if (empty(trim($reponse))) {
+            if (empty(trim($payload['body_text']))) {
                 return [
                     'success' => false,
                     'message' => 'La réponse ne peut pas être vide'
                 ];
             }
 
-            $result = $this->model->addResponse($contact_id, $reponse, $this->current_user_id);
+            $result = $this->model->addResponse($contact_id, $payload['body_text'], $this->current_user_id);
             
             if ($result) {
                 // Envoyer l'email de réponse
-                $emailResult = $this->sendResponseEmail($contact_id, $reponse);
-                
+                $emailResult = $this->sendResponseEmail($contact_id, $reponse, $email_subject);
+
+                if (!$emailResult['success']) {
+                    return [
+                        'success' => false,
+                        'message' => 'Réponse enregistrée, mais l\'email n\'a pas été envoyé : ' . ($emailResult['message'] ?? 'Erreur inconnue')
+                    ];
+                }
+
                 return [
                     'success' => true,
-                    'message' => 'Réponse envoyée avec succès' . ($emailResult['success'] ? '' : ' (mais erreur d\'envoi email)')
+                    'message' => 'Réponse envoyée avec succès'
                 ];
             } else {
                 return [
@@ -122,23 +143,27 @@ class ContactController {
     /**
      * Envoie un email de réponse
      */
-    private function sendResponseEmail($contact_id, $reponse) {
+    private function sendResponseEmail($contact_id, $reponse, $email_subject = null) {
         try {
             $contact = $this->model->getContactById($contact_id);
             if (!$contact) {
                 return ['success' => false, 'message' => 'Contact non trouvé'];
             }
 
-            $to = $contact['email'];
-            $subject = "Re: " . $contact['sujet'];
-            $message = $this->buildResponseEmail($contact, $reponse);
+            $payload = $this->resolveEmailPayload($contact, $reponse, $email_subject);
+
+            $to = trim((string) ($contact['email'] ?? ''));
+            if ($to === '' || !filter_var($to, FILTER_VALIDATE_EMAIL)) {
+                return ['success' => false, 'message' => 'Email du contact invalide'];
+            }
+
+            $subject = $this->sanitizeEmailHeader($payload['subject']);
+            $subject = $this->encodeEmailSubject($subject);
+            $message = $this->buildResponseEmail($contact, $payload);
             $headers = $this->buildEmailHeaders();
 
-            if (mail($to, $subject, $message, $headers)) {
-                return ['success' => true, 'message' => 'Email envoyé'];
-            } else {
-                return ['success' => false, 'message' => 'Erreur d\'envoi email'];
-            }
+            $sendResult = $this->emailService->sendHtmlEmail($to, $subject, $message, $headers);
+            return $sendResult['success'] ? ['success' => true, 'message' => 'Email envoyé'] : $sendResult;
         } catch (Exception $e) {
             return ['success' => false, 'message' => 'Erreur: ' . $e->getMessage()];
         }
@@ -147,7 +172,27 @@ class ContactController {
     /**
      * Construit le contenu de l'email de réponse
      */
-    private function buildResponseEmail($contact, $reponse) {
+    private function buildResponseEmail($contact, $payload) {
+        $title = $payload['title'];
+        $bodyHtml = $payload['body_html'];
+        $language = $payload['language'];
+        $dateLabel = date('d/m/Y à H:i', strtotime($contact['date_creation']));
+        $year = date('Y');
+
+        if ($language === 'en') {
+            $greeting = "Hello " . htmlspecialchars($contact['nom']) . ",";
+            $intro = "Thank you for contacting us. Here is our reply:";
+            $originalTitle = "Your original message:";
+            $closing = "Best regards,<br>The support team";
+            $footer = "This email is a response to your message on " . $dateLabel . ".";
+        } else {
+            $greeting = "Bonjour " . htmlspecialchars($contact['nom']) . ",";
+            $intro = "Nous vous remercions de nous avoir contactés. Voici notre réponse :";
+            $originalTitle = "Votre message original :";
+            $closing = "Cordialement,<br>L'équipe du support";
+            $footer = "Cet email est une réponse à votre message du " . $dateLabel . ".";
+        }
+
         $template = "
         <!DOCTYPE html>
         <html>
@@ -166,27 +211,27 @@ class ContactController {
         <body>
             <div class='container'>
                 <div class='header'>
-                    <h1>Réponse à votre message</h1>
+                    <h1>" . htmlspecialchars($title) . "</h1>
                 </div>
                 <div class='content'>
-                    <p>Bonjour " . htmlspecialchars($contact['nom']) . ",</p>
+                    <p>" . $greeting . "</p>
                     
-                    <p>Nous vous remercions de nous avoir contactés. Voici notre réponse :</p>
+                    <p>" . $intro . "</p>
                     
                     <div class='response'>
-                        " . nl2br(htmlspecialchars($reponse)) . "
+                        " . $bodyHtml . "
                     </div>
                     
                     <div class='original-message'>
-                        <strong>Votre message original :</strong><br>
+                        <strong>" . $originalTitle . "</strong><br>
                         " . nl2br(htmlspecialchars($contact['message'])) . "
                     </div>
                     
-                    <p>Cordialement,<br>L'équipe du support</p>
+                    <p>" . $closing . "</p>
                 </div>
                 <div class='footer'>
-                    <p>Cet email est une réponse à votre message du " . date('d/m/Y à H:i', strtotime($contact['date_creation'])) . ".</p>
-                    <p>&copy; " . date('Y') . " Votre Société. Tous droits réservés.</p>
+                    <p>" . $footer . "</p>
+                    <p>&copy; " . $year . " Votre Société. Tous droits réservés.</p>
                 </div>
             </div>
         </body>
@@ -195,17 +240,136 @@ class ContactController {
         return $template;
     }
 
+    private function resolveEmailPayload($contact, $payload, $email_subject = null)
+    {
+        $language = 'fr';
+        $title = '';
+        $subject = '';
+        $contentHtml = '';
+
+        if (is_array($payload)) {
+            $language = trim((string)($payload['language'] ?? 'fr'));
+            if (!in_array($language, ['fr', 'en'], true)) {
+                $language = 'fr';
+            }
+
+            $titleFr = trim((string)($payload['title_fr'] ?? ''));
+            $titleEn = trim((string)($payload['title_en'] ?? ''));
+            $subjectFr = trim((string)($payload['subject_fr'] ?? ''));
+            $subjectEn = trim((string)($payload['subject_en'] ?? ''));
+
+            $contentFr = (string)($payload['content_fr'] ?? '');
+            $contentEn = (string)($payload['content_en'] ?? '');
+
+            $contentHtml = $language === 'en' ? $contentEn : $contentFr;
+
+            $title = $language === 'en' ? $titleEn : $titleFr;
+            if ($title === '') {
+                $title = $language === 'en' ? 'Reply to your message' : 'Réponse à votre message';
+            }
+
+            $subject = $language === 'en' ? $subjectEn : $subjectFr;
+        } else {
+            $contentHtml = (string)$payload;
+        }
+
+        $subject = trim((string)($subject ?: $email_subject));
+        if ($subject === '') {
+            $subject = 'Re: ' . ($contact['sujet'] ?? '');
+        }
+
+        $contentHtml = trim($contentHtml);
+        $bodyText = trim(strip_tags($contentHtml));
+
+        return [
+            'language' => $language,
+            'title' => $title ?: 'Réponse à votre message',
+            'subject' => $subject,
+            'body_html' => $contentHtml !== '' ? $contentHtml : nl2br(htmlspecialchars($bodyText)),
+            'body_text' => $bodyText
+        ];
+    }
+
     /**
      * Construit les headers de l'email
      */
     private function buildEmailHeaders() {
+        $from = $this->resolveFromAddress();
+        $replyTo = $this->resolveReplyToAddress($from);
+
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
-        $headers .= "From: support@votresociete.com" . "\r\n";
-        $headers .= "Reply-To: no-reply@votresociete.com" . "\r\n";
+        $headers .= "From: " . $from . "\r\n";
+        $headers .= "Reply-To: " . $replyTo . "\r\n";
         $headers .= "X-Mailer: PHP/" . phpversion();
         
         return $headers;
+    }
+
+    private function resolveFromAddress()
+    {
+        $candidates = [
+            getenv('MAIL_FROM') ?: null,
+            defined('MAIL_FROM_ADDRESS') ? MAIL_FROM_ADDRESS : null,
+            defined('CONTACT_EMAIL') ? CONTACT_EMAIL : null,
+            getenv('CONTACT_EMAIL') ?: null
+        ];
+
+        foreach ($candidates as $candidate) {
+            if ($candidate && filter_var($candidate, FILTER_VALIDATE_EMAIL)) {
+                return $candidate;
+            }
+        }
+
+        $host = $this->resolveHostDomain();
+        if ($host === null) {
+            return 'no-reply@localhost';
+        }
+
+        return 'no-reply@' . $host;
+    }
+
+    private function resolveReplyToAddress($fallback)
+    {
+        $candidate = getenv('MAIL_REPLY_TO') ?: null;
+        if (!$candidate && defined('MAIL_REPLY_TO')) {
+            $candidate = MAIL_REPLY_TO;
+        }
+
+        if ($candidate && filter_var($candidate, FILTER_VALIDATE_EMAIL)) {
+            return $candidate;
+        }
+
+        return $fallback ?: 'no-reply@localhost';
+    }
+
+    private function resolveHostDomain()
+    {
+        $host = $_SERVER['SERVER_NAME'] ?? ($_SERVER['HTTP_HOST'] ?? '');
+        $host = strtolower(trim($host));
+        $host = preg_replace('/:\d+$/', '', $host);
+        $host = preg_replace('/^www\./', '', $host);
+
+        if ($host === '' || $host === 'localhost' || $host === '127.0.0.1') {
+            return null;
+        }
+
+        return $host;
+    }
+
+    private function sanitizeEmailHeader($value)
+    {
+        $value = trim((string) $value);
+        return preg_replace("/\r|\n/", ' ', $value);
+    }
+
+    private function encodeEmailSubject($subject)
+    {
+        if (function_exists('mb_encode_mimeheader')) {
+            return mb_encode_mimeheader($subject, 'UTF-8', 'B', "\r\n");
+        }
+
+        return $subject;
     }
 
     /**

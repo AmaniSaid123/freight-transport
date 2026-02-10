@@ -347,7 +347,7 @@ require_once __DIR__ . '/../../includes/translation.php';
                     <h2 class="display-5 text-white mb-2"><?= t('contact_form_title') ?></h2>
                     <p class="mb-4 text-white"><?= t('contact_form_description') ?> <a class="text-dark fw-bold"
                             href="#"><?= t('contact_form_download') ?></a>.</p>
-                    <form id="contactForm" method="POST" action="<?= BASE_URL ?>/actions/process_contact.php">
+                    <form id="contactForm" method="POST" action="/actions/process_contact.php">
                         <div class="row g-3">
                             <div class="col-lg-12 col-xl-6">
                                 <div class="form-floating">
@@ -464,113 +464,6 @@ require_once __DIR__ . '/../../includes/translation.php';
     <?php include(__DIR__ . '/../layouts/js.php'); ?>
 
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const contactForm = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const formMessage = document.getElementById('formMessage');
-
-            // Remplir les champs cachés
-            document.getElementById('ip_address').value = getUserIP();
-            document.getElementById('user_agent').value = navigator.userAgent;
-
-            contactForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                // Désactiver le bouton
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<?= t('contact_form_sending') ?>...';
-                formMessage.style.display = 'none';
-
-                // Récupérer les données du formulaire
-                const formData = new FormData(contactForm);
-
-                // Envoyer la requête AJAX
-                fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Succès
-                            showMessage(data.message, 'success');
-                            contactForm.reset();
-                        } else {
-                            // Erreur
-                            showMessage(data.message, 'danger');
-
-                            // Afficher les erreurs de champ
-                            if (data.errors) {
-                                displayFieldErrors(data.errors);
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showMessage('Une erreur est survenue. Veuillez réessayer.', 'danger');
-                    })
-                    .finally(() => {
-                        // Réactiver le bouton
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = '<?= t('contact_form_send_button') ?>';
-                    });
-            });
-
-            function showMessage(message, type) {
-                formMessage.innerHTML = message;
-                formMessage.className = `alert alert-${type} mt-3`;
-                formMessage.style.display = 'block';
-
-                // Scroll vers le message
-                formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-
-            function displayFieldErrors(errors) {
-                // Réinitialiser les erreurs
-                document.querySelectorAll('.is-invalid').forEach(el => {
-                    el.classList.remove('is-invalid');
-                });
-                document.querySelectorAll('.invalid-feedback').forEach(el => {
-                    el.remove();
-                });
-
-                // Afficher les nouvelles erreurs
-                for (const field in errors) {
-                    const input = document.getElementById(field);
-                    if (input) {
-                        input.classList.add('is-invalid');
-
-                        const errorDiv = document.createElement('div');
-                        errorDiv.className = 'invalid-feedback';
-                        errorDiv.textContent = errors[field];
-
-                        input.parentNode.appendChild(errorDiv);
-                    }
-                }
-            }
-
-            // Fonction pour obtenir l'IP de l'utilisateur
-            function getUserIP() {
-                return new Promise((resolve) => {
-                    // Essayer d'obtenir l'IP via un service externe
-                    fetch('https://api.ipify.org?format=json')
-                        .then(response => response.json())
-                        .then(data => resolve(data.ip))
-                        .catch(() => {
-                            // Fallback vers l'IP du serveur
-                            resolve('<?= $_SERVER['REMOTE_ADDR'] ?>');
-                        });
-                });
-            }
-
-            // Initialiser avec l'IP
-            getUserIP().then(ip => {
-                document.getElementById('ip_address').value = ip;
-            });
-        });
-    </script>
 
 </body>
 

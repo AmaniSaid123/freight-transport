@@ -1,6 +1,6 @@
 <?php
 //****************** PAGE SETUP ******************
-$idpage = 14;
+$idpage = 27;
 
 require_once __DIR__ . '/../../../views/pages/session_check.php';
 require_once __DIR__ . '/../../../../config/debug.php';
@@ -158,8 +158,16 @@ $destinations = $controller->getAvailableDestinations();
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Origine</label>
-                                                        <input type="text" class="form-control" name="origin[]" value="Chine" readonly>
+                                                        <label>Origine *</label>
+                                                        <select class="form-control" name="origin[]" required>
+                                                            <option value="">Sélectionnez une origine</option>
+                                                            <?php foreach ($destinations as $destination): ?>
+                                                                <option value="<?= $destination ?>" 
+                                                                    <?= (isset($_POST['origin'][0]) && $_POST['origin'][0] === $destination) ? 'selected' : '' ?>>
+                                                                    <?= $destination ?>
+                                                                </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -200,13 +208,21 @@ $destinations = $controller->getAvailableDestinations();
                                             <?php for ($i = 1; $i < count($_POST['origin']); $i++): ?>
                                                 <?php if (!empty($_POST['origin'][$i]) && !empty($_POST['destination'][$i])): ?>
                                                     <div class="expedition-item">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label>Origine</label>
-                                                                    <input type="text" class="form-control" name="origin[]" value="Chine" readonly>
-                                                                </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Origine *</label>
+                                                                <select class="form-control" name="origin[]" required>
+                                                                    <option value="">Sélectionnez une origine</option>
+                                                                    <?php foreach ($destinations as $destination): ?>
+                                                                        <option value="<?= $destination ?>" 
+                                                                            <?= (isset($_POST['origin'][$i]) && $_POST['origin'][$i] === $destination) ? 'selected' : '' ?>>
+                                                                            <?= $destination ?>
+                                                                        </option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
                                                             </div>
+                                                        </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label>Destination *</label>
@@ -301,8 +317,13 @@ $destinations = $controller->getAvailableDestinations();
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Origine</label>
-                                <input type="text" class="form-control" name="origin[]" value="Chine" readonly>
+                                <label>Origine *</label>
+                                <select class="form-control" name="origin[]" required>
+                                    <option value="">Sélectionnez une origine</option>
+                                    <?php foreach ($destinations as $destination): ?>
+                                        <option value="<?= $destination ?>"><?= $destination ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">

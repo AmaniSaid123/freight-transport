@@ -1,6 +1,8 @@
 <?php
 class Parcel {
     private $bdd;
+    private $shipmentStatusColumn = null;
+    private $shipmentHistoryStatusColumn = null;
     
     public function __construct($database) {
         $this->bdd = $database;
@@ -69,7 +71,12 @@ class Parcel {
      * Récupère les expéditions d'un dossier client
      */
     public function getShipmentsByCustomerId($customer_record_id) {
-        $sql = "SELECT * FROM shipment WHERE customer_record_id = ? ORDER BY created_at DESC";
+        $statusSelect = $this->getStatusSelectExpression();
+        $sql = "SELECT s.*, {$statusSelect}
+                FROM shipment s 
+                LEFT JOIN shipment_status ss ON ss.shipment_id = s.id
+                WHERE s.customer_record_id = ?
+                ORDER BY s.created_at DESC";
         $stmt = $this->bdd->prepare($sql);
         $stmt->execute([$customer_record_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -79,8 +86,10 @@ class Parcel {
      * Récupère une expédition par son ID
      */
     public function getShipmentById($id) {
-        $sql = "SELECT s.*, cr.full_name, cr.email, cr.phone 
+        $statusSelect = $this->getStatusSelectExpression();
+        $sql = "SELECT s.*, {$statusSelect}, cr.full_name, cr.email, cr.phone 
                 FROM shipment s 
+                LEFT JOIN shipment_status ss ON ss.shipment_id = s.id
                 JOIN customer_records cr ON s.customer_record_id = cr.id 
                 WHERE s.id = ? AND cr.deletion_status = 0";
         $stmt = $this->bdd->prepare($sql);
@@ -151,15 +160,31 @@ class Parcel {
         try {
             $this->bdd->beginTransaction();
 
-            // Mettre à jour le statut de l'expédition
-            $sql = "UPDATE shipment SET status = ?, updated_at = NOW() WHERE id = ?";
-            $stmt = $this->bdd->prepare($sql);
-            $stmt->execute([$status, $shipment_id]);
-
+            $historyStatusColumn = $this->resolveShipmentHistoryStatusColumn();
+            if (!$historyStatusColumn) {
+                throw new Exception("La colonne de statut est absente de la table shipment_status_history");
+            }
             // Ajouter à l'historique
-            $sql_history = "INSERT INTO shipment_status_history (shipment_id, status, notes, created_by) VALUES (?, ?, ?, ?)";
+            $sql_history = "INSERT INTO shipment_status_history (shipment_id, {$historyStatusColumn}, notes, created_by) VALUES (?, ?, ?, ?)";
             $stmt_history = $this->bdd->prepare($sql_history);
-            $stmt_history->execute([$shipment_id, $status, $notes, $user_id]);
+            $historyValue = $this->mapStatusForColumn($status, $historyStatusColumn);
+            $stmt_history->execute([$shipment_id, $historyValue, $notes, $user_id]);
+
+            // Mettre à jour l'état courant dans une table dédiée
+            $sql_state = "
+                INSERT INTO shipment_status (shipment_id, status_code, notes, updated_at, updated_by)
+                VALUES (:shipment_id, :status_code, :notes, NOW(), :user_id)
+                ON DUPLICATE KEY UPDATE status_code = VALUES(status_code), notes = VALUES(notes), updated_at = NOW(), updated_by = VALUES(updated_by)";
+            $stmt_state = $this->bdd->prepare($sql_state);
+            $stmt_state->execute([
+                'shipment_id' => $shipment_id,
+                'status_code' => $status,
+                'notes' => $notes,
+                'user_id' => $user_id
+            ]);
+
+            // Mettre à jour éventuellement la table shipment si la colonne existe
+            $this->updateShipmentTableStatus($shipment_id, $status);
 
             $this->bdd->commit();
             return true;
@@ -173,10 +198,26 @@ class Parcel {
      * Récupère l'historique des statuts d'une expédition
      */
     public function getShipmentStatusHistory($shipment_id) {
-        $sql = "SELECT ssh.*, u.username as created_by_name 
+        $historyStatusColumn = $this->resolveShipmentHistoryStatusColumn();
+        $statusExpr = $historyStatusColumn ? "ssh.`{$historyStatusColumn}`" : "NULL";
+        if (!$historyStatusColumn) {
+            // Au moins exposer un alias status_code pour l'appelant même si la colonne est absente
+            $statusSelect = ", NULL AS status_code";
+        } elseif ($historyStatusColumn === 'status_code') {
+            $statusSelect = "";
+        } else {
+            $statusSelect = ", {$statusExpr} AS status_code";
+        }
+
+        $sql = "SELECT ssh.*{$statusSelect}, u.username as created_by_name, ps.name_fr, ps.name_en, ps.badge_class
                 FROM shipment_status_history ssh 
-                LEFT JOIN user u ON ssh.created_by = u.id 
-                WHERE ssh.shipment_id = ? 
+                LEFT JOIN user u ON ssh.created_by = u.id ";
+        if ($historyStatusColumn) {
+            $sql .= "LEFT JOIN parcel_status ps ON ps.code = {$statusExpr} ";
+        } else {
+            $sql .= "LEFT JOIN parcel_status ps ON 1 = 0 ";
+        }
+        $sql .= "WHERE ssh.shipment_id = ? 
                 ORDER BY ssh.created_at DESC";
         $stmt = $this->bdd->prepare($sql);
         $stmt->execute([$shipment_id]);
@@ -190,6 +231,23 @@ class Parcel {
         $sql = "UPDATE customer_records SET deletion_status = 1, deleted_at = NOW(), deleted_by_user = ? WHERE id = ?";
         $stmt = $this->bdd->prepare($sql);
         return $stmt->execute([$user_id, $id]);
+    }
+
+    /**
+     * Supprime toutes les expéditions et historiques liés à un dossier client
+     */
+    public function deleteShipmentsByCustomerRecord($customer_record_id) {
+        // Supprimer l'historique des statuts
+        $sqlHistory = "DELETE FROM shipment_status_history WHERE shipment_id IN (
+            SELECT id FROM shipment WHERE customer_record_id = ?
+        )";
+        $stmtHistory = $this->bdd->prepare($sqlHistory);
+        $stmtHistory->execute([$customer_record_id]);
+
+        // Supprimer les expéditions
+        $sqlShipments = "DELETE FROM shipment WHERE customer_record_id = ?";
+        $stmtShipments = $this->bdd->prepare($sqlShipments);
+        return $stmtShipments->execute([$customer_record_id]);
     }
 
     /**
@@ -255,19 +313,56 @@ class Parcel {
      * Récupère les statistiques (non supprimés)
      */
     public function getStats() {
+        $statusExpr = $this->getStatusExprForAggregation();
         $sql = "SELECT 
                 COUNT(DISTINCT cr.id) as total_customers,
                 COUNT(s.id) as total_shipments,
-                SUM(CASE WHEN s.status = 'en_attente' THEN 1 ELSE 0 END) as pending_shipments,
-                SUM(CASE WHEN s.status = 'en_cours' THEN 1 ELSE 0 END) as in_progress_shipments,
-                SUM(CASE WHEN s.status = 'livre' THEN 1 ELSE 0 END) as delivered_shipments,
-                SUM(CASE WHEN s.status = 'annule' THEN 1 ELSE 0 END) as cancelled_shipments
+                SUM(CASE WHEN {$statusExpr} IN ('pending', 'en_attente') THEN 1 ELSE 0 END) as pending_shipments,
+                SUM(CASE WHEN {$statusExpr} IN ('in_progress', 'en_cours') THEN 1 ELSE 0 END) as in_progress_shipments,
+                SUM(CASE WHEN {$statusExpr} IN ('delivered', 'livre') THEN 1 ELSE 0 END) as delivered_shipments,
+                SUM(CASE WHEN {$statusExpr} IN ('cancelled', 'annule') THEN 1 ELSE 0 END) as cancelled_shipments
                 FROM customer_records cr 
                 LEFT JOIN shipment s ON cr.id = s.customer_record_id
+                LEFT JOIN shipment_status ss ON ss.shipment_id = s.id
                 WHERE cr.deletion_status = 0";
         
         $stmt = $this->bdd->prepare($sql);
         $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Statuts disponibles (table parcel_status)
+     */
+    public function getStatusDefinitions()
+    {
+        $sql = "SELECT code, name_en, name_fr, badge_class FROM parcel_status ORDER BY code ASC";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $definitions = [];
+        foreach ($rows as $row) {
+            $definitions[$row['code']] = [
+                'label_en' => $row['name_en'],
+                'label_fr' => $row['name_fr'],
+                'badge' => $row['badge_class'] ?: 'secondary'
+            ];
+        }
+        return $definitions;
+    }
+
+    /**
+     * Template email pour un statut
+     */
+    public function getEmailTemplateByStatus($status_code)
+    {
+        $sql = "SELECT status_code, titre_email_fr, titre_email_en, objet_fr, objet_en, contenu_fr, contenu_en 
+                FROM mailing 
+                WHERE status_code = ? 
+                ORDER BY updated_at DESC, created_at DESC 
+                LIMIT 1";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute([$status_code]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -304,6 +399,149 @@ class Parcel {
      */
     public function getLastError() {
         return $this->bdd->errorInfo()[2] ?? 'Erreur inconnue';
+    }
+
+    /**
+     * Retourne l'expression SQL pour sélectionner le statut courant avec alias status_code
+     */
+    private function getStatusSelectExpression()
+    {
+        $column = $this->resolveShipmentStatusColumn();
+        $expr = $column ? "COALESCE(s.{$column}, ss.status_code)" : "ss.status_code";
+        return $expr . " AS status_code";
+    }
+
+    /**
+     * Retourne l'expression du statut pour les agrégations
+     */
+    private function getStatusExprForAggregation()
+    {
+        $column = $this->resolveShipmentStatusColumn();
+        return $column ? "COALESCE(ss.status_code, s.{$column})" : "ss.status_code";
+    }
+
+    /**
+     * Met à jour la colonne de statut dans la table shipment si elle existe
+     */
+    private function updateShipmentTableStatus($shipment_id, $status_code)
+    {
+        $column = $this->resolveShipmentStatusColumn();
+        if (!$column) {
+            return;
+        }
+
+        // Ignore legacy numeric columns that cannot hold text status codes
+        if (!$this->statusColumnAcceptsString('shipment', $column)) {
+            return;
+        }
+
+        $updateParts = ["{$column} = :status_code"];
+        if ($this->columnExists('shipment', 'updated_at')) {
+            $updateParts[] = "updated_at = NOW()";
+        }
+        $sql = "UPDATE shipment SET " . implode(', ', $updateParts) . " WHERE id = :shipment_id";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute([
+            'status_code' => $this->mapStatusForColumn($status_code, $column),
+            'shipment_id' => $shipment_id
+        ]);
+    }
+
+    /**
+     * Vérifie la présence d'une colonne de statut sur la table shipment
+     */
+    private function resolveShipmentStatusColumn()
+    {
+        if ($this->shipmentStatusColumn !== null) {
+            return $this->shipmentStatusColumn ?: null;
+        }
+
+        foreach (['status_code', 'status_id', 'status'] as $column) {
+            if ($this->columnExists('shipment', $column)) {
+                $this->shipmentStatusColumn = $column;
+                return $column;
+            }
+        }
+
+        $this->shipmentStatusColumn = '';
+        return null;
+    }
+
+    /**
+     * Résout la colonne de statut sur la table shipment_status_history
+     */
+    private function resolveShipmentHistoryStatusColumn()
+    {
+        if ($this->shipmentHistoryStatusColumn !== null) {
+            return $this->shipmentHistoryStatusColumn ?: null;
+        }
+
+        foreach (['status_code', 'status_id', 'status', 'statut'] as $column) {
+            if ($this->columnExists('shipment_status_history', $column) && $this->statusColumnAcceptsString('shipment_status_history', $column)) {
+                $this->shipmentHistoryStatusColumn = $column;
+                return $column;
+            }
+        }
+
+        $this->shipmentHistoryStatusColumn = '';
+        return null;
+    }
+
+    /**
+     * Vérifie si la colonne peut accueillir une valeur texte (char/varchar/text/enum/set)
+     */
+    private function statusColumnAcceptsString($table, $column)
+    {
+        $sql = "SELECT DATA_TYPE 
+                FROM INFORMATION_SCHEMA.COLUMNS 
+                WHERE TABLE_SCHEMA = DATABASE() 
+                  AND TABLE_NAME = :table 
+                  AND COLUMN_NAME = :column 
+                LIMIT 1";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute(['table' => $table, 'column' => $column]);
+        $type = strtolower((string)$stmt->fetchColumn());
+
+        if (!$type) {
+            return false;
+        }
+
+        $textualTypes = ['char', 'varchar', 'text', 'tinytext', 'mediumtext', 'longtext', 'enum', 'set'];
+        return in_array($type, $textualTypes, true);
+    }
+
+    /**
+     * Convertit le statut en valeur compatible avec une colonne héritée (ex: enum FR)
+     */
+    private function mapStatusForColumn($status_code, $column)
+    {
+        if ($column === 'status_code') {
+            return $status_code;
+        }
+
+        $map = [
+            'pending' => 'en_attente',
+            'in_progress' => 'en_cours',
+            'delivered' => 'livre',
+            'cancelled' => 'annule',
+        ];
+
+        return $map[$status_code] ?? $status_code;
+    }
+
+    /**
+     * Vérifie l'existence d'une colonne dans la base courante
+     */
+    private function columnExists($table, $column)
+    {
+        $sql = "SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+                WHERE TABLE_SCHEMA = DATABASE() 
+                  AND TABLE_NAME = :table 
+                  AND COLUMN_NAME = :column 
+                LIMIT 1";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute(['table' => $table, 'column' => $column]);
+        return (bool)$stmt->fetchColumn();
     }
 }
 ?>

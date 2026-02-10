@@ -36,8 +36,8 @@ class Mailing {
      * Crée un nouvel email
      */
     public function createMail($data) {
-        $sql = "INSERT INTO mailing (titre_email, objet, contenu_fr, contenu_en, destinataires, type_destinataires, statut, date_programmation, pieces_jointes, created_by) 
-                VALUES (:titre_email, :objet, :contenu_fr, :contenu_en, :destinataires, :type_destinataires, :statut, :date_programmation, :pieces_jointes, :created_by)";
+        $sql = "INSERT INTO mailing (titre_email_fr, titre_email_en, objet_fr, objet_en, contenu_fr, contenu_en, destinataires, type_destinataires, status_code, date_programmation, pieces_jointes, created_by) 
+                VALUES (:titre_email_fr, :titre_email_en, :objet_fr, :objet_en, :contenu_fr, :contenu_en, :destinataires, :type_destinataires, :status_code, :date_programmation, :pieces_jointes, :created_by)";
         
         $stmt = $this->bdd->prepare($sql);
         return $stmt->execute($data);
@@ -70,19 +70,30 @@ class Mailing {
     }
 
     /**
-     * Récupère les statistiques
+     * Récupère les statistiques (basé sur status_code)
      */
     public function getStats() {
         $sql = "SELECT 
                 COUNT(*) as total,
-                SUM(CASE WHEN statut = 'envoye' THEN 1 ELSE 0 END) as envoyes,
-                SUM(CASE WHEN statut = 'brouillon' THEN 1 ELSE 0 END) as brouillons,
-                SUM(CASE WHEN statut = 'programme' THEN 1 ELSE 0 END) as programmes,
-                SUM(CASE WHEN statut = 'erreur' THEN 1 ELSE 0 END) as erreurs
+                SUM(CASE WHEN status_code = 'envoye' THEN 1 ELSE 0 END) as envoyes,
+                SUM(CASE WHEN status_code = 'brouillon' THEN 1 ELSE 0 END) as brouillons,
+                SUM(CASE WHEN status_code = 'programme' THEN 1 ELSE 0 END) as programmes,
+                SUM(CASE WHEN status_code = 'erreur' THEN 1 ELSE 0 END) as erreurs
                 FROM mailing";
         $stmt = $this->bdd->prepare($sql);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Définitions des statuts depuis parcel_status
+     */
+    public function getStatusDefinitions()
+    {
+        $sql = "SELECT code, name_en, name_fr, badge_class FROM parcel_status ORDER BY code";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

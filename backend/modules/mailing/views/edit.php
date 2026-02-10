@@ -104,17 +104,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Modifier l'email</h1>
-                        <div>
-                            <a href="detail.php?id=<?= $mail_id ?>" class="btn btn-info btn-sm">
-                                <i class="fas fa-eye"></i> Voir détails
-                            </a>
-                            <a href="list.php" class="btn btn-secondary btn-sm">
-                                <i class="fas fa-arrow-left"></i> Retour
-                            </a>
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Modifier l'email</h1>
+                            <div>
+                                <a href="detail.php?id=<?= $mail_id ?>" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i> Voir détails
+                                </a>
+                                <a href="list.php" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-arrow-left"></i> Retour
+                                </a>
+                            </div>
                         </div>
-                    </div>
 
                     <!-- Message Alert -->
                     <?php if (!empty($message)): ?>
@@ -126,8 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                     <!-- Informations générales -->
                     <div class="email-info">
                         <div class="row">
+                            <?php $mailStatus = $mail['status_code'] ?? ''; ?>
                             <div class="col-md-6">
-                                <strong>Statut actuel:</strong> <?= $controller->getStatusBadge($mail['statut']) ?>
+                                <strong>Statut actuel:</strong> <?= $controller->getStatusBadge($mailStatus) ?>
                             </div>
                             <div class="col-md-6">
                                 <strong>Créé le:</strong> <?= $controller->formatDate($mail['created_at']) ?>
@@ -154,24 +155,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                 id="mailForm"
                                 novalidate>
                                 
-                                <!-- Titre Email -->
+                                <!-- Titre Email (FR / EN) -->
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">
-                                        Titre de l'email
+                                        Titre (FR)
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-sm-10">
                                         <input type="text"
-                                            class="form-control <?= (!empty($errors['titre_email']) ? 'is-invalid' : '') ?>"
-                                            name="titre_email" 
-                                            placeholder="Donnez un titre à cet email"
-                                            value="<?= htmlspecialchars($formData['titre_email'] ?? '') ?>" 
+                                            class="form-control <?= (!empty($errors['titre_email_fr']) ? 'is-invalid' : '') ?>"
+                                            name="titre_email_fr" 
+                                            placeholder="Titre en français"
+                                            value="<?= htmlspecialchars($formData['titre_email_fr'] ?? '') ?>" 
                                             required
-                                            data-required-message="Le titre de l'email est obligatoire">
-                                        <?php if (!empty($errors['titre_email'])): ?>
+                                            data-required-message="Le titre (FR) est obligatoire">
+                                        <?php if (!empty($errors['titre_email_fr'])): ?>
                                             <div class="invalid-feedback d-block">
                                                 <i class="fas fa-exclamation-circle"></i>
-                                                <?= htmlspecialchars($errors['titre_email']) ?>
+                                                <?= htmlspecialchars($errors['titre_email_fr']) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">
+                                        Titre (EN)
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                            class="form-control <?= (!empty($errors['titre_email_en']) ? 'is-invalid' : '') ?>"
+                                            name="titre_email_en" 
+                                            placeholder="Title in English"
+                                            value="<?= htmlspecialchars($formData['titre_email_en'] ?? '') ?>" 
+                                            required
+                                            data-required-message="Le titre (EN) est obligatoire">
+                                        <?php if (!empty($errors['titre_email_en'])): ?>
+                                            <div class="invalid-feedback d-block">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <?= htmlspecialchars($errors['titre_email_en']) ?>
                                             </div>
                                         <?php endif; ?>
                                     </div>
@@ -180,26 +203,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                 <!-- Objet -->
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">
-                                        Objet
+                                        Objet (FR)
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-sm-10">
                                         <input type="text"
-                                            class="form-control <?= (!empty($errors['objet']) ? 'is-invalid' : '') ?>"
-                                            name="objet" 
-                                            placeholder="Objet de l'email"
-                                            value="<?= htmlspecialchars($formData['objet'] ?? '') ?>" 
+                                            class="form-control <?= (!empty($errors['objet_fr']) ? 'is-invalid' : '') ?>"
+                                            name="objet_fr" 
+                                            placeholder="Objet de l'email (FR)"
+                                            value="<?= htmlspecialchars($formData['objet_fr'] ?? '') ?>" 
                                             required
-                                            data-required-message="L'objet de l'email est obligatoire">
-                                        <?php if (!empty($errors['objet'])): ?>
+                                            data-required-message="L'objet (FR) est obligatoire">
+                                        <?php if (!empty($errors['objet_fr'])): ?>
                                             <div class="invalid-feedback d-block">
                                                 <i class="fas fa-exclamation-circle"></i>
-                                                <?= htmlspecialchars($errors['objet']) ?>
+                                                <?= htmlspecialchars($errors['objet_fr']) ?>
                                             </div>
                                         <?php endif; ?>
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">
+                                        Objet (EN)
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                            class="form-control <?= (!empty($errors['objet_en']) ? 'is-invalid' : '') ?>"
+                                            name="objet_en" 
+                                            placeholder="Email subject (EN)"
+                                            value="<?= htmlspecialchars($formData['objet_en'] ?? '') ?>" 
+                                            required
+                                            data-required-message="L'objet (EN) est obligatoire">
+                                        <?php if (!empty($errors['objet_en'])): ?>
+                                            <div class="invalid-feedback d-block">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <?= htmlspecialchars($errors['objet_en']) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                                 <!-- Type Destinataires -->
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">
@@ -282,21 +326,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                         Statut
                                     </label>
                                     <div class="col-sm-10">
+                                        <?php $statusOptions = $controller->getStatusOptions(); ?>
                                         <select class="form-control" name="statut" id="statutSelect">
-                                            <option value="brouillon" <?= ($formData['statut'] ?? '') == 'brouillon' ? 'selected' : '' ?>>Brouillon</option>
-                                            <option value="programme" <?= ($formData['statut'] ?? '') == 'programme' ? 'selected' : '' ?>>Programmé</option>
-                                            <?php if ($mail['statut'] === 'envoye'): ?>
-                                                <option value="envoye" selected>Envoyé (non modifiable)</option>
-                                            <?php endif; ?>
+                                            <?php foreach ($statusOptions as $code => $def): ?>
+                                                <option value="<?= htmlspecialchars($code); ?>" <?= ($formData['statut'] ?? $mailStatus) == $code ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($code); ?>
+                                                </option>
+                                            <?php endforeach; ?>
                                         </select>
-                                        <?php if ($mail['statut'] === 'envoye'): ?>
-                                            <small class="form-text text-muted">Un email déjà envoyé ne peut pas être modifié</small>
-                                        <?php endif; ?>
                                     </div>
                                 </div>
 
                                 <!-- Date de programmation -->
-                                <div class="form-group row" id="dateProgrammationGroup" style="<?= ($formData['statut'] ?? '') == 'programme' ? '' : 'display: none;' ?>">
+                                <div class="form-group row" id="dateProgrammationGroup" style="<?= ($formData['statut'] ?? $mailStatus) == 'programme' ? '' : 'display: none;' ?>">
                                     <label class="col-sm-2 col-form-label">
                                         Date de programmation
                                     </label>
@@ -316,7 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                                 <span class="text-danger">*</span> Champs obligatoires
                                             </small>
                                         </div>
-                                        <button type="submit" class="btn btn-primary" name="submit" <?= $mail['statut'] === 'envoye' ? 'disabled' : '' ?>>
+                                        <button type="submit" class="btn btn-primary" name="submit">
                                             <i class="fas fa-save"></i> Mettre à jour l'email
                                         </button>
                                         <button type="reset" class="btn btn-secondary">
