@@ -22,6 +22,8 @@ $controller = new ParcelController($bdd, $_SESSION['my_userId']);
 $message = '';
 $alertClass = 'alert-info';
 $errors = [];
+$redirectUrl = '';
+$redirectDelayMs = 1500;
 
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result['success']) {
         $message = $result['message'];
         $alertClass = 'alert-success';
+        $redirectUrl = BASE_URL . 'modules/parcels/views/list.php';
         
         // Redirection vers le détail si nécessaire
         // header('Location: detail.php?customer_id=' . $result['customer_id']);
@@ -89,6 +92,16 @@ $destinations = $controller->getAvailableDestinations();
                         <div class="alert <?= $alertClass; ?> text-center" role="alert">
                             <?= htmlspecialchars($message); ?>
                         </div>
+                        <?php if (!empty($redirectUrl)): ?>
+                            <div class="text-center text-muted mb-3">Redirection vers la liste...</div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <?php if (!empty($redirectUrl)): ?>
+                        <script>
+                            setTimeout(function () {
+                                window.location.href = <?= json_encode($redirectUrl); ?>;
+                            }, <?= (int) $redirectDelayMs; ?>);
+                        </script>
                     <?php endif; ?>
 
                     <!-- Formulaire -->

@@ -78,14 +78,14 @@ $statuses = $controller->getAllStatuses();
                                                     class="btn btn-sm btn-info mr-2">Editer</a>
                                                 <?php endif; ?>
                                                 <?php if (get_access($bdd, 25, $_SESSION['my_idprofile']) == 1): ?>
-
-                                                <form method="post" onsubmit="return confirm('Supprimer ce statut ?');"
-                                                    class="d-inline">
-                                                    <input type="hidden" name="delete_code"
-                                                        value="<?= htmlspecialchars($status['code']); ?>">
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-danger">Supprimer</button>
-                                                </form>
+                                                <button type="button"
+                                                    class="btn btn-sm btn-danger"
+                                                    data-toggle="modal"
+                                                    data-target="#deleteStatusModal"
+                                                    data-code="<?= htmlspecialchars($status['code'], ENT_QUOTES); ?>"
+                                                    data-name="<?= htmlspecialchars($status['name_fr'], ENT_QUOTES); ?>">
+                                                    Supprimer
+                                                </button>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -97,9 +97,51 @@ $statuses = $controller->getAllStatuses();
                     </div>
                 </div>
             </div>
+
+            <!-- Delete Status Modal -->
+            <div class="modal fade" id="deleteStatusModal" tabindex="-1" role="dialog" aria-labelledby="deleteStatusModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteStatusModalLabel">Supprimer un statut</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Voulez-vous vraiment supprimer le statut
+                            <strong id="deleteStatusCode"></strong>
+                            <span id="deleteStatusName"></span> ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <form method="post" class="d-inline">
+                                <input type="hidden" name="delete_code" id="deleteStatusInput" value="">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <?php include_once __DIR__ . '/../../../layouts/footer.php'; ?>
         </div>
     </div>
+
+    <?php include_once __DIR__ . '/../../../layouts/script.php'; ?>
+
+    <script>
+        $('#deleteStatusModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var code = button.data('code') || '';
+            var name = button.data('name') || '';
+
+            var modal = $(this);
+            modal.find('#deleteStatusInput').val(code);
+            modal.find('#deleteStatusCode').text(code);
+            modal.find('#deleteStatusName').text(name ? ' (' + name + ')' : '');
+        });
+    </script>
 </body>
 
 </html>

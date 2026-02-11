@@ -7,7 +7,7 @@ class ParcelController
     private $current_user_id;
     private $emailService;
 
-    public function __construct($database, $user_id, EmailService $emailService = null)
+    public function __construct($database, $user_id, ?EmailService $emailService = null)
     {
         $this->model = new Parcel($database);
         $this->current_user_id = $user_id;

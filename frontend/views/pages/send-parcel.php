@@ -18,19 +18,13 @@ $controller = new ParcelController();
 $form_message = null;
 $form_type = null;
 
-if (isset($_POST['send-parcel'])) {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $result = $controller->handleCreateParcel($_POST);
-        $form_message = $result['message'] ?? '';
-        $form_type = (!empty($result['success']) ? 'success' : 'error');
-        if (!empty($result['success'])) {
-            // Clear fields on success
-            $_POST = [];
-        }
-    } else {
-        http_response_code(405);
-        $form_message = 'Méthode non autorisée';
-        $form_type = 'error';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $result = $controller->handleCreateParcel($_POST);
+    $form_message = $result['message'] ?? '';
+    $form_type = (!empty($result['success']) ? 'success' : 'error');
+    if (!empty($result['success'])) {
+        // Clear fields on success
+        $_POST = [];
     }
 }
 

@@ -23,6 +23,7 @@ class ParcelController
     public function handleCreateParcel(array $data): array
     {
         try {
+            $isClientMode = !empty($data['client_mode']);
             $name = clean_text($data['full_name'] ?? '');
             $phone_country = clean_text($data['phone_country'] ?? '');
             $phone_local = clean_text($data['phone_local'] ?? '');
@@ -32,11 +33,27 @@ class ParcelController
             $phone = trim(($phone_country ? $phone_country . ' ' : '') . $phone_local);
 
             // Validation
-            if (!$name || !$email || !$address || !$phone || !$phone_country || !$phone_local) {
+            if (!$email) {
                 return [
                     'success' => false,
-                    'message' => 'Veuillez remplir tous les champs obligatoires.'
+                    'message' => 'Veuillez renseigner une adresse email.'
                 ];
+            }
+
+            if (!$isClientMode) {
+                if (!$name || !$address) {
+                    return [
+                        'success' => false,
+                        'message' => 'Veuillez remplir tous les champs obligatoires.'
+                    ];
+                }
+
+                if (!$phone_country || !$phone_local) {
+                    return [
+                        'success' => false,
+                        'message' => 'Veuillez renseigner un numéro de téléphone.'
+                    ];
+                }
             }
 
             if (empty($data['origin']) || !is_array($data['origin'])) {
@@ -64,6 +81,13 @@ class ParcelController
                 $dossier_id = $existing['id'];
                 $customer_id = $existing['customer_id'];
             } else {
+                if ($isClientMode) {
+                    $this->bdd->rollBack();
+                    return [
+                        'success' => false,
+                        'message' => 'Client introuvable. Désactivez "Vous êtes client" pour créer un nouveau dossier.'
+                    ];
+                }
                 // 🚀 Nouveau client
                 $customer_id = $this->generateRefDossier();
                 $creation_date = date('Y-m-d H:i:s');
